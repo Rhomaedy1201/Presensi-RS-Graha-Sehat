@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/src/futures/splash_screen/controllers/splash_controller.dart';
+import 'package:presensi_gs/src/features/splash_screen/controllers/splash_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

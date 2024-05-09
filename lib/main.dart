@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:presensi_gs/routes/route_page.dart';
-import 'package:presensi_gs/src/futures/splash_screen/views/index.dart';
+import 'package:presensi_gs/src/features/splash_screen/views/index.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  await initializeDateFormatting('id_ID', null).then((_) {
+    // DepedencyInjection.init();
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -12,6 +17,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return GetMaterialApp(
       defaultTransition: Transition.size,
       debugShowCheckedModeBanner: false,
