@@ -12,7 +12,7 @@ class SplashController extends GetxController {
 
   onCheck() {
     Timer(const Duration(seconds: 3), () {
-      // Get.offAllNamed(RouteNames.login);
+      Get.offAllNamed(RouteNames.login);
     });
   }
 }
