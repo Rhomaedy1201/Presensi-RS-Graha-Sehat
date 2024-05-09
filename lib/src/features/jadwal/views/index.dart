@@ -15,7 +15,7 @@ class JadwalView extends StatefulWidget {
 }
 
 class _JadwalViewState extends State<JadwalView> {
-  DateTime firstDate = DateTime.now();
+  DateTime valueDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _JadwalViewState extends State<JadwalView> {
         centerTitle: true,
         title: Text(
           'Jadwal',
-          style: customTextStyle(FontWeight.w500, 22, cBlack),
+          style: customTextStyle(FontWeight.w500, 20, cBlack),
         ),
       ),
       body: Padding(
@@ -137,7 +137,7 @@ class _JadwalViewState extends State<JadwalView> {
               final date = await datePicker(context, DateTime.now());
               if (mounted) {
                 setState(() {
-                  firstDate = date ?? DateTime.now();
+                  valueDate = date ?? DateTime.now();
                 });
               }
             } else if (GetPlatform.isIOS) {
@@ -158,7 +158,7 @@ class _JadwalViewState extends State<JadwalView> {
                           mode: CupertinoDatePickerMode.monthYear,
                           onDateTimeChanged: (val) {
                             setState(() {
-                              firstDate = val;
+                              valueDate = val;
                             });
                           },
                         ),
@@ -188,7 +188,7 @@ class _JadwalViewState extends State<JadwalView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(firstDate.getMonthAndYear().toString()),
+                  Text(valueDate.getMonthAndYear().toString()),
                   const Icon(
                     Icons.date_range_outlined,
                     size: 25,

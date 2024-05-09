@@ -8,6 +8,7 @@ Future<DateTime?> datePicker(BuildContext context, DateTime dateTime) =>
       // firstDate: DateTime.now().subtract(const Duration(days: 14)),
       firstDate: DateTime(2023),
       lastDate: DateTime.now(),
+      initialEntryMode: DatePickerEntryMode.calendar,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(

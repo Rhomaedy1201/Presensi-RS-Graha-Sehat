@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/auth/views/index.dart';
+import 'package:presensi_gs/src/features/histori_presensi/views/index.dart';
 import 'package:presensi_gs/src/features/home/views/index.dart';
 import 'package:presensi_gs/src/features/jadwal/views/index.dart';
 import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
@@ -31,7 +32,7 @@ class RoutePages {
     ),
     GetPage(
       name: RouteNames.historiPresensi,
-      page: () => const JadwalView(),
+      page: () => const HistoriPresensiView(),
     ),
   ];
 }
