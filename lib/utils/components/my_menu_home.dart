@@ -15,7 +15,7 @@ class MenuHome {
       'icon': Icons.location_on_outlined,
       'bg_color': const Color(0xFFCEFBD9),
       'icon_color': const Color(0xFF34CCD5),
-      'route': null,
+      'route': RouteNames.presensi,
     },
     {
       'title': 'Perizinan',

@@ -5,4 +5,5 @@ abstract class RouteNames {
   static const navigationBarView = '/navigation-bar';
   static const jadwal = '/jadwal';
   static const historiPresensi = '/histori-presensi';
+  static const presensi = '/presensi-view';
 }

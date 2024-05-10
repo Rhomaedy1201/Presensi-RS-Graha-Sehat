@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Ummy Qiyamullaily, S.Kom",
+                      "Muhammad Rhomaedi",
                       style: customTextStyle(FontWeight.w700, 17, cBlack),
                     ),
                     Text(
