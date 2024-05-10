@@ -6,4 +6,5 @@ abstract class RouteNames {
   static const jadwal = '/jadwal';
   static const historiPresensi = '/histori-presensi';
   static const presensi = '/presensi-view';
+  static const tukarShift = '/tukar-shift-view';
 }

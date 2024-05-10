@@ -65,12 +65,11 @@ class _LoginViewState extends State<LoginView> {
                       },
                       autocorrect: false,
                       maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
                       obscureText: _obscureText,
                       // controller: loginController.passwordController,
                       enableSuggestions: false,
                       decoration: const InputDecoration(
-                        hintText: "Masukkan Email",
+                        hintText: "Masukkan Nip",
                         hintStyle: TextStyle(
                           color: cGrey_700,
                           fontSize: 13,

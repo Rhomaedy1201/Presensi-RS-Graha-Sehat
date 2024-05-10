@@ -142,8 +142,8 @@ class _HomeViewState extends State<HomeView> {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         var data = MenuHome().menu;
-        return InkWell(
-          splashColor: cPrimary,
+        return GestureDetector(
+          // splashColor: cPrimary,
           onTap: () {
             data[index]['route'] == null
                 ? debugPrint("NULL ROUTE")
