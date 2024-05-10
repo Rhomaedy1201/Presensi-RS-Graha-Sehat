@@ -145,6 +145,11 @@ class _LoginViewState extends State<LoginView> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: cPrimary_800,
                   shadowColor: cPrimary_400,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ), // Mengatur border radius menjadi 0
+                  ),
                 ),
                 onPressed: () {
                   Get.offAllNamed(RouteNames.home);
