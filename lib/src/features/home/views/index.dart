@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/get_location/controllers/index.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_menu_home.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -13,12 +14,22 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  GetLocationController getLocationC = Get.put(GetLocationController());
   List statistikPresensi = [
     {'nama': 'Hadir', 'value': 10},
     {'nama': 'Telat', 'value': 4},
     {'nama': 'Alpha', 'value': 2},
     {'nama': 'Izin', 'value': 0},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getLocationC.getLocation().then((value) {
+      print(value);
+      print("object");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
