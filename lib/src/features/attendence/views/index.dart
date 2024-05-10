@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
@@ -243,7 +244,7 @@ class _PresensiViewState extends State<PresensiView> {
                                     child: SizedBox(
                                       width: Get.width,
                                       height: 45,
-                                      child: ElevatedButton(
+                                      child: ElevatedButton.icon(
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: cPrimary,
                                           shadowColor: cPrimary_400,
@@ -267,13 +268,18 @@ class _PresensiViewState extends State<PresensiView> {
                                                       -7.943586, 113.796086)) <=
                                               50);
                                         },
-                                        child: const Text(
+                                        label: const Text(
                                           "Presensi Masuk",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                             color: cWhite,
                                           ),
+                                        ),
+                                        icon: const Icon(
+                                          CommunityMaterialIcons.location_enter,
+                                          size: 25,
+                                          color: cWhite,
                                         ),
                                       ),
                                     ),
@@ -285,7 +291,7 @@ class _PresensiViewState extends State<PresensiView> {
                                     child: SizedBox(
                                       width: Get.width,
                                       height: 45,
-                                      child: ElevatedButton(
+                                      child: ElevatedButton.icon(
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: cPrimary,
                                           shadowColor: cPrimary_400,
@@ -297,13 +303,18 @@ class _PresensiViewState extends State<PresensiView> {
                                           ),
                                         ),
                                         onPressed: null,
-                                        child: const Text(
+                                        label: const Text(
                                           "Presensi Pulang",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                             color: cWhite,
                                           ),
+                                        ),
+                                        icon: const Icon(
+                                          CommunityMaterialIcons.location_exit,
+                                          size: 25,
+                                          color: cWhite,
                                         ),
                                       ),
                                     ),
