@@ -256,13 +256,7 @@ class _PresensiViewState extends State<PresensiView> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          // getLocationC
-                                          //     .getLocation()
-                                          //     .then((value) {
-                                          //   print(value.latitude);
-                                          // });
-
-                                          print(Distance().distance(
+                                          print(const Distance().distance(
                                                   latLng,
                                                   const LatLng(
                                                       -7.943586, 113.796086)) <=
