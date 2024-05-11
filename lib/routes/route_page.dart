@@ -7,6 +7,7 @@ import 'package:presensi_gs/src/features/home/views/index.dart';
 import 'package:presensi_gs/src/features/jadwal/views/index.dart';
 import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/index.dart';
+import 'package:presensi_gs/src/features/profile/views/index.dart';
 import 'package:presensi_gs/src/features/splash_screen/views/index.dart';
 
 class RoutePages {
@@ -43,6 +44,10 @@ class RoutePages {
     GetPage(
       name: RouteNames.tukarShift,
       page: () => const TukarShiftView(),
+    ),
+    GetPage(
+      name: RouteNames.profileView,
+      page: () => const ProfileView(),
     ),
   ];
 }
