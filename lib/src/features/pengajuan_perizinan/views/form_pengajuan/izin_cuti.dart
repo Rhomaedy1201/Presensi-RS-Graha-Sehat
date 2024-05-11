@@ -6,13 +6,16 @@ import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
 
-class FormIzinKeluarJamKerja extends StatelessWidget {
+class FormIzinCuti extends StatelessWidget {
   final Function(DateTime) callbackSetState;
-  DateTime jamIzinKeluarJamKerja;
-  FormIzinKeluarJamKerja({
-    super.key,
+  final Function(DateTime) callbackSetState2;
+  DateTime tglMulai;
+  DateTime tglSelesai;
+  FormIzinCuti({
     required this.callbackSetState,
-    required this.jamIzinKeluarJamKerja,
+    required this.callbackSetState2,
+    required this.tglMulai,
+    required this.tglSelesai,
   });
 
   @override
@@ -39,7 +42,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
               vertical: 10,
             ),
             child: Text(
-              "Form izin keluar jam kerja",
+              "Form izin Cuti",
               style: customTextStyle(FontWeight.w500, 13, cBlack),
             ),
           ),
@@ -60,15 +63,44 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Jam izin keluar",
+                      "Tanggal Mulai",
                       style: customTextStyle(FontWeight.w600, 11, cBlack),
                     ),
                     spaceHeight(5),
-                    formJamIzin(context)
+                    formTglMulai(context),
+                    spaceHeight(10),
+                    Text(
+                      "Tanggal Selesai",
+                      style: customTextStyle(FontWeight.w600, 11, cBlack),
+                    ),
+                    spaceHeight(5),
+                    formTglSelesai(context),
+                    spaceHeight(10),
+                    formKeterangan(),
+                    spaceHeight(10),
+                    Text(
+                      "Saldo Cuti",
+                      style: customTextStyle(FontWeight.w600, 11, cBlack),
+                    ),
+                    spaceHeight(5),
+                    Container(
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: cGrey_400, width: 1.5),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 7),
+                        child: Text(
+                          "Rp 2.500.000",
+                          style: customTextStyle(FontWeight.w600, 13, cBlack),
+                        ),
+                      ),
+                    ),
+                    spaceHeight(5),
                   ],
                 ),
-                spaceHeight(10),
-                formKeterangan(),
               ],
             ),
           )
@@ -77,7 +109,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
     );
   }
 
-  InkWell formJamIzin(BuildContext context) {
+  InkWell formTglMulai(BuildContext context) {
     return InkWell(
       onTap: () async {
         showCupertinoModalPopup(
@@ -94,9 +126,9 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                     maximumDate: DateTime.now(),
                     maximumYear: DateTime.now().year,
                     minimumYear: 2024,
-                    mode: CupertinoDatePickerMode.time,
+                    mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
-                      jamIzinKeluarJamKerja = val;
+                      tglMulai = val;
                       callbackSetState(val);
                     },
                   ),
@@ -106,7 +138,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                   child: const Text('OK'),
                   onPressed: () {
                     print(
-                      jamIzinKeluarJamKerja.getFullTime().toString(),
+                      tglMulai.dateTime().toString(),
                     );
                     Navigator.of(context).pop();
                   },
@@ -131,7 +163,76 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                jamIzinKeluarJamKerja.getFullTime().toString(),
+                tglMulai.fullDateAll().toString(),
+                style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+              ),
+              const Icon(
+                Icons.date_range_outlined,
+                size: 25,
+                color: cPrimary,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  InkWell formTglSelesai(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        showCupertinoModalPopup(
+          context: context,
+          builder: (_) => Container(
+            height: 400,
+            color: const Color.fromARGB(255, 255, 255, 255),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 300,
+                  child: CupertinoDatePicker(
+                    initialDateTime: DateTime.now(),
+                    maximumDate: DateTime.now(),
+                    maximumYear: DateTime.now().year,
+                    minimumYear: 2024,
+                    mode: CupertinoDatePickerMode.date,
+                    onDateTimeChanged: (val) {
+                      tglSelesai = val;
+                      callbackSetState2(val);
+                    },
+                  ),
+                ),
+                // Close the modal
+                CupertinoButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    print(
+                      tglSelesai.dateTime().toString(),
+                    );
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 37,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(5),
+          ),
+          border: Border.all(color: cGrey_400, width: 1.5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                tglSelesai.fullDateAll().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(

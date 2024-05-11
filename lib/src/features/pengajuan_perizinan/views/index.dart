@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_keluar_jam_kerja.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_melahirkan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_pulang_cepat.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_sakit.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_terlambat.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
@@ -20,6 +23,12 @@ class PerizinanView extends StatefulWidget {
 class _PerizinanViewState extends State<PerizinanView> {
   DateTime jamIzinKeluarJamKerja = DateTime.now();
   DateTime jamIzinPulangCepat = DateTime.now();
+  DateTime tglMelahirkan = DateTime.now();
+  DateTime tglMulaiSakit = DateTime.now();
+  DateTime tglSelesaiSakit = DateTime.now();
+  DateTime tglMulaiCuti = DateTime.now();
+  DateTime tglSelesaiCuti = DateTime.now();
+
   String? jenisIzin;
   List pengajuanList = [
     {'id': 1, 'nama': 'Izin keluar pada jam kerja'},
@@ -37,6 +46,31 @@ class _PerizinanViewState extends State<PerizinanView> {
 
   void callbackPulangCepat(DateTime newDate) {
     jamIzinPulangCepat = newDate;
+    setState(() {});
+  }
+
+  void callbackIzinMelahirkan(DateTime newDate) {
+    tglMelahirkan = newDate;
+    setState(() {});
+  }
+
+  void callbackIzinSakit(DateTime tglMulai) {
+    tglMulaiSakit = tglMulai;
+    setState(() {});
+  }
+
+  void callbackIzinSakit2(DateTime tglSelesai) {
+    tglSelesaiSakit = tglSelesai;
+    setState(() {});
+  }
+
+  void callbackIzinCuti(DateTime tglMulai) {
+    tglMulaiCuti = tglMulai;
+    setState(() {});
+  }
+
+  void callbackIzinCuti2(DateTime tglSelesai) {
+    tglSelesaiCuti = tglSelesai;
     setState(() {});
   }
 
@@ -75,52 +109,69 @@ class _PerizinanViewState extends State<PerizinanView> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Expanded(
-            child: Column(
-              children: [
-                Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: cWhite,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: cGrey_400,
-                        blurRadius: 15,
-                        offset: Offset(1, 1), // Shadow position
+          child: Column(
+            children: [
+              Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: cWhite,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: cGrey_400,
+                      blurRadius: 15,
+                      offset: Offset(1, 1), // Shadow position
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          dropdownJenisIzin(),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            dropdownJenisIzin(),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-                spaceHeight(20),
-                FormIzinKeluarJamKerja(
-                  callbackSetState: setStateCallbackKeluarJamKerja,
-                  jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
-                ),
-                spaceHeight(10),
-                FormIzinPulangCepat(
-                  callbackSetState: callbackPulangCepat,
-                  jamIzinPulangCepat: jamIzinPulangCepat,
-                ),
-                spaceHeight(10),
-                const FormIzinTerlambat(),
-              ],
-            ),
+              ),
+              spaceHeight(20),
+              FormIzinKeluarJamKerja(
+                callbackSetState: setStateCallbackKeluarJamKerja,
+                jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
+              ),
+              spaceHeight(10),
+              FormIzinPulangCepat(
+                callbackSetState: callbackPulangCepat,
+                jamIzinPulangCepat: jamIzinPulangCepat,
+              ),
+              spaceHeight(10),
+              const FormIzinTerlambat(),
+              spaceHeight(10),
+              FormIzinMelahirkan(
+                callbackSetState: callbackIzinMelahirkan,
+                tglMelahirkan: tglMelahirkan,
+              ),
+              spaceHeight(10),
+              FormIzinSakit(
+                callbackSetState: callbackIzinSakit,
+                callbackSetState2: callbackIzinSakit2,
+                tglMulai: tglMulaiSakit,
+                tglSelesai: tglSelesaiSakit,
+              ),
+              spaceHeight(10),
+              FormIzinCuti(
+                callbackSetState: callbackIzinCuti,
+                callbackSetState2: callbackIzinCuti2,
+                tglMulai: tglMulaiCuti,
+                tglSelesai: tglSelesaiCuti,
+              ),
+            ],
           ),
         ),
       ),

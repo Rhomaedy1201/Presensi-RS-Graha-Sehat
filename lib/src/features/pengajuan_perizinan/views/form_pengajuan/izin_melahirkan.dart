@@ -6,13 +6,12 @@ import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
 
-class FormIzinKeluarJamKerja extends StatelessWidget {
+class FormIzinMelahirkan extends StatelessWidget {
   final Function(DateTime) callbackSetState;
-  DateTime jamIzinKeluarJamKerja;
-  FormIzinKeluarJamKerja({
-    super.key,
+  DateTime tglMelahirkan;
+  FormIzinMelahirkan({
     required this.callbackSetState,
-    required this.jamIzinKeluarJamKerja,
+    required this.tglMelahirkan,
   });
 
   @override
@@ -39,7 +38,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
               vertical: 10,
             ),
             child: Text(
-              "Form izin keluar jam kerja",
+              "Form izin Melahirkan",
               style: customTextStyle(FontWeight.w500, 13, cBlack),
             ),
           ),
@@ -60,15 +59,13 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Jam izin keluar",
+                      "Tanggal izin",
                       style: customTextStyle(FontWeight.w600, 11, cBlack),
                     ),
                     spaceHeight(5),
                     formJamIzin(context)
                   ],
                 ),
-                spaceHeight(10),
-                formKeterangan(),
               ],
             ),
           )
@@ -94,9 +91,9 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                     maximumDate: DateTime.now(),
                     maximumYear: DateTime.now().year,
                     minimumYear: 2024,
-                    mode: CupertinoDatePickerMode.time,
+                    mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
-                      jamIzinKeluarJamKerja = val;
+                      tglMelahirkan = val;
                       callbackSetState(val);
                     },
                   ),
@@ -106,7 +103,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                   child: const Text('OK'),
                   onPressed: () {
                     print(
-                      jamIzinKeluarJamKerja.getFullTime().toString(),
+                      tglMelahirkan.dateTime().toString(),
                     );
                     Navigator.of(context).pop();
                   },
@@ -131,7 +128,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                jamIzinKeluarJamKerja.getFullTime().toString(),
+                tglMelahirkan.fullDateAll().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
@@ -143,64 +140,6 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Column formKeterangan() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Keterangan",
-          style: customTextStyle(FontWeight.w600, 11, cBlack),
-        ),
-        spaceHeight(5),
-        Container(
-          decoration: BoxDecoration(
-            color: cWhite,
-            border: Border.all(
-              width: 1.5,
-              color: cGrey_400,
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 0,
-                ),
-                child: SizedBox(
-                  child: TextField(
-                    scrollPadding: EdgeInsets.zero,
-                    autocorrect: false,
-                    maxLines: null,
-                    // controller: loginController.passwordController,
-                    enableSuggestions: false,
-                    style: customTextStyle(
-                      FontWeight.w400,
-                      11,
-                      cBlack,
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    decoration: const InputDecoration(
-                      hintText: "Masukkan Keterangan",
-                      hintStyle: TextStyle(
-                        color: cGrey_700,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
