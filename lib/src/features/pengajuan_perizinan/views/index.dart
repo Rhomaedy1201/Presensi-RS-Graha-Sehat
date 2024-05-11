@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/index.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_keluar_jam_kerja.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_pulang_cepat.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -17,6 +18,7 @@ class PerizinanView extends StatefulWidget {
 
 class _PerizinanViewState extends State<PerizinanView> {
   DateTime jamIzinKeluarJamKerja = DateTime.now();
+  DateTime jamIzinPulangCepat = DateTime.now();
   String? jenisIzin;
   List pengajuanList = [
     {'id': 1, 'nama': 'Izin keluar pada jam kerja'},
@@ -27,8 +29,13 @@ class _PerizinanViewState extends State<PerizinanView> {
     {'id': 6, 'nama': 'Izin cuti'},
   ];
 
-  void setStateCallback(DateTime newDate) {
+  void setStateCallbackKeluarJamKerja(DateTime newDate) {
     jamIzinKeluarJamKerja = newDate;
+    setState(() {});
+  }
+
+  void callbackPulangCepat(DateTime newDate) {
+    jamIzinPulangCepat = newDate;
     setState(() {});
   }
 
@@ -67,43 +74,50 @@ class _PerizinanViewState extends State<PerizinanView> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Column(
-            children: [
-              Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                  color: cWhite,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: cGrey_400,
-                      blurRadius: 15,
-                      offset: Offset(1, 1), // Shadow position
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          dropdownJenisIzin(),
-                        ],
+          child: Expanded(
+            child: Column(
+              children: [
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: cWhite,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: cGrey_400,
+                        blurRadius: 15,
+                        offset: Offset(1, 1), // Shadow position
                       ),
-                    )
-                  ],
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            dropdownJenisIzin(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              spaceHeight(20),
-              FormIzinKeluarJamKerja(
-                callbackSetState: setStateCallback,
-                jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
-              )
-            ],
+                spaceHeight(20),
+                FormIzinKeluarJamKerja(
+                  callbackSetState: setStateCallbackKeluarJamKerja,
+                  jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
+                ),
+                spaceHeight(10),
+                FormIzinPulangCepat(
+                  callbackSetState: callbackPulangCepat,
+                  jamIzinPulangCepat: jamIzinPulangCepat,
+                )
+              ],
+            ),
           ),
         ),
       ),
