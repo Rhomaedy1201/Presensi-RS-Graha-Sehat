@@ -107,7 +107,6 @@ class _LoginViewState extends State<LoginView> {
                       },
                       autocorrect: false,
                       maxLines: 1,
-                      obscureText: _obscureText,
                       // controller: loginController.passwordController,
                       enableSuggestions: false,
                       decoration: InputDecoration(

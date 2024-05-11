@@ -22,7 +22,7 @@ class MenuHome {
       'icon': Icons.airplanemode_on_sharp,
       'bg_color': const Color(0xFFF7F1DA),
       'icon_color': const Color(0xFFFCDE46),
-      'route': null,
+      'route': RouteNames.perizinanView,
     },
     {
       'title': 'Lembur',

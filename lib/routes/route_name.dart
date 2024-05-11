@@ -8,4 +8,5 @@ abstract class RouteNames {
   static const presensi = '/presensi-view';
   static const tukarShift = '/tukar-shift-view';
   static const profileView = '/profile-view';
+  static const perizinanView = '/perizinan-view';
 }

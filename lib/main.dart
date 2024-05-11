@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:presensi_gs/routes/route_page.dart';
 import 'package:presensi_gs/src/features/splash_screen/views/index.dart';
+import 'package:presensi_gs/utils/colors.dart';
 
 Future<void> main() async {
   await initializeDateFormatting('id_ID', null).then((_) {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.amber,
+          seedColor: cPrimary,
         ),
       ),
       home: const SplashScreen(),
