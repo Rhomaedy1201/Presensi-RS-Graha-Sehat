@@ -63,75 +63,7 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
                       style: customTextStyle(FontWeight.w600, 11, cBlack),
                     ),
                     spaceHeight(5),
-                    InkWell(
-                      onTap: () async {
-                        showCupertinoModalPopup(
-                          context: context,
-                          builder: (_) => Container(
-                            height: 400,
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 300,
-                                  child: CupertinoDatePicker(
-                                    initialDateTime: DateTime.now(),
-                                    maximumDate: DateTime.now(),
-                                    maximumYear: DateTime.now().year,
-                                    minimumYear: 2024,
-                                    mode: CupertinoDatePickerMode.time,
-                                    onDateTimeChanged: (val) {
-                                      jamIzinKeluarJamKerja = val;
-                                      callbackSetState(val);
-                                    },
-                                  ),
-                                ),
-                                // Close the modal
-                                CupertinoButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    print(
-                                      jamIzinKeluarJamKerja
-                                          .getFullTime()
-                                          .toString(),
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 37,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                          border: Border.all(color: cGrey_400, width: 1.5),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                jamIzinKeluarJamKerja.getFullTime().toString(),
-                                style: customTextStyle(
-                                    FontWeight.w500, 13, cGrey_900),
-                              ),
-                              const Icon(
-                                Icons.date_range_outlined,
-                                size: 25,
-                                color: cPrimary,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
+                    formJamIzin(context)
                   ],
                 ),
                 spaceHeight(10),
@@ -140,6 +72,75 @@ class FormIzinKeluarJamKerja extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  InkWell formJamIzin(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        showCupertinoModalPopup(
+          context: context,
+          builder: (_) => Container(
+            height: 400,
+            color: const Color.fromARGB(255, 255, 255, 255),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 300,
+                  child: CupertinoDatePicker(
+                    initialDateTime: DateTime.now(),
+                    maximumDate: DateTime.now(),
+                    maximumYear: DateTime.now().year,
+                    minimumYear: 2024,
+                    mode: CupertinoDatePickerMode.time,
+                    onDateTimeChanged: (val) {
+                      jamIzinKeluarJamKerja = val;
+                      callbackSetState(val);
+                    },
+                  ),
+                ),
+                // Close the modal
+                CupertinoButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    print(
+                      jamIzinKeluarJamKerja.getFullTime().toString(),
+                    );
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 37,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(5),
+          ),
+          border: Border.all(color: cGrey_400, width: 1.5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                jamIzinKeluarJamKerja.getFullTime().toString(),
+                style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+              ),
+              const Icon(
+                Icons.date_range_outlined,
+                size: 25,
+                color: cPrimary,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

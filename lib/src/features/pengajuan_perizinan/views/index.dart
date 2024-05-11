@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_keluar_jam_kerja.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_pulang_cepat.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_terlambat.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -115,7 +116,9 @@ class _PerizinanViewState extends State<PerizinanView> {
                 FormIzinPulangCepat(
                   callbackSetState: callbackPulangCepat,
                   jamIzinPulangCepat: jamIzinPulangCepat,
-                )
+                ),
+                spaceHeight(10),
+                const FormIzinTerlambat(),
               ],
             ),
           ),
