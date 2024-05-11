@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_izin_keluar_jam_kerja/index.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/index.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
