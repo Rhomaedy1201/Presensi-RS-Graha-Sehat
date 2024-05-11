@@ -94,7 +94,7 @@ class _PerizinanViewState extends State<PerizinanView> {
                 ), // Mengatur border radius menjadi 0
               ),
             ),
-            onPressed: () {},
+            onPressed: jenisIzin == null ? null : () {},
             child: const Text(
               "Submit Pengajuan",
               style: TextStyle(
@@ -140,37 +140,69 @@ class _PerizinanViewState extends State<PerizinanView> {
                   ],
                 ),
               ),
-              spaceHeight(20),
-              FormIzinKeluarJamKerja(
-                callbackSetState: setStateCallbackKeluarJamKerja,
-                jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
-              ),
-              spaceHeight(10),
-              FormIzinPulangCepat(
-                callbackSetState: callbackPulangCepat,
-                jamIzinPulangCepat: jamIzinPulangCepat,
-              ),
-              spaceHeight(10),
-              const FormIzinTerlambat(),
-              spaceHeight(10),
-              FormIzinMelahirkan(
-                callbackSetState: callbackIzinMelahirkan,
-                tglMelahirkan: tglMelahirkan,
-              ),
-              spaceHeight(10),
-              FormIzinSakit(
-                callbackSetState: callbackIzinSakit,
-                callbackSetState2: callbackIzinSakit2,
-                tglMulai: tglMulaiSakit,
-                tglSelesai: tglSelesaiSakit,
-              ),
-              spaceHeight(10),
-              FormIzinCuti(
-                callbackSetState: callbackIzinCuti,
-                callbackSetState2: callbackIzinCuti2,
-                tglMulai: tglMulaiCuti,
-                tglSelesai: tglSelesaiCuti,
-              ),
+              if (jenisIzin == '1')
+                Column(
+                  children: [
+                    spaceHeight(20),
+                    FormIzinKeluarJamKerja(
+                      callbackSetState: setStateCallbackKeluarJamKerja,
+                      jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
+                    ),
+                  ],
+                )
+              else if (jenisIzin == '2')
+                Column(
+                  children: [
+                    spaceHeight(20),
+                    FormIzinPulangCepat(
+                      callbackSetState: callbackPulangCepat,
+                      jamIzinPulangCepat: jamIzinPulangCepat,
+                    ),
+                  ],
+                )
+              else if (jenisIzin == '3')
+                Column(
+                  children: [
+                    spaceHeight(20),
+                    const FormIzinTerlambat(),
+                  ],
+                )
+              else if (jenisIzin == '4')
+                Column(
+                  children: [
+                    spaceHeight(20),
+                    FormIzinMelahirkan(
+                      callbackSetState: callbackIzinMelahirkan,
+                      tglMelahirkan: tglMelahirkan,
+                    ),
+                  ],
+                )
+              else if (jenisIzin == '5')
+                Column(
+                  children: [
+                    spaceHeight(20),
+                    FormIzinSakit(
+                      callbackSetState: callbackIzinSakit,
+                      callbackSetState2: callbackIzinSakit2,
+                      tglMulai: tglMulaiSakit,
+                      tglSelesai: tglSelesaiSakit,
+                    ),
+                  ],
+                )
+              else if (jenisIzin == '6')
+                Column(
+                  children: [
+                    spaceHeight(20),
+                    FormIzinCuti(
+                      callbackSetState: callbackIzinCuti,
+                      callbackSetState2: callbackIzinCuti2,
+                      tglMulai: tglMulaiCuti,
+                      tglSelesai: tglSelesaiCuti,
+                    ),
+                  ],
+                )
+              else
+                Container()
             ],
           ),
         ),
