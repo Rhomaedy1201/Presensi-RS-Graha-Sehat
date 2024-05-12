@@ -9,4 +9,5 @@ abstract class RouteNames {
   static const tukarShift = '/tukar-shift-view';
   static const profileView = '/profile-view';
   static const perizinanView = '/perizinan-view';
+  static const approvalView = '/approval-view';
 }

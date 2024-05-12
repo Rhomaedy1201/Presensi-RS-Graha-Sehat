@@ -23,3 +23,5 @@ const cGrey_700 = Color(0xFFA6A6A6);
 const cGrey_900 = Color(0xFF4E4E4E);
 const cBlack = Color(0xFF000000);
 const cWhite = Color(0xFFFFFFFF);
+const cYellow = Color(0xFFFFBB00);
+const cYellow_200 = Color(0xFFFFF3BC);

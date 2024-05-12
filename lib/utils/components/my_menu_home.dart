@@ -53,11 +53,11 @@ class MenuHome {
       'route': RouteNames.tukarShift,
     },
     {
-      'title': 'Informasi',
-      'icon': Icons.info_outline,
+      'title': 'Approval',
+      'icon': Icons.edit_document,
       'bg_color': const Color(0xFFF7DAEB),
       'icon_color': const Color(0xFFFB3BAB),
-      'route': null,
+      'route': RouteNames.approvalView,
     },
   ];
 }

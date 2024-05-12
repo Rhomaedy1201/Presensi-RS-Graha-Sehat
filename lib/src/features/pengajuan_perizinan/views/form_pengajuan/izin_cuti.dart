@@ -93,7 +93,7 @@ class FormIzinCuti extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 7),
                         child: Text(
-                          "Rp 2.500.000",
+                          "12",
                           style: customTextStyle(FontWeight.w600, 13, cBlack),
                         ),
                       ),

@@ -47,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
                 color: cGrey_200,
                 border: Border.all(
                   width: 1.5,
-                  color: emailActive ? cPrimary_800 : cGrey_400,
+                  color: emailActive ? cPrimary : cGrey_400,
                 ),
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -76,7 +76,11 @@ class _LoginViewState extends State<LoginView> {
                           fontWeight: FontWeight.w500,
                         ),
                         border: InputBorder.none,
-                        suffixIcon: Icon(Icons.email, color: cPrimary_800),
+                        suffixIcon: Icon(
+                          Icons.person_2_rounded,
+                          size: 28,
+                          color: cPrimary,
+                        ),
                       ),
                     ),
                   ],
@@ -89,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                 color: cGrey_200,
                 border: Border.all(
                   width: 1.5,
-                  color: passActive ? cPrimary_800 : cGrey_400,
+                  color: passActive ? cPrimary : cGrey_400,
                 ),
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -135,13 +139,29 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
             ),
-            spaceHeight(25),
+            spaceHeight(5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    print("Lupa Password");
+                  },
+                  child: Text(
+                    "Lupa password?",
+                    style: customTextStyle(FontWeight.w400, 12, cPrimary),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              ],
+            ),
+            spaceHeight(30),
             SizedBox(
               width: Get.width,
-              height: 55,
+              height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: cPrimary_800,
+                  backgroundColor: cPrimary,
                   shadowColor: cPrimary_400,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
