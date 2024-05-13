@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -165,81 +166,86 @@ class _PengajuanComponentsState extends State<PengajuanComponents> {
     );
   }
 
-  Container dataCards() {
-    return Container(
-      width: Get.width,
-      decoration: BoxDecoration(
-        color: cWhite,
-        borderRadius: BorderRadius.circular(7),
-        boxShadow: const [
-          BoxShadow(
-            color: cGrey_400,
-            blurRadius: 3,
-            offset: Offset(1, 1), // Shadow position
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/profile.jpg'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                spaceWidth(10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Muhammad Rhomaedi",
-                      style: customTextStyle(FontWeight.w600, 12, cBlack),
-                    ),
-                    spaceHeight(1),
-                    Text(
-                      "012377",
-                      style: customTextStyle(FontWeight.w500, 10, cGrey_700),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: cYellow_200,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-                    child: Text(
-                      "On Progress",
-                      style: customTextStyle(FontWeight.w600, 10, cYellow),
-                    ),
-                  ),
-                ),
-                spaceHeight(5),
-                Text(
-                  "Izin Cuti",
-                  style: customTextStyle(FontWeight.w500, 10, cBlack),
-                ),
-              ],
+  Widget dataCards() {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(RouteNames.detailPengajuanView);
+      },
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: cWhite,
+          borderRadius: BorderRadius.circular(7),
+          boxShadow: const [
+            BoxShadow(
+              color: cGrey_400,
+              blurRadius: 3,
+              offset: Offset(1, 1), // Shadow position
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/profile.jpg'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  spaceWidth(10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Muhammad Rhomaedi",
+                        style: customTextStyle(FontWeight.w600, 12, cBlack),
+                      ),
+                      spaceHeight(1),
+                      Text(
+                        "012377",
+                        style: customTextStyle(FontWeight.w500, 10, cGrey_700),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: cYellow_200,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 3, vertical: 1),
+                      child: Text(
+                        "On Progress",
+                        style: customTextStyle(FontWeight.w600, 10, cYellow),
+                      ),
+                    ),
+                  ),
+                  spaceHeight(5),
+                  Text(
+                    "Izin Cuti",
+                    style: customTextStyle(FontWeight.w500, 10, cBlack),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

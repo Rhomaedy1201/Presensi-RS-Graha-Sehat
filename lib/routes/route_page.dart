@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:presensi_gs/routes/route_name.dart';
+import 'package:presensi_gs/src/features/approval/views/detail_pengajuan.dart';
 import 'package:presensi_gs/src/features/approval/views/index.dart';
 import 'package:presensi_gs/src/features/attendence/views/index.dart';
 import 'package:presensi_gs/src/features/auth/views/index.dart';
@@ -58,6 +59,10 @@ class RoutePages {
     GetPage(
       name: RouteNames.approvalView,
       page: () => const ApprovalView(),
+    ),
+    GetPage(
+      name: RouteNames.detailPengajuanView,
+      page: () => const DetailPengajuanView(),
     ),
   ];
 }

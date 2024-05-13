@@ -10,4 +10,5 @@ abstract class RouteNames {
   static const profileView = '/profile-view';
   static const perizinanView = '/perizinan-view';
   static const approvalView = '/approval-view';
+  static const detailPengajuanView = '/detail-pengajuan-view';
 }
