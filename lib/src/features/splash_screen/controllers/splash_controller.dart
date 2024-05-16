@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:presensi_gs/routes/route_name.dart';
+import 'package:presensi_gs/src/features/auth/controllers/login_check.dart';
 
 class SplashController extends GetxController {
   @override
@@ -12,7 +12,7 @@ class SplashController extends GetxController {
 
   onCheck() {
     Timer(const Duration(seconds: 3), () {
-      Get.offAllNamed(RouteNames.login);
+      LoginCheck().check();
     });
   }
 }

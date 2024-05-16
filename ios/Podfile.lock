@@ -5,12 +5,16 @@ PODS:
     - Toast
   - location (0.0.1):
     - Flutter
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - Toast (4.1.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -23,11 +27,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/fluttertoast/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   fluttertoast: 77ff8760d90ff5041a97e3d0c0ecaaa8472524d2
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   Toast: ec33c32b8688982cecc6348adeae667c1b9938da
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
