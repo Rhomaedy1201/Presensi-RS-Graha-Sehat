@@ -1,7 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/auth/controllers/login_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
