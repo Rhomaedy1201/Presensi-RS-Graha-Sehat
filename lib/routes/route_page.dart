@@ -3,6 +3,7 @@ import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/approval/views/detail_pengajuan.dart';
 import 'package:presensi_gs/src/features/approval/views/index.dart';
 import 'package:presensi_gs/src/features/attendence/views/index.dart';
+import 'package:presensi_gs/src/features/auth/bindings/login_binding.dart';
 import 'package:presensi_gs/src/features/auth/views/index.dart';
 import 'package:presensi_gs/src/features/histori_presensi/views/index.dart';
 import 'package:presensi_gs/src/features/home/views/index.dart';
@@ -23,6 +24,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.login,
       page: () => const LoginView(),
+      binding: LoginBinding(),
     ),
     GetPage(
       name: RouteNames.home,
