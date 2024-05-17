@@ -1,59 +1,70 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/profile/controllers/profile_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  ProfileController profileC = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cGrey_200,
       appBar: myAppBar("Profile"),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              spaceHeight(50),
-              Container(
-                width: 90,
-                height: 90,
-                decoration: BoxDecoration(
-                  color: cGrey_400,
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(color: cPrimary, width: 4),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/profile.jpg'),
-                    fit: BoxFit.fill,
+      body: Obx(
+        () => profileC.isLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      spaceHeight(50),
+                      Container(
+                        width: 90,
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: cGrey_400,
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: cPrimary, width: 4),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/profile.jpg'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      spaceHeight(10),
+                      Text(
+                        profileC.userM?.nama ?? "...",
+                        style: customTextStyle(FontWeight.w700, 16, cBlack),
+                      ),
+                      Text(
+                        "Kepala unit SDM",
+                        style: customTextStyle(FontWeight.w500, 12, cBlack),
+                      ),
+                      spaceHeight(40),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            changePasswordMenu(),
+                            logoutMenu(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              spaceHeight(10),
-              Text(
-                "Muhammad Rhomaedi",
-                style: customTextStyle(FontWeight.w700, 16, cBlack),
-              ),
-              Text(
-                "Kepala unit SDM",
-                style: customTextStyle(FontWeight.w500, 12, cBlack),
-              ),
-              spaceHeight(40),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    changePasswordMenu(),
-                    logoutMenu(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

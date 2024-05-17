@@ -11,6 +11,7 @@ import 'package:presensi_gs/src/features/jadwal/views/index.dart';
 import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/index.dart';
+import 'package:presensi_gs/src/features/profile/bindings/profile_binding.dart';
 import 'package:presensi_gs/src/features/profile/views/index.dart';
 import 'package:presensi_gs/src/features/splash_screen/views/index.dart';
 
@@ -53,6 +54,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.profileView,
       page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
     GetPage(
       name: RouteNames.perizinanView,
