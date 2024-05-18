@@ -73,6 +73,12 @@ class ProfileController extends GetxController {
         await prefs.remove('nip');
         await prefs.remove('role');
         await prefs.remove('token');
+        await prefs.remove('id');
+        await prefs.remove('id_jabatan');
+        await prefs.remove('nama_jabatan');
+        await prefs.remove('id_parent');
+        await prefs.remove('cuti_level');
+        await prefs.remove('level');
         await prefs.clear();
         snackbarSuccess("Berhasil Logout");
       } else {

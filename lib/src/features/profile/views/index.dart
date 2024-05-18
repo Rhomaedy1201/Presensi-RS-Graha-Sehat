@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/profile/controllers/profile_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_alert.dart';
@@ -17,6 +18,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   ProfileController profileC = Get.find<ProfileController>();
+  PrefsController prefsC = Get.find<PrefsController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +51,7 @@ class _ProfileViewState extends State<ProfileView> {
                         style: customTextStyle(FontWeight.w700, 16, cBlack),
                       ),
                       Text(
-                        "Kepala unit SDM",
+                        prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
                         style: customTextStyle(FontWeight.w500, 12, cBlack),
                       ),
                       spaceHeight(40),
