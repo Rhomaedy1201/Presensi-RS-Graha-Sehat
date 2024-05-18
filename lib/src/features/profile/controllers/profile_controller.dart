@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:presensi_gs/http/models/user_model.dart';
 import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/base_url.dart';
+import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
@@ -66,13 +67,14 @@ class ProfileController extends GetxController {
         headers: headers,
       );
 
-      if (response.statusCode == 204) {
+      if (response.statusCode == 200) {
         Get.offAllNamed(RouteNames.login);
         await prefs.remove('nama');
         await prefs.remove('nip');
         await prefs.remove('role');
         await prefs.remove('token');
         await prefs.clear();
+        snackbarSuccess("Berhasil Logout");
       } else {
         debugPrint(response.body.toString());
       }
