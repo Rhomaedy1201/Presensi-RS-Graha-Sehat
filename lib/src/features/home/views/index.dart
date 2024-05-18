@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
+import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_menu_home.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -13,6 +15,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  HomeController homeC = Get.find<HomeController>();
+  PrefsController prefsC = Get.find<PrefsController>();
   List statistikPresensi = [
     {'nama': 'Hadir', 'value': 10},
     {'nama': 'Telat', 'value': 4},
@@ -30,116 +34,120 @@ class _HomeViewState extends State<HomeView> {
     double heightStatusBar = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
       backgroundColor: cGrey_100,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              spaceHeight(heightStatusBar + 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Muhammad Rhomaedi",
-                        style: customTextStyle(FontWeight.w700, 17, cBlack),
-                      ),
-                      Text(
-                        "Kepala Unit SDM",
-                        style: customTextStyle(FontWeight.w500, 14, cBlack),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      color: cWhite,
-                      boxShadow: [
-                        BoxShadow(
-                          color: cGrey_400,
-                          blurRadius: 15,
-                          offset: Offset(1, 1), // Shadow position
+      body: Obx(
+        () => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                spaceHeight(heightStatusBar + 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          prefsC.isLoading.value ? "..." : prefsC.nama.value,
+                          style: customTextStyle(FontWeight.w700, 17, cBlack),
+                        ),
+                        Text(
+                          prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
+                          style: customTextStyle(FontWeight.w500, 14, cBlack),
                         ),
                       ],
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
                     ),
-                    child: const Icon(
-                      Icons.notifications,
-                      size: 22,
-                      color: cPrimary,
-                    ),
-                  ),
-                ],
-              ),
-              spaceHeight(30),
-              Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                  color: cPrimary,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Jadwal hari ini",
-                            style: customTextStyle(FontWeight.w500, 13, cWhite),
-                          ),
-                          Text(
-                            "WFO | 08.00 -- 15.00",
-                            style: customTextStyle(FontWeight.w700, 17, cWhite),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: cWhite,
+                        boxShadow: [
+                          BoxShadow(
+                            color: cGrey_400,
+                            blurRadius: 15,
+                            offset: Offset(1, 1), // Shadow position
                           ),
                         ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
                       ),
-                      const Icon(
-                        Icons.calendar_today_outlined,
-                        color: cWhite,
-                        size: 24,
-                      )
-                    ],
+                      child: const Icon(
+                        Icons.notifications,
+                        size: 22,
+                        color: cPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+                spaceHeight(30),
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: cPrimary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 12),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Jadwal hari ini",
+                              style:
+                                  customTextStyle(FontWeight.w500, 13, cWhite),
+                            ),
+                            Text(
+                              "WFO | 08.00 -- 15.00",
+                              style:
+                                  customTextStyle(FontWeight.w700, 17, cWhite),
+                            ),
+                          ],
+                        ),
+                        const Icon(
+                          Icons.calendar_today_outlined,
+                          color: cWhite,
+                          size: 24,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              spaceHeight(25),
-              cardMenu(),
-              spaceHeight(25),
-              Text(
-                "Statistik Bulan ini",
-                style: customTextStyle(FontWeight.w600, 15, cBlack),
-              ),
-              spaceHeight(15),
-              statistikBulanIni(),
-              spaceHeight(15),
-              Text(
-                "Top Absensi",
-                style: customTextStyle(FontWeight.w600, 15, cBlack),
-              ),
-              spaceHeight(15),
-              dataCards(),
-              spaceHeight(5),
-              dataCards(),
-              spaceHeight(5),
-              dataCards(),
-              spaceHeight(5),
-              dataCards(),
-              spaceHeight(5),
-              dataCards(),
-              spaceHeight(15),
-            ],
+                spaceHeight(25),
+                cardMenu(),
+                spaceHeight(25),
+                Text(
+                  "Statistik Bulan ini",
+                  style: customTextStyle(FontWeight.w600, 15, cBlack),
+                ),
+                spaceHeight(15),
+                statistikBulanIni(),
+                spaceHeight(15),
+                Text(
+                  "Top Absensi",
+                  style: customTextStyle(FontWeight.w600, 15, cBlack),
+                ),
+                spaceHeight(15),
+                dataCards(),
+                spaceHeight(5),
+                dataCards(),
+                spaceHeight(5),
+                dataCards(),
+                spaceHeight(5),
+                dataCards(),
+                spaceHeight(5),
+                dataCards(),
+                spaceHeight(15),
+              ],
+            ),
           ),
         ),
       ),
