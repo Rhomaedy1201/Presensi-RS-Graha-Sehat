@@ -41,6 +41,19 @@ class LoginController extends GetxController {
           await prefs?.setString('nip', loginM!.data.user.nip);
           await prefs?.setString('role', loginM!.data.user.role ?? 'null');
           await prefs?.setString('token', loginM!.data.token);
+          await prefs?.setString('nip', loginM!.data.user.jabatans[0].nip);
+          await prefs?.setString(
+              'id_jabatan', loginM!.data.user.jabatans[0].idJabatan);
+          await prefs?.setString('id_jabatan',
+              loginM!.data.user.jabatans[0].mJabatan.id.toString());
+          await prefs?.setString(
+              'nama_jabatan', loginM!.data.user.jabatans[0].mJabatan.nama);
+          await prefs?.setString(
+              'id_parent', loginM!.data.user.jabatans[0].mJabatan.idParent);
+          await prefs?.setString('cuti_level',
+              loginM!.data.user.jabatans[0].mJabatan.cutiLevel ?? "null");
+          await prefs?.setString(
+              'level', loginM!.data.user.jabatans[0].mJabatan.level ?? "null");
 
           Get.toNamed(RouteNames.home);
           snackbarSuccess("Login Berhasil 👋🏻");
