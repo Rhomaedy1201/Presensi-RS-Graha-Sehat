@@ -122,6 +122,13 @@ class _HomeViewState extends State<HomeView> {
             ),
             spaceHeight(15),
             statistikBulanIni(),
+            spaceHeight(15),
+            Text(
+              "Top Absensi",
+              style: customTextStyle(FontWeight.w600, 15, cBlack),
+            ),
+            spaceHeight(15),
+            dataCards(),
           ],
         ),
       ),
@@ -180,11 +187,91 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  Widget dataCards() {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: cWhite,
+          borderRadius: BorderRadius.circular(7),
+          boxShadow: const [
+            BoxShadow(
+              color: cGrey_400,
+              blurRadius: 3,
+              offset: Offset(1, 1), // Shadow position
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/profile.jpg'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  spaceWidth(10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Muhammad Rhomaedi",
+                        style: customTextStyle(FontWeight.w600, 12, cBlack),
+                      ),
+                      spaceHeight(1),
+                      Row(
+                        children: [
+                          Text(
+                            "Kepala SDM",
+                            style:
+                                customTextStyle(FontWeight.w500, 10, cGrey_900),
+                          ),
+                          spaceWidth(5),
+                          Container(width: 1, height: 10, color: cGrey_900),
+                          spaceWidth(5),
+                          Text(
+                            "012377",
+                            style:
+                                customTextStyle(FontWeight.w500, 10, cGrey_900),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Container statistikBulanIni() {
     return Container(
       width: Get.width,
       decoration: BoxDecoration(
-        border: Border.all(width: 1.5, color: cGrey_500),
+        color: cWhite,
+        // border: Border.all(width: 1.5, color: cGrey_500),
+        boxShadow: const [
+          BoxShadow(
+            color: cGrey_400,
+            blurRadius: 8,
+            offset: Offset(1, 1), // Shadow position
+          ),
+        ],
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(
