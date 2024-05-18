@@ -30,106 +30,117 @@ class _HomeViewState extends State<HomeView> {
     double heightStatusBar = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
       backgroundColor: cGrey_100,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            spaceHeight(heightStatusBar + 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Muhammad Rhomaedi",
-                      style: customTextStyle(FontWeight.w700, 17, cBlack),
-                    ),
-                    Text(
-                      "Kepala Unit SDM",
-                      style: customTextStyle(FontWeight.w500, 14, cBlack),
-                    ),
-                  ],
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: cWhite,
-                    boxShadow: [
-                      BoxShadow(
-                        color: cGrey_400,
-                        blurRadius: 15,
-                        offset: Offset(1, 1), // Shadow position
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              spaceHeight(heightStatusBar + 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Muhammad Rhomaedi",
+                        style: customTextStyle(FontWeight.w700, 17, cBlack),
+                      ),
+                      Text(
+                        "Kepala Unit SDM",
+                        style: customTextStyle(FontWeight.w500, 14, cBlack),
                       ),
                     ],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
                   ),
-                  child: const Icon(
-                    Icons.notifications,
-                    size: 22,
-                    color: cPrimary,
-                  ),
-                ),
-              ],
-            ),
-            spaceHeight(30),
-            Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                color: cPrimary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Jadwal hari ini",
-                          style: customTextStyle(FontWeight.w500, 13, cWhite),
-                        ),
-                        Text(
-                          "WFO | 08.00 -- 15.00",
-                          style: customTextStyle(FontWeight.w700, 17, cWhite),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      color: cWhite,
+                      boxShadow: [
+                        BoxShadow(
+                          color: cGrey_400,
+                          blurRadius: 15,
+                          offset: Offset(1, 1), // Shadow position
                         ),
                       ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
                     ),
-                    const Icon(
-                      Icons.calendar_today_outlined,
-                      color: cWhite,
-                      size: 24,
-                    )
-                  ],
+                    child: const Icon(
+                      Icons.notifications,
+                      size: 22,
+                      color: cPrimary,
+                    ),
+                  ),
+                ],
+              ),
+              spaceHeight(30),
+              Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: cPrimary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Jadwal hari ini",
+                            style: customTextStyle(FontWeight.w500, 13, cWhite),
+                          ),
+                          Text(
+                            "WFO | 08.00 -- 15.00",
+                            style: customTextStyle(FontWeight.w700, 17, cWhite),
+                          ),
+                        ],
+                      ),
+                      const Icon(
+                        Icons.calendar_today_outlined,
+                        color: cWhite,
+                        size: 24,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            spaceHeight(25),
-            cardMenu(),
-            spaceHeight(25),
-            Text(
-              "Statistik Bulan ini",
-              style: customTextStyle(FontWeight.w600, 15, cBlack),
-            ),
-            spaceHeight(15),
-            statistikBulanIni(),
-            spaceHeight(15),
-            Text(
-              "Top Absensi",
-              style: customTextStyle(FontWeight.w600, 15, cBlack),
-            ),
-            spaceHeight(15),
-            dataCards(),
-          ],
+              spaceHeight(25),
+              cardMenu(),
+              spaceHeight(25),
+              Text(
+                "Statistik Bulan ini",
+                style: customTextStyle(FontWeight.w600, 15, cBlack),
+              ),
+              spaceHeight(15),
+              statistikBulanIni(),
+              spaceHeight(15),
+              Text(
+                "Top Absensi",
+                style: customTextStyle(FontWeight.w600, 15, cBlack),
+              ),
+              spaceHeight(15),
+              dataCards(),
+              spaceHeight(5),
+              dataCards(),
+              spaceHeight(5),
+              dataCards(),
+              spaceHeight(5),
+              dataCards(),
+              spaceHeight(5),
+              dataCards(),
+              spaceHeight(15),
+            ],
+          ),
         ),
       ),
     );

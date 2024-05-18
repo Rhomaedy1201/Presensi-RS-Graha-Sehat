@@ -59,6 +59,7 @@ class User {
   dynamic role;
   DateTime createdAt;
   DateTime updatedAt;
+  List<Jabatan> jabatans;
 
   User({
     required this.nama,
@@ -66,6 +67,7 @@ class User {
     required this.role,
     required this.createdAt,
     required this.updatedAt,
+    required this.jabatans,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -74,6 +76,8 @@ class User {
         role: json["role"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        jabatans: List<Jabatan>.from(
+            json["jabatans"].map((x) => Jabatan.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -83,5 +87,66 @@ class User {
         "created_at":
             "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
         "updated_at": updatedAt.toIso8601String(),
+        "jabatans": List<dynamic>.from(jabatans.map((x) => x.toJson())),
+      };
+}
+
+class Jabatan {
+  int id;
+  String nip;
+  String idJabatan;
+  MJabatan mJabatan;
+
+  Jabatan({
+    required this.id,
+    required this.nip,
+    required this.idJabatan,
+    required this.mJabatan,
+  });
+
+  factory Jabatan.fromJson(Map<String, dynamic> json) => Jabatan(
+        id: json["id"],
+        nip: json["nip"],
+        idJabatan: json["id_jabatan"],
+        mJabatan: MJabatan.fromJson(json["m_jabatan"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "nip": nip,
+        "id_jabatan": idJabatan,
+        "m_jabatan": mJabatan.toJson(),
+      };
+}
+
+class MJabatan {
+  int id;
+  String nama;
+  String idParent;
+  dynamic cutiLevel;
+  dynamic level;
+
+  MJabatan({
+    required this.id,
+    required this.nama,
+    required this.idParent,
+    required this.cutiLevel,
+    required this.level,
+  });
+
+  factory MJabatan.fromJson(Map<String, dynamic> json) => MJabatan(
+        id: json["id"],
+        nama: json["nama"],
+        idParent: json["id_parent"],
+        cutiLevel: json["cuti_level"],
+        level: json["level"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "nama": nama,
+        "id_parent": idParent,
+        "cuti_level": cutiLevel,
+        "level": level,
       };
 }
