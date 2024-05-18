@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/profile/controllers/profile_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_alert.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -124,7 +125,15 @@ class _ProfileViewState extends State<ProfileView> {
   GestureDetector logoutMenu() {
     return GestureDetector(
       onTap: () {
-        debugPrint("Logout");
+        MyAlert.show(
+          title: "Peringatan!",
+          msg: "Apakah anda ingin logout?",
+          onOke: () {
+            profileC.logout();
+          },
+          onCancel: () => Get.back(),
+          context: context,
+        );
       },
       child: SizedBox(
         width: Get.width,

@@ -61,12 +61,12 @@ class ProfileController extends GetxController {
         throw Exception("Token not found");
       }
 
-      http.Response response = await http.get(
+      http.Response response = await http.delete(
         Uri.parse("$base_url/logout"),
         headers: headers,
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 204) {
         Get.offAllNamed(RouteNames.login);
         await prefs.remove('nama');
         await prefs.remove('nip');
