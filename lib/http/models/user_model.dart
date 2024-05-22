@@ -8,8 +8,8 @@ class UserModel {
   String nama;
   String nip;
   dynamic role;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   UserModel({
     required this.nama,
@@ -23,16 +23,15 @@ class UserModel {
         nama: json["nama"],
         nip: json["nip"],
         role: json["role"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
         "nama": nama,
         "nip": nip,
         "role": role,
-        "created_at":
-            "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }
