@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/approval/views/detail_pengajuan.dart';
 import 'package:presensi_gs/src/features/approval/views/index.dart';
+import 'package:presensi_gs/src/features/attendence/bindings/presensi_binding.dart';
 import 'package:presensi_gs/src/features/attendence/views/index.dart';
 import 'package:presensi_gs/src/features/auth/bindings/login_binding.dart';
 import 'package:presensi_gs/src/features/auth/views/index.dart';
@@ -48,6 +49,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.presensi,
       page: () => const PresensiView(),
+      binding: PresensiBinding(),
     ),
     GetPage(
       name: RouteNames.tukarShift,
