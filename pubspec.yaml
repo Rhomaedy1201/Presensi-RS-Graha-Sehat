@@ -20,6 +20,7 @@ dependencies:
   latlong2: ^0.9.1
   location: ^6.0.2
   shared_preferences: ^2.2.3
+  ntp: ^2.0.0
 
 dev_dependencies:
   flutter_test:
