@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:ntp/ntp.dart';
+import 'package:presensi_gs/http/component_controller/ip_address_controller.dart';
 import 'package:presensi_gs/src/features/attendence/controllers/presensi_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
@@ -24,6 +26,7 @@ class PresensiView extends StatefulWidget {
 class _PresensiViewState extends State<PresensiView> {
   // Controller
   PresensiController presensiC = Get.put(PresensiController());
+  IpAddressController ipAddressC = Get.put(IpAddressController());
 
   // NTP WAKTU
   DateTime? _ntpTime;

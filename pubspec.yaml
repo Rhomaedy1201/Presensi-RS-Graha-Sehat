@@ -21,6 +21,8 @@ dependencies:
   location: ^6.0.2
   shared_preferences: ^2.2.3
   ntp: ^2.0.0
+  connectivity_plus: ^6.0.3
+  dart_ipify: ^1.1.1
 
 dev_dependencies:
   flutter_test:
