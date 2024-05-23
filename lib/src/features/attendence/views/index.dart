@@ -392,15 +392,6 @@ class _PresensiViewState extends State<PresensiView> {
                                                             .value
                                                         ? null
                                                         : () {
-                                                            // print(const Distance().distance(
-                                                            //         latLng,
-                                                            //         LatLng(
-                                                            //           double.parse(presensiC
-                                                            //               .latitude.value),
-                                                            //           double.parse(presensiC
-                                                            //               .longitude.value),
-                                                            //         )) <=
-                                                            //     50);
                                                             if (const Distance()
                                                                     .distance(
                                                                         latLng,
@@ -416,8 +407,19 @@ class _PresensiViewState extends State<PresensiView> {
                                                                     presensiC
                                                                         .radius
                                                                         .value)) {
-                                                              snackbarSuccess(
-                                                                  "Anda diarea kantor");
+                                                              print(latLng);
+                                                              presensiC.presensiMasuk(
+                                                                  // int.parse(presensiC
+                                                                  //     .idLokasi
+                                                                  //     .value),
+                                                                  // latLng
+                                                                  //     .latitude,
+                                                                  // latLng
+                                                                  //     .longitude,
+                                                                  // ipAddressC
+                                                                  //     .ipAdressv
+                                                                  //     .value
+                                                                  );
                                                             } else {
                                                               snackbarfailed(
                                                                   "Anda Diluar area kantor");
