@@ -395,7 +395,8 @@ class _PresensiViewState extends State<PresensiView> {
                                                           double.parse(presensiC
                                                               .longitude.value),
                                                         )) <=
-                                                    50) {
+                                                    int.parse(presensiC
+                                                        .radius.value)) {
                                                   snackbarSuccess(
                                                       "Anda diarea kantor");
                                                 } else {
