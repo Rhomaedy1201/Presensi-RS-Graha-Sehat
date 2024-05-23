@@ -362,64 +362,81 @@ class _PresensiViewState extends State<PresensiView> {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 20),
-                                          child: SizedBox(
-                                            width: Get.width,
-                                            height: 45,
-                                            child: ElevatedButton.icon(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: cPrimary,
-                                                shadowColor: cGrey_400,
-                                                elevation: 2,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    8,
-                                                  ), // Mengatur border radius menjadi 0
+                                          child: presensiC
+                                                  .isLoadingCheckAbsenMasuk
+                                                  .value
+                                              ? const CircularProgressIndicator()
+                                              : SizedBox(
+                                                  width: Get.width,
+                                                  height: 45,
+                                                  child: ElevatedButton.icon(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor: cPrimary,
+                                                      shadowColor: cGrey_400,
+                                                      elevation: 2,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          8,
+                                                        ), // Mengatur border radius menjadi 0
+                                                      ),
+                                                    ),
+                                                    onPressed: !presensiC
+                                                            .isActivePresensiMasuk
+                                                            .value
+                                                        ? null
+                                                        : () {
+                                                            // print(const Distance().distance(
+                                                            //         latLng,
+                                                            //         LatLng(
+                                                            //           double.parse(presensiC
+                                                            //               .latitude.value),
+                                                            //           double.parse(presensiC
+                                                            //               .longitude.value),
+                                                            //         )) <=
+                                                            //     50);
+                                                            if (const Distance()
+                                                                    .distance(
+                                                                        latLng,
+                                                                        LatLng(
+                                                                          double.parse(presensiC
+                                                                              .latitude
+                                                                              .value),
+                                                                          double.parse(presensiC
+                                                                              .longitude
+                                                                              .value),
+                                                                        )) <=
+                                                                int.parse(
+                                                                    presensiC
+                                                                        .radius
+                                                                        .value)) {
+                                                              snackbarSuccess(
+                                                                  "Anda diarea kantor");
+                                                            } else {
+                                                              snackbarfailed(
+                                                                  "Anda Diluar area kantor");
+                                                            }
+                                                          },
+                                                    label: const Text(
+                                                      "Presensi Masuk",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: cWhite,
+                                                      ),
+                                                    ),
+                                                    icon: const Icon(
+                                                      CommunityMaterialIcons
+                                                          .location_enter,
+                                                      size: 25,
+                                                      color: cWhite,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                              onPressed: () {
-                                                // print(const Distance().distance(
-                                                //         latLng,
-                                                //         LatLng(
-                                                //           double.parse(presensiC
-                                                //               .latitude.value),
-                                                //           double.parse(presensiC
-                                                //               .longitude.value),
-                                                //         )) <=
-                                                //     50);
-                                                if (const Distance().distance(
-                                                        latLng,
-                                                        LatLng(
-                                                          double.parse(presensiC
-                                                              .latitude.value),
-                                                          double.parse(presensiC
-                                                              .longitude.value),
-                                                        )) <=
-                                                    int.parse(presensiC
-                                                        .radius.value)) {
-                                                  snackbarSuccess(
-                                                      "Anda diarea kantor");
-                                                } else {
-                                                  snackbarfailed(
-                                                      "Anda Diluar area kantor");
-                                                }
-                                              },
-                                              label: const Text(
-                                                "Presensi Masuk",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: cWhite,
-                                                ),
-                                              ),
-                                              icon: const Icon(
-                                                CommunityMaterialIcons
-                                                    .location_enter,
-                                                size: 25,
-                                                color: cWhite,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                         spaceHeight(10),
                                         Padding(
@@ -428,34 +445,46 @@ class _PresensiViewState extends State<PresensiView> {
                                           child: SizedBox(
                                             width: Get.width,
                                             height: 45,
-                                            child: ElevatedButton.icon(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: cPrimary,
-                                                shadowColor: cGrey_400,
-                                                elevation: 2,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    8,
-                                                  ), // Mengatur border radius menjadi 0
-                                                ),
-                                              ),
-                                              onPressed: null,
-                                              label: const Text(
-                                                "Presensi Pulang",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: cWhite,
-                                                ),
-                                              ),
-                                              icon: const Icon(
-                                                CommunityMaterialIcons
-                                                    .location_exit,
-                                                size: 25,
-                                                color: cWhite,
-                                              ),
-                                            ),
+                                            child: presensiC
+                                                    .isLoadingCheckAbsenPulang
+                                                    .value
+                                                ? Container()
+                                                : ElevatedButton.icon(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor: cPrimary,
+                                                      shadowColor: cGrey_400,
+                                                      elevation: 2,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          8,
+                                                        ), // Mengatur border radius menjadi 0
+                                                      ),
+                                                    ),
+                                                    onPressed: !presensiC
+                                                            .isActivePresensiPulang
+                                                            .value
+                                                        ? null
+                                                        : () {},
+                                                    label: const Text(
+                                                      "Presensi Pulang",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: cWhite,
+                                                      ),
+                                                    ),
+                                                    icon: const Icon(
+                                                      CommunityMaterialIcons
+                                                          .location_exit,
+                                                      size: 25,
+                                                      color: cWhite,
+                                                    ),
+                                                  ),
                                           ),
                                         ),
                                       ],
