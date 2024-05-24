@@ -106,7 +106,9 @@ class _HomeViewState extends State<HomeView> {
                                   customTextStyle(FontWeight.w500, 13, cWhite),
                             ),
                             Text(
-                              "WFO | 08.00 -- 15.00",
+                              homeC.isLoadingCheckJadwal.value
+                                  ? "..."
+                                  : "${homeC.shift.value} | ${homeC.jamMasuk.value} -- ${homeC.jamPulang.value}",
                               style:
                                   customTextStyle(FontWeight.w700, 17, cWhite),
                             ),
