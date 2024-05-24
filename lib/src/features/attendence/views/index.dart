@@ -391,43 +391,51 @@ class _PresensiViewState extends State<PresensiView> {
                                                             .isActivePresensiMasuk
                                                             .value
                                                         ? null
-                                                        : () {
-                                                            if (const Distance()
-                                                                    .distance(
-                                                                        latLng,
-                                                                        LatLng(
-                                                                          double.parse(presensiC
-                                                                              .latitude
-                                                                              .value),
-                                                                          double.parse(presensiC
-                                                                              .longitude
-                                                                              .value),
-                                                                        )) <=
-                                                                int.parse(
-                                                                    presensiC
+                                                        : presensiC
+                                                                .isActivePresensiPulang
+                                                                .value
+                                                            ? null
+                                                            : () {
+                                                                if (const Distance()
+                                                                        .distance(
+                                                                            latLng,
+                                                                            LatLng(
+                                                                              double.parse(presensiC.latitude.value),
+                                                                              double.parse(presensiC.longitude.value),
+                                                                            )) <=
+                                                                    int.parse(presensiC
                                                                         .radius
                                                                         .value)) {
-                                                              print(latLng);
-                                                              presensiC.presensiMasuk(
-                                                                  // int.parse(presensiC
-                                                                  //     .idLokasi
-                                                                  //     .value),
-                                                                  // latLng
-                                                                  //     .latitude,
-                                                                  // latLng
-                                                                  //     .longitude,
-                                                                  // ipAddressC
-                                                                  //     .ipAdressv
-                                                                  //     .value
-                                                                  );
-                                                            } else {
-                                                              snackbarfailed(
-                                                                  "Anda Diluar area kantor");
-                                                            }
-                                                          },
-                                                    label: const Text(
-                                                      "Presensi Masuk",
-                                                      style: TextStyle(
+                                                                  if (presensiC
+                                                                      .isLoadingPresensiMasuk
+                                                                      .value) {
+                                                                  } else {
+                                                                    presensiC.presensiMasuk(
+                                                                        presensiC
+                                                                            .idLokasi
+                                                                            .value,
+                                                                        latLng
+                                                                            .latitude
+                                                                            .toString(),
+                                                                        latLng
+                                                                            .longitude
+                                                                            .toString(),
+                                                                        ipAddressC
+                                                                            .ipAdressv
+                                                                            .value);
+                                                                  }
+                                                                } else {
+                                                                  snackbarfailed(
+                                                                      "Anda Diluar area kantor");
+                                                                }
+                                                              },
+                                                    label: Text(
+                                                      presensiC
+                                                              .isLoadingPresensiMasuk
+                                                              .value
+                                                          ? "Loading..."
+                                                          : "Presensi Masuk",
+                                                      style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -473,10 +481,33 @@ class _PresensiViewState extends State<PresensiView> {
                                                             .isActivePresensiPulang
                                                             .value
                                                         ? null
-                                                        : () {},
-                                                    label: const Text(
-                                                      "Presensi Pulang",
-                                                      style: TextStyle(
+                                                        : () {
+                                                            if (presensiC
+                                                                .isLoadingPresensiPulang
+                                                                .value) {
+                                                            } else {
+                                                              presensiC.presensiPulang(
+                                                                  presensiC
+                                                                      .idLokasi
+                                                                      .value,
+                                                                  latLng
+                                                                      .latitude
+                                                                      .toString(),
+                                                                  latLng
+                                                                      .longitude
+                                                                      .toString(),
+                                                                  ipAddressC
+                                                                      .ipAdressv
+                                                                      .value);
+                                                            }
+                                                          },
+                                                    label: Text(
+                                                      presensiC
+                                                              .isLoadingPresensiPulang
+                                                              .value
+                                                          ? "Loading"
+                                                          : "Presensi Pulang",
+                                                      style: const TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.w600,

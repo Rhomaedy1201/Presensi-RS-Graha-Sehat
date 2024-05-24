@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:presensi_gs/http/models/lokasi_model.dart';
+import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/base_url.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ class PresensiController extends GetxController {
   var isLoadingCheckAbsenMasuk = false.obs;
   var isLoadingCheckAbsenPulang = false.obs;
   var isLoadingPresensiMasuk = false.obs;
+  var isLoadingPresensiPulang = false.obs;
   LokasiModel? lokasiM;
   var idLokasi = "".obs;
   var namaLokasi = "".obs;
@@ -53,7 +55,7 @@ class PresensiController extends GetxController {
         lokasiM = LokasiModel.fromJson(json);
         for (var i = 0; i < lokasiM!.data.length; i++) {
           if (lokasiM!.data[i].status == "1") {
-            namaLokasi.value = lokasiM!.data[i].id.toString();
+            idLokasi.value = lokasiM!.data[i].id.toString();
             namaLokasi.value = lokasiM!.data[i].nama;
             latitude.value = lokasiM!.data[i].latitude;
             longitude.value = lokasiM!.data[i].longitude;
@@ -133,12 +135,11 @@ class PresensiController extends GetxController {
   }
 
   Future<void> presensiMasuk(
-      // int idLokasi,
-      // double latitude,
-      // double longitude,
-      // String lastIp,
-      ) async {
-    print("object");
+    idLokasi,
+    String latitude,
+    String longitude,
+    lastIp,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     var headers = {
@@ -152,11 +153,11 @@ class PresensiController extends GetxController {
       }
 
       Map body = {
-        "id_lokasi": 3,
-        "latitude": -7.943797,
-        "longitude": 113.795821,
-        "last_ip": "125.166.118.243",
-        "device": "Android",
+        "id_lokasi": int.parse(idLokasi),
+        "latitude": double.parse(latitude),
+        "longitude": double.parse(longitude),
+        "last_ip": lastIp.toString(),
+        "device": GetPlatform.isIOS ? "IOS" : "Android",
       };
 
       http.Response response = await http.post(
@@ -166,16 +167,64 @@ class PresensiController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
-      print(json);
       if (response.statusCode == 200) {
         snackbarSuccess(
             "Berhasil presensi masuk.\nStatus : ${json['data']['status']}");
+        Get.offAllNamed(RouteNames.home);
       } else {
         snackbarfailed("Terjadi Kesalahan Untuk Presensi Masuk.");
       }
     } catch (e) {
+      print(e.toString());
     } finally {
       isLoadingPresensiMasuk(false);
+    }
+  }
+
+  Future<void> presensiPulang(
+    idLokasi,
+    String latitude,
+    String longitude,
+    lastIp,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingPresensiPulang(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      Map body = {
+        "id_lokasi": int.parse(idLokasi),
+        "latitude": double.parse(latitude),
+        "longitude": double.parse(longitude),
+        "last_ip": lastIp.toString(),
+        "device": GetPlatform.isIOS ? "IOS" : "Android",
+      };
+
+      http.Response response = await http.post(
+        Uri.parse("$base_url/presensi/pulang"),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        snackbarSuccess(
+            "Berhasil presensi pulang.\nStatus : ${json['data']['status']}");
+        Get.offAllNamed(RouteNames.home);
+      } else {
+        snackbarfailed("Terjadi Kesalahan Untuk Presensi Masuk.");
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingPresensiPulang(false);
     }
   }
 }
