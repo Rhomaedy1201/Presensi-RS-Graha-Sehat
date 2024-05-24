@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:presensi_gs/src/features/jadwal/controllers/jadwal_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_datepicker.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -16,6 +18,7 @@ class JadwalView extends StatefulWidget {
 
 class _JadwalViewState extends State<JadwalView> {
   DateTime valueDate = DateTime.now();
+  JadwalController jadwalC = Get.find<JadwalController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +32,51 @@ class _JadwalViewState extends State<JadwalView> {
           style: customTextStyle(FontWeight.w500, 20, cBlack),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            formFilterTanggal(context),
-            spaceHeight(20),
-            Text(
-              "List Jadwal",
-              style: customTextStyle(FontWeight.w600, 14, cBlack),
-            ),
-            spaceHeight(10),
-            cardJadwal(),
-            spaceHeight(7),
-            cardJadwal(),
-            spaceHeight(7),
-            cardJadwal(),
-          ],
-        ),
-      ),
+      body: Obx(() => jadwalC.isLoading.value
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  formFilterTanggal(context),
+                  spaceHeight(20),
+                  Text(
+                    "List Jadwal",
+                    style: customTextStyle(FontWeight.w600, 14, cBlack),
+                  ),
+                  spaceHeight(10),
+                  ListView.builder(
+                    itemCount: jadwalC.jadwalM?.data.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var data = jadwalC.jadwalM!.data;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 7),
+                        child: cardJadwal(
+                          data[index].tanggal,
+                          data[index].jamMasuk,
+                          data[index].jamPulang,
+                          data[index].shift,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            )),
     );
   }
 
-  Container cardJadwal() {
+  Container cardJadwal(
+    tgl,
+    jamMasuk,
+    jamPulang,
+    shift,
+  ) {
     return Container(
       width: Get.width,
       decoration: BoxDecoration(
@@ -74,7 +98,7 @@ class _JadwalViewState extends State<JadwalView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Senin",
+                  DateFormat('dd-MM-yyyy').parse(tgl).getDay(),
                   style: customTextStyle(FontWeight.w500, 10, cBlack),
                 ),
                 spaceHeight(3),
@@ -89,11 +113,11 @@ class _JadwalViewState extends State<JadwalView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "11",
+                        DateFormat('dd-MM-yyyy').parse(tgl).getTgl(),
                         style: customTextStyle(FontWeight.w600, 12, cBlack),
                       ),
                       Text(
-                        "Mei",
+                        DateFormat('dd-MM-yyyy').parse(tgl).getMonth(),
                         style: customTextStyle(FontWeight.w500, 8, cBlack),
                       ),
                     ],
@@ -106,12 +130,12 @@ class _JadwalViewState extends State<JadwalView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Pagi 3",
+                  shift,
                   style: customTextStyle(FontWeight.w600, 12, cPrimary),
                 ),
                 spaceHeight(3),
                 Text(
-                  "08:00 WIB -- 15:00 WIB",
+                  "$jamMasuk -- $jamPulang",
                   style: customTextStyle(FontWeight.w600, 15, cBlack),
                 ),
               ],

@@ -9,6 +9,7 @@ import 'package:presensi_gs/src/features/auth/views/index.dart';
 import 'package:presensi_gs/src/features/histori_presensi/views/index.dart';
 import 'package:presensi_gs/src/features/home/bindings/home_binding.dart';
 import 'package:presensi_gs/src/features/home/views/index.dart';
+import 'package:presensi_gs/src/features/jadwal/bindings/jadwal_binding.dart';
 import 'package:presensi_gs/src/features/jadwal/views/index.dart';
 import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/index.dart';
@@ -41,6 +42,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.jadwal,
       page: () => const JadwalView(),
+      binding: JadwalBinding(),
     ),
     GetPage(
       name: RouteNames.historiPresensi,
