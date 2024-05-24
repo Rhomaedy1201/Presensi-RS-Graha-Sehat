@@ -366,7 +366,7 @@ class _PresensiViewState extends State<PresensiView> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 20),
                                           child: presensiC
-                                                  .isLoadingCheckAbsenMasuk
+                                                  .isLoadingCheckJadwalMasuk
                                                   .value
                                               ? const CircularProgressIndicator()
                                               : SizedBox(
@@ -387,48 +387,49 @@ class _PresensiViewState extends State<PresensiView> {
                                                         ), // Mengatur border radius menjadi 0
                                                       ),
                                                     ),
-                                                    onPressed: !presensiC
-                                                            .isActivePresensiMasuk
+                                                    onPressed: presensiC
+                                                            .isActiveBtnMasuk
                                                             .value
-                                                        ? null
-                                                        : presensiC
-                                                                .isActivePresensiPulang
-                                                                .value
-                                                            ? null
-                                                            : () {
-                                                                if (const Distance()
-                                                                        .distance(
-                                                                            latLng,
-                                                                            LatLng(
-                                                                              double.parse(presensiC.latitude.value),
-                                                                              double.parse(presensiC.longitude.value),
-                                                                            )) <=
-                                                                    int.parse(presensiC
+                                                        ? () {
+                                                            if (const Distance()
+                                                                    .distance(
+                                                                        latLng,
+                                                                        LatLng(
+                                                                          double.parse(presensiC
+                                                                              .latitude
+                                                                              .value),
+                                                                          double.parse(presensiC
+                                                                              .longitude
+                                                                              .value),
+                                                                        )) <=
+                                                                int.parse(
+                                                                    presensiC
                                                                         .radius
                                                                         .value)) {
-                                                                  if (presensiC
-                                                                      .isLoadingPresensiMasuk
-                                                                      .value) {
-                                                                  } else {
-                                                                    presensiC.presensiMasuk(
-                                                                        presensiC
-                                                                            .idLokasi
-                                                                            .value,
-                                                                        latLng
-                                                                            .latitude
-                                                                            .toString(),
-                                                                        latLng
-                                                                            .longitude
-                                                                            .toString(),
-                                                                        ipAddressC
-                                                                            .ipAdressv
-                                                                            .value);
-                                                                  }
-                                                                } else {
-                                                                  snackbarfailed(
-                                                                      "Anda Diluar area kantor");
-                                                                }
-                                                              },
+                                                              if (presensiC
+                                                                  .isLoadingPresensiMasuk
+                                                                  .value) {
+                                                              } else {
+                                                                presensiC.presensiMasuk(
+                                                                    presensiC
+                                                                        .idLokasi
+                                                                        .value,
+                                                                    latLng
+                                                                        .latitude
+                                                                        .toString(),
+                                                                    latLng
+                                                                        .longitude
+                                                                        .toString(),
+                                                                    ipAddressC
+                                                                        .ipAdressv
+                                                                        .value);
+                                                              }
+                                                            } else {
+                                                              snackbarfailed(
+                                                                  "Anda Diluar area kantor");
+                                                            }
+                                                          }
+                                                        : null,
                                                     label: Text(
                                                       presensiC
                                                               .isLoadingPresensiMasuk
@@ -459,7 +460,7 @@ class _PresensiViewState extends State<PresensiView> {
                                             width: Get.width,
                                             height: 45,
                                             child: presensiC
-                                                    .isLoadingCheckAbsenPulang
+                                                    .isLoadingCheckAbsenMasuk
                                                     .value
                                                 ? Container()
                                                 : ElevatedButton.icon(
@@ -478,7 +479,7 @@ class _PresensiViewState extends State<PresensiView> {
                                                       ),
                                                     ),
                                                     onPressed: !presensiC
-                                                            .isActivePresensiPulang
+                                                            .isActiveBtnPulang
                                                             .value
                                                         ? null
                                                         : () {

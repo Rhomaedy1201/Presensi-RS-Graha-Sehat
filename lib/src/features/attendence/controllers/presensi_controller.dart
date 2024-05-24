@@ -11,8 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PresensiController extends GetxController {
   var isLoadingLokasi = false.obs;
+  var isLoadingCheckJadwalMasuk = false.obs;
   var isLoadingCheckAbsenMasuk = false.obs;
-  var isLoadingCheckAbsenPulang = false.obs;
   var isLoadingPresensiMasuk = false.obs;
   var isLoadingPresensiPulang = false.obs;
   LokasiModel? lokasiM;
@@ -21,14 +21,15 @@ class PresensiController extends GetxController {
   var latitude = "".obs;
   var longitude = "".obs;
   var radius = "".obs;
-  var isActivePresensiMasuk = false.obs;
-  var isActivePresensiPulang = false.obs;
+  var isActiveBtnMasuk = false.obs;
+  var isActiveBtnPulang = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     getLokasi();
     checkJadwalMasuk();
+    checkAbsenMasuk();
     checkAbsenPulang();
   }
 
@@ -81,8 +82,9 @@ class PresensiController extends GetxController {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
+
     try {
-      isLoadingCheckAbsenMasuk(true);
+      isLoadingCheckJadwalMasuk(true);
       if (token == null) {
         throw Exception("Token not found");
       }
@@ -91,13 +93,46 @@ class PresensiController extends GetxController {
         Uri.parse("$base_url/presensi/check-jadwal"),
         headers: headers,
       );
-
       if (response.statusCode == 200) {
-        isActivePresensiMasuk.value = true;
+        isActiveBtnMasuk.value = true;
+        isActiveBtnPulang.value = false;
       } else {
-        isActivePresensiMasuk.value = false;
+        isActiveBtnMasuk.value = false;
       }
     } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingCheckJadwalMasuk(false);
+    }
+  }
+
+  Future<void> checkAbsenMasuk() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingCheckAbsenMasuk(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/presensi/check-absen-masuk"),
+        headers: headers,
+      );
+
+      // final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        isActiveBtnPulang.value = true;
+        isActiveBtnMasuk.value = false;
+      } else {
+        isActiveBtnPulang.value = false;
+      }
+    } catch (e) {
+      print(e.toString());
     } finally {
       isLoadingCheckAbsenMasuk(false);
     }
@@ -111,26 +146,24 @@ class PresensiController extends GetxController {
       'Authorization': 'Bearer $token',
     };
     try {
-      isLoadingCheckAbsenPulang(true);
+      isLoadingCheckAbsenMasuk(true);
       if (token == null) {
         throw Exception("Token not found");
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/presensi/check-absen-masuk"),
+        Uri.parse("$base_url/presensi/check-absen-pulang"),
         headers: headers,
       );
 
       final json = jsonDecode(response.body);
-      print(json);
-      if (response.statusCode == 200) {
-        isActivePresensiPulang.value = true;
-      } else {
-        isActivePresensiPulang.value = false;
+      if (json['data'] != null) {
+        isActiveBtnPulang.value = false;
+        isActiveBtnMasuk.value = false;
       }
     } catch (e) {
     } finally {
-      isLoadingCheckAbsenPulang(false);
+      isLoadingCheckAbsenMasuk(false);
     }
   }
 
@@ -219,12 +252,13 @@ class PresensiController extends GetxController {
             "Berhasil presensi pulang.\nStatus : ${json['data']['status']}");
         Get.offAllNamed(RouteNames.home);
       } else {
-        snackbarfailed("Terjadi Kesalahan Untuk Presensi Masuk.");
+        snackbarfailed(
+            "Terjadi Kesalahan Untuk Presensi PuisLoadingPresensiPulang.");
       }
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoadingPresensiPulang(false);
+      isLoadingPresensiMasuk(false);
     }
   }
 }
