@@ -121,7 +121,7 @@ class Jabatan {
 class MJabatan {
   int id;
   String nama;
-  int idParent;
+  int? idParent;
   String? cutiLevel;
   String? level;
 

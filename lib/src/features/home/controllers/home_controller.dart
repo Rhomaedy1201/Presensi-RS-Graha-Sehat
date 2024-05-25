@@ -11,6 +11,7 @@ class HomeController extends GetxController {
   var shift = "".obs;
   var jamMasuk = "".obs;
   var jamPulang = "".obs;
+  var isJadwal = false.obs;
 
   @override
   void onInit() {
@@ -38,12 +39,13 @@ class HomeController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
-      print(json);
       if (response.statusCode == 200) {
+        isJadwal(false);
         shift.value = json['data']['shift'];
         jamMasuk.value = json['data']['jam_masuk'];
         jamPulang.value = json['data']['jam_pulang'];
       } else {
+        isJadwal(true);
         debugPrint("Terjadi kesalahan get data jadwal");
       }
     } catch (e) {

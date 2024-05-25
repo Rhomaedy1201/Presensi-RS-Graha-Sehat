@@ -108,7 +108,9 @@ class _HomeViewState extends State<HomeView> {
                             Text(
                               homeC.isLoadingCheckJadwal.value
                                   ? "..."
-                                  : "${homeC.shift.value} | ${homeC.jamMasuk.value} -- ${homeC.jamPulang.value}",
+                                  : homeC.isJadwal.value
+                                      ? "Kosong"
+                                      : "${homeC.shift.value} | ${homeC.jamMasuk.value} -- ${homeC.jamPulang.value}",
                               style:
                                   customTextStyle(FontWeight.w700, 17, cWhite),
                             ),
