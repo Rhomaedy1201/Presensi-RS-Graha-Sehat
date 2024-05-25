@@ -93,7 +93,7 @@ class User {
 class Jabatan {
   int id;
   String nip;
-  String idJabatan;
+  int? idJabatan;
   MJabatan mJabatan;
 
   Jabatan({
