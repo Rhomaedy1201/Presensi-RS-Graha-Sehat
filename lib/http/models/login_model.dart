@@ -57,7 +57,7 @@ class User {
   String nama;
   String nip;
   String? role;
-  String createdAt;
+  String? createdAt;
   String? updatedAt;
   List<Jabatan> jabatans;
 

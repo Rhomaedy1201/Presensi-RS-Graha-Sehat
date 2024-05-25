@@ -44,11 +44,11 @@ class LoginController extends GetxController {
           await prefs?.setString(
               'id', loginM!.data.user.jabatans[0].mJabatan.id.toString());
           await prefs?.setString(
-              'id_jabatan', loginM!.data.user.jabatans[0].idJabatan);
+              'id_jabatan', loginM!.data.user.jabatans[0].idJabatan.toString());
           await prefs?.setString(
               'nama_jabatan', loginM!.data.user.jabatans[0].mJabatan.nama);
-          await prefs?.setString(
-              'id_parent', loginM!.data.user.jabatans[0].mJabatan.idParent.toString());
+          await prefs?.setString('id_parent',
+              loginM!.data.user.jabatans[0].mJabatan.idParent.toString());
           await prefs?.setString('cuti_level',
               loginM!.data.user.jabatans[0].mJabatan.cutiLevel ?? "null");
           await prefs?.setString(
