@@ -40,7 +40,7 @@ class Datum {
   String nama;
   String kodeShift;
   String? shift;
-  String mulaiAbsen;
+  int mulaiAbsen;
   String jamMasuk;
   int telatMasuk;
   String jamPulang;

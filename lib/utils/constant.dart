@@ -19,6 +19,7 @@ extension DateTimeExtension on DateTime {
   String getDay() => DateFormat('EEEE', locale).format(this);
   String getTgl() => DateFormat('dd', locale).format(this);
   String getMonth() => DateFormat('MMM', locale).format(this);
+  String getMonthNumber() => DateFormat('MM', locale).format(this);
   String getMinute() => DateFormat('mm', locale).format(this);
   String getYear() => DateFormat('yyyy', locale).format(this);
   String getMonthAndYear() => DateFormat('MMMM yyyy', locale).format(this);

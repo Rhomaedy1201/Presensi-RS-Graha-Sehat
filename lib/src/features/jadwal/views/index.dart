@@ -48,23 +48,44 @@ class _JadwalViewState extends State<JadwalView> {
                     style: customTextStyle(FontWeight.w600, 14, cBlack),
                   ),
                   spaceHeight(10),
-                  ListView.builder(
-                    itemCount: jadwalC.jadwalM?.data.length ?? 0,
-                    shrinkWrap: true,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      var data = jadwalC.jadwalM!.data;
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 7),
-                        child: cardJadwal(
-                          data[index].tanggal,
-                          data[index].jamMasuk,
-                          data[index].jamPulang,
-                          data[index].shift,
+                  jadwalC.isEmptyData.value
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 120),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.warning_amber,
+                                  size: 30,
+                                ),
+                                spaceHeight(10),
+                                Text(
+                                  "Jadwal Masih Kosong pada \n${valueDate.getMonthAndYear()}",
+                                  style: customTextStyle(
+                                      FontWeight.w500, 14, cBlack),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: jadwalC.jadwalM?.data.length ?? 0,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var data = jadwalC.jadwalM!.data;
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 7),
+                              child: cardJadwal(
+                                data[index].tanggal,
+                                data[index].jamMasuk,
+                                data[index].jamPulang,
+                                data[index].shift,
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ],
               ),
             )),
@@ -113,11 +134,11 @@ class _JadwalViewState extends State<JadwalView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        DateFormat('dd-MM-yyyy').parse(tgl).getTgl(),
+                        DateFormat('yyyy-MM-dd').parse(tgl).getTgl(),
                         style: customTextStyle(FontWeight.w600, 12, cBlack),
                       ),
                       Text(
-                        DateFormat('dd-MM-yyyy').parse(tgl).getMonth(),
+                        DateFormat('yyyy-MM-dd').parse(tgl).getMonth(),
                         style: customTextStyle(FontWeight.w500, 8, cBlack),
                       ),
                     ],
@@ -190,7 +211,13 @@ class _JadwalViewState extends State<JadwalView> {
                       // Close the modal
                       CupertinoButton(
                         child: const Text('OK'),
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          jadwalC.jadwalM!.data.clear();
+                          print(valueDate.getMonthNumber());
+                          jadwalC.getJadwal(
+                              valueDate.getMonthNumber(), valueDate.getYear());
+                        },
                       )
                     ],
                   ),
