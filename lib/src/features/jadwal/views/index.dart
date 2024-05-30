@@ -156,7 +156,7 @@ class _JadwalViewState extends State<JadwalView> {
                 ),
                 spaceHeight(3),
                 Text(
-                  "$jamMasuk -- $jamPulang",
+                  "$jamMasuk WIB -- $jamPulang WIB",
                   style: customTextStyle(FontWeight.w600, 15, cBlack),
                 ),
               ],
