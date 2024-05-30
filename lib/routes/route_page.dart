@@ -6,6 +6,7 @@ import 'package:presensi_gs/src/features/attendence/bindings/presensi_binding.da
 import 'package:presensi_gs/src/features/attendence/views/index.dart';
 import 'package:presensi_gs/src/features/auth/bindings/login_binding.dart';
 import 'package:presensi_gs/src/features/auth/views/index.dart';
+import 'package:presensi_gs/src/features/histori_presensi/bindings/histori_presensi_binding.dart';
 import 'package:presensi_gs/src/features/histori_presensi/views/index.dart';
 import 'package:presensi_gs/src/features/home/bindings/home_binding.dart';
 import 'package:presensi_gs/src/features/home/views/index.dart';
@@ -47,6 +48,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.historiPresensi,
       page: () => const HistoriPresensiView(),
+      binding: HistoriPresensiBinding(),
     ),
     GetPage(
       name: RouteNames.presensi,

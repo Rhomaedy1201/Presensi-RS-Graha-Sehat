@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:presensi_gs/src/features/histori_presensi/controllers/histori_presensi_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_datepicker.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -15,6 +17,8 @@ class HistoriPresensiView extends StatefulWidget {
 }
 
 class _HistoriPresensiViewState extends State<HistoriPresensiView> {
+  HistoriPresensiController historiPresensiC =
+      Get.find<HistoriPresensiController>();
   DateTime valueDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -28,28 +32,50 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
           style: customTextStyle(FontWeight.w500, 20, cBlack),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            formFilterTanggal(context),
-            spaceHeight(20),
-            Text(
-              "Data Histori",
-              style: customTextStyle(FontWeight.w600, 14, cBlack),
-            ),
-            spaceHeight(10),
-            cardHistoris(1, "09 Mei 2024"),
-            spaceHeight(8),
-            cardHistoris(2, "10 Mei 2024"),
-          ],
+      body: Obx(
+        () => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              formFilterTanggal(context),
+              spaceHeight(20),
+              Text(
+                "Data Histori",
+                style: customTextStyle(FontWeight.w600, 14, cBlack),
+              ),
+              historiPresensiC.isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: historiPresensiC.historiPresensiM!.data.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        var data = historiPresensiC.historiPresensiM!.data;
+                        int no = 0;
+
+                        if (data[index].presensi != null) {
+                          no++;
+
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: cardHistoris(
+                              no,
+                              data[index].tanggal.fullDateAll(),
+                              data[index].presensi!.masuk,
+                              data[index].presensi!.pulang,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Container cardHistoris(no, tgl) {
+  Container cardHistoris(no, tgl, jamMasuk, jamKeluar) {
     return Container(
       width: Get.width,
       decoration: BoxDecoration(
@@ -126,7 +152,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                     ),
                     spaceHeight(2),
                     Text(
-                      '07:32 WIB',
+                      '$jamMasuk WIB',
                       style: customTextStyle(FontWeight.w600, 15, cBlack),
                     ),
                   ],
@@ -149,7 +175,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                     ),
                     spaceHeight(2),
                     Text(
-                      '15:05 WIB',
+                      '$jamKeluar WIB',
                       style: customTextStyle(FontWeight.w600, 15, cBlack),
                     ),
                   ],
