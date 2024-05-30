@@ -110,7 +110,7 @@ class _HomeViewState extends State<HomeView> {
                                   ? "..."
                                   : homeC.isJadwal.value
                                       ? "Kosong"
-                                      : "${homeC.shift.value} | ${homeC.jamMasuk.value} -- ${homeC.jamPulang.value}",
+                                      : "${homeC.shift.value} | ${homeC.jamMasuk.value} WIB -- ${homeC.jamPulang.value} WIB",
                               style:
                                   customTextStyle(FontWeight.w700, 17, cWhite),
                             ),
