@@ -22,7 +22,8 @@ class MenuHome {
       'icon': Icons.airplanemode_on_sharp,
       'bg_color': const Color(0xFFF7F1DA),
       'icon_color': const Color(0xFFFCDE46),
-      'route': RouteNames.perizinanView,
+      'route': null,
+      // 'route': RouteNames.perizinanView,
     },
     {
       'title': 'Lembur',
@@ -50,14 +51,16 @@ class MenuHome {
       'icon': Icons.change_circle_outlined,
       'bg_color': const Color(0xFFDBDAF7),
       'icon_color': const Color(0xFF6E7CF3),
-      'route': RouteNames.tukarShift,
+      'route': null,
+      // 'route': RouteNames.tukarShift,
     },
     {
       'title': 'Approval',
       'icon': Icons.edit_document,
       'bg_color': const Color(0xFFF7DAEB),
       'icon_color': const Color(0xFFFB3BAB),
-      'route': RouteNames.approvalView,
+      'route': null,
+      // 'route': RouteNames.approvalView,
     },
   ];
 }

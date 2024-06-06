@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_dialog.dart';
 import 'package:presensi_gs/utils/components/my_menu_home.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -185,7 +186,7 @@ class _HomeViewState extends State<HomeView> {
           // splashColor: cPrimary,
           onTap: () {
             data[index]['route'] == null
-                ? debugPrint("NULL ROUTE")
+                ? dialogComingSoon(data[index]['title'])
                 : Get.toNamed(data[index]['route']);
           },
           child: SizedBox(
