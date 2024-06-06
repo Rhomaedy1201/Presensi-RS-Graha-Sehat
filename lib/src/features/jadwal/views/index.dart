@@ -178,53 +178,53 @@ class _JadwalViewState extends State<JadwalView> {
         spaceHeight(5),
         InkWell(
           onTap: () async {
-            if (GetPlatform.isAndroid) {
-              final date = await datePicker(context, DateTime.now());
-              if (mounted) {
-                setState(() {
-                  valueDate = date ?? DateTime.now();
-                });
-              }
-            } else if (GetPlatform.isIOS) {
-              showCupertinoModalPopup(
-                context: context,
-                builder: (_) => Container(
-                  height: 400,
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 300,
-                        child: CupertinoDatePicker(
-                          initialDateTime:
-                              valueDate != null ? valueDate : DateTime.now(),
-                          maximumDate: DateTime.now(),
-                          maximumYear: DateTime.now().year,
-                          minimumYear: 2024,
-                          mode: CupertinoDatePickerMode.monthYear,
-                          onDateTimeChanged: (val) {
-                            setState(() {
-                              valueDate = val;
-                            });
-                          },
-                        ),
-                      ),
-                      // Close the modal
-                      CupertinoButton(
-                        child: const Text('OK'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          jadwalC.jadwalM!.data.clear();
-                          print(valueDate.getMonthNumber());
-                          jadwalC.getJadwal(
-                              valueDate.getMonthNumber(), valueDate.getYear());
+            // if (GetPlatform.isAndroid) {
+            //   final date = await datePicker(context, DateTime.now());
+            //   if (mounted) {
+            //     setState(() {
+            //       valueDate = date ?? DateTime.now();
+            //     });
+            //   }
+            // } else if (GetPlatform.isIOS) {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (_) => Container(
+                height: 400,
+                color: const Color.fromARGB(255, 255, 255, 255),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 300,
+                      child: CupertinoDatePicker(
+                        initialDateTime:
+                            valueDate != null ? valueDate : DateTime.now(),
+                        maximumDate: DateTime.now(),
+                        maximumYear: DateTime.now().year,
+                        minimumYear: 2024,
+                        mode: CupertinoDatePickerMode.monthYear,
+                        onDateTimeChanged: (val) {
+                          setState(() {
+                            valueDate = val;
+                          });
                         },
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    // Close the modal
+                    CupertinoButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        jadwalC.jadwalM!.data.clear();
+                        print(valueDate.getMonthNumber());
+                        jadwalC.getJadwal(
+                            valueDate.getMonthNumber(), valueDate.getYear());
+                      },
+                    )
+                  ],
                 ),
-              );
-            }
+              ),
+            );
+            // }
           },
           child: Container(
             height: 40,
