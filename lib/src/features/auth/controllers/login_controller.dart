@@ -17,7 +17,10 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
 
   Future<void> login() async {
-    var headers = {'Content-Type': 'application/json'};
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
     try {
       isLoading(true);
       Map body = {
@@ -60,11 +63,11 @@ class LoginController extends GetxController {
           nipController.clear();
           passwordController.clear();
         } else {
-          snackbarfailed("Terjadi kesalahan saat login!.");
+          snackbarfailed("Nip atau password salah!.");
         }
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     } finally {
       isLoading(false);
     }
