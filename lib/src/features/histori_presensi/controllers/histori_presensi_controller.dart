@@ -13,6 +13,7 @@ class HistoriPresensiController extends GetxController {
   var isLoading = false.obs;
   var month = DateTime.now().getMonthNumber();
   var year = DateTime.now().getYear();
+  var isEmptyData = true.obs;
 
   @override
   void onInit() {
@@ -41,6 +42,11 @@ class HistoriPresensiController extends GetxController {
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         historiPresensiM = HistoriPresensiModel.fromJson(json);
+        for (var i = 0; i < historiPresensiM!.data.length; i++) {
+          if (historiPresensiM!.data[i].presensi != null) {
+            isEmptyData.value = false;
+          }
+        }
       } else {
         debugPrint("Terjadi kesalahan get data");
       }

@@ -46,29 +46,50 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
               ),
               historiPresensiC.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      itemCount: historiPresensiC.historiPresensiM!.data.length,
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        var data = historiPresensiC.historiPresensiM!.data;
-
-                        if (data[index].presensi != null) {
-                          no++;
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: cardHistoris(
-                              no,
-                              data[index].tanggal.fullDateAll(),
-                              data[index].presensi!.masuk,
-                              data[index].presensi!.pulang,
+                  : historiPresensiC.isEmptyData.value
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 120),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.warning_amber,
+                                  size: 30,
+                                ),
+                                spaceHeight(10),
+                                Text(
+                                  "Histori Presensi Masih Kosong pada \n${valueDate.getMonthAndYear()}",
+                                  style: customTextStyle(
+                                      FontWeight.w500, 14, cBlack),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount:
+                              historiPresensiC.historiPresensiM!.data.length,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var data = historiPresensiC.historiPresensiM!.data;
+                            if (data[index].presensi != null) {
+                              no++;
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: cardHistoris(
+                                  no,
+                                  data[index].tanggal.fullDateAll(),
+                                  data[index].presensi!.masuk,
+                                  data[index].presensi!.pulang,
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
             ],
           ),
         ),
@@ -229,7 +250,8 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                       SizedBox(
                         height: 300,
                         child: CupertinoDatePicker(
-                          initialDateTime: DateTime.now(),
+                          initialDateTime:
+                              valueDate != null ? valueDate : DateTime.now(),
                           maximumDate: DateTime.now(),
                           maximumYear: DateTime.now().year,
                           minimumYear: 2024,
@@ -243,9 +265,16 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                       ),
                       // Close the modal
                       CupertinoButton(
-                        child: const Text('OK'),
-                        onPressed: () => Navigator.of(context).pop(),
-                      )
+                          child: const Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            historiPresensiC.isEmptyData.value = true;
+                            historiPresensiC.historiPresensiM!.data.clear();
+                            historiPresensiC.getHistoriPresensi(
+                              valueDate.getMonthNumber(),
+                              valueDate.getYear(),
+                            );
+                          })
                     ],
                   ),
                 ),
