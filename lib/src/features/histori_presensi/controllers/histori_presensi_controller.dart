@@ -16,8 +16,8 @@ class HistoriPresensiController extends GetxController {
 
   @override
   void onInit() {
-    getHistoriPresensi(month, year);
     super.onInit();
+    getHistoriPresensi(month, year);
   }
 
   Future<void> getHistoriPresensi(month, year) async {

@@ -46,6 +46,7 @@ class Datum {
   String updateBy;
   String createdBy;
   String status;
+  int libur;
   String tanggalCast;
   Presensi? presensi;
 
@@ -64,6 +65,7 @@ class Datum {
     required this.updateBy,
     required this.createdBy,
     required this.status,
+    required this.libur,
     required this.tanggalCast,
     required this.presensi,
   });
@@ -83,6 +85,7 @@ class Datum {
         updateBy: json["update_by"],
         createdBy: json["created_by"],
         status: json["status"],
+        libur: json["libur"],
         tanggalCast: json["tanggal_cast"],
         presensi: json["presensi"] == null
             ? null
@@ -105,6 +108,7 @@ class Datum {
         "update_by": updateBy,
         "created_by": createdBy,
         "status": status,
+        "libur": libur,
         "tanggal_cast": tanggalCast,
         "presensi": presensi?.toJson(),
       };
@@ -115,14 +119,14 @@ class Presensi {
   String status;
   String masuk;
   String pulang;
-  String pulangCast;
+  // String pulangCast;
 
   Presensi({
     required this.idJadwal,
     required this.status,
     required this.masuk,
     required this.pulang,
-    required this.pulangCast,
+    // required this.pulangCast,
   });
 
   factory Presensi.fromJson(Map<String, dynamic> json) => Presensi(
@@ -130,7 +134,7 @@ class Presensi {
         status: json["status"],
         masuk: json["masuk"],
         pulang: json["pulang"],
-        pulangCast: json["pulang_cast"],
+        // pulangCast: json["pulang_cast"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -138,6 +142,6 @@ class Presensi {
         "status": status,
         "masuk": masuk,
         "pulang": pulang,
-        "pulang_cast": pulangCast,
+        // "pulang_cast": pulangCast,
       };
 }

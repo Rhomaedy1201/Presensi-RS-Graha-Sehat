@@ -36,7 +36,7 @@ class JadwalController extends GetxController {
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/jadwal/$nip/nip?month=$month&tahun=$year"),
+        Uri.parse("$base_url/jadwalku?month=$month&tahun=$year"),
         headers: headers,
       );
 

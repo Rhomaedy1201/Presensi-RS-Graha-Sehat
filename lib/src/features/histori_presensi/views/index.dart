@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:presensi_gs/src/features/histori_presensi/controllers/histori_presensi_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_datepicker.dart';
@@ -20,6 +19,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
   HistoriPresensiController historiPresensiC =
       Get.find<HistoriPresensiController>();
   DateTime valueDate = DateTime.now();
+  int no = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,13 +49,12 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                   : ListView.builder(
                       itemCount: historiPresensiC.historiPresensiM!.data.length,
                       shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         var data = historiPresensiC.historiPresensiM!.data;
-                        int no = 0;
 
                         if (data[index].presensi != null) {
                           no++;
-
                           return Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: cardHistoris(
@@ -65,6 +64,8 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                               data[index].presensi!.pulang,
                             ),
                           );
+                        } else {
+                          return Container();
                         }
                       },
                     ),
