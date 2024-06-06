@@ -196,7 +196,8 @@ class _JadwalViewState extends State<JadwalView> {
                       SizedBox(
                         height: 300,
                         child: CupertinoDatePicker(
-                          initialDateTime: DateTime.now(),
+                          initialDateTime:
+                              valueDate != null ? valueDate : DateTime.now(),
                           maximumDate: DateTime.now(),
                           maximumYear: DateTime.now().year,
                           minimumYear: 2024,
