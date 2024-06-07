@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:presensi_gs/src/features/jadwal/controllers/jadwal_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
-import 'package:presensi_gs/utils/components/my_datepicker.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
@@ -69,22 +68,24 @@ class _JadwalViewState extends State<JadwalView> {
                             ),
                           ),
                         )
-                      : ListView.builder(
-                          itemCount: jadwalC.jadwalM?.data.length ?? 0,
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            var data = jadwalC.jadwalM!.data;
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 7),
-                              child: cardJadwal(
-                                data[index].tanggal,
-                                data[index].jamMasuk,
-                                data[index].jamPulang,
-                                data[index].shift,
-                              ),
-                            );
-                          },
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: jadwalC.jadwalM!.data.length,
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var data = jadwalC.jadwalM!.data;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 7),
+                                child: cardJadwal(
+                                  data[index].tanggal,
+                                  data[index].jamMasuk ?? 'null',
+                                  data[index].jamPulang ?? 'null',
+                                  data[index].shift ?? 'null',
+                                ),
+                              );
+                            },
+                          ),
                         ),
                 ],
               ),
@@ -114,20 +115,21 @@ class _JadwalViewState extends State<JadwalView> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   DateFormat('dd-MM-yyyy').parse(tgl).getDay(),
-                  style: customTextStyle(FontWeight.w500, 10, cBlack),
+                  style: customTextStyle(FontWeight.w500, 11, cBlack),
                 ),
                 spaceHeight(3),
                 Container(
                   width: 37,
                   height: 37,
                   decoration: BoxDecoration(
-                    color: cPrimary,
+                    color: jamMasuk == 'null' ? cRed : cPrimary,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
@@ -135,11 +137,11 @@ class _JadwalViewState extends State<JadwalView> {
                     children: [
                       Text(
                         DateFormat('yyyy-MM-dd').parse(tgl).getTgl(),
-                        style: customTextStyle(FontWeight.w600, 12, cBlack),
+                        style: customTextStyle(FontWeight.w700, 12, cBlack),
                       ),
                       Text(
                         DateFormat('yyyy-MM-dd').parse(tgl).getMonth(),
-                        style: customTextStyle(FontWeight.w500, 8, cBlack),
+                        style: customTextStyle(FontWeight.w500, 9, cBlack),
                       ),
                     ],
                   ),
@@ -147,20 +149,35 @@ class _JadwalViewState extends State<JadwalView> {
               ],
             ),
             spaceWidth(15),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  shift,
-                  style: customTextStyle(FontWeight.w600, 12, cPrimary),
-                ),
-                spaceHeight(3),
-                Text(
-                  "$jamMasuk WIB -- $jamPulang WIB",
-                  style: customTextStyle(FontWeight.w600, 15, cBlack),
-                ),
-              ],
-            )
+            jamPulang == 'null'
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Libur",
+                        style: customTextStyle(FontWeight.w600, 12, cRed),
+                      ),
+                      spaceHeight(3),
+                      Text(
+                        "Tidak Ada Jadwal".toUpperCase(),
+                        style: customTextStyle(FontWeight.w600, 15, cBlack),
+                      ),
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        shift,
+                        style: customTextStyle(FontWeight.w600, 12, cPrimary),
+                      ),
+                      spaceHeight(3),
+                      Text(
+                        "$jamMasuk WIB -- $jamPulang WIB",
+                        style: customTextStyle(FontWeight.w600, 15, cBlack),
+                      ),
+                    ],
+                  )
           ],
         ),
       ),

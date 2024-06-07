@@ -52,6 +52,7 @@ class JadwalController extends GetxController {
         debugPrint("Terjadi kesalahan get data");
       }
       print(json);
+      print(json);
     } catch (e) {
       print(e.toString());
     } finally {
