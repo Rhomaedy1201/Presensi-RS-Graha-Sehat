@@ -134,7 +134,16 @@ class _HomeViewState extends State<HomeView> {
                   style: customTextStyle(FontWeight.w600, 15, cBlack),
                 ),
                 spaceHeight(15),
-                statistikBulanIni(),
+                // statistikBulanIni(),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      "Coming Soon",
+                      style: customTextStyle(FontWeight.w500, 14, cGrey_600),
+                    ),
+                  ),
+                ),
                 spaceHeight(15),
                 Text(
                   "Top Absensi",
