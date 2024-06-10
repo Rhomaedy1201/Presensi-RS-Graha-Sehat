@@ -260,7 +260,7 @@ class PresensiController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoadingPresensiMasuk(false);
+      isLoadingPresensiPulang(false);
     }
   }
 }
