@@ -121,7 +121,7 @@ class _JadwalViewState extends State<JadwalView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  DateFormat('dd-MM-yyyy').parse(tgl).getDay(),
+                  DateFormat('yyyy-MM-dd').parse(tgl).getDay(),
                   style: customTextStyle(FontWeight.w500, 11, cBlack),
                 ),
                 spaceHeight(3),
