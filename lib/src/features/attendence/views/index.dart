@@ -387,9 +387,14 @@ class _PresensiViewState extends State<PresensiView> {
                                                         ), // Mengatur border radius menjadi 0
                                                       ),
                                                     ),
-                                                    onPressed: presensiC
-                                                            .isActiveBtnMasuk
-                                                            .value
+                                                    onPressed: (presensiC
+                                                                    .isActiveBtnPulang
+                                                                    .value ==
+                                                                false &&
+                                                            presensiC
+                                                                    .checkJadwalMasukBtn
+                                                                    .value ==
+                                                                true)
                                                         ? () {
                                                             if (const Distance()
                                                                     .distance(

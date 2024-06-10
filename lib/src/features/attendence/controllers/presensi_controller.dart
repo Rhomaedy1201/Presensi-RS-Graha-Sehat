@@ -23,6 +23,7 @@ class PresensiController extends GetxController {
   var radius = "".obs;
   var isActiveBtnMasuk = false.obs;
   var isActiveBtnPulang = false.obs;
+  var checkJadwalMasukBtn = false.obs;
 
   @override
   void onInit() {
@@ -94,10 +95,12 @@ class PresensiController extends GetxController {
         headers: headers,
       );
       if (response.statusCode == 200) {
-        isActiveBtnMasuk.value = true;
-        isActiveBtnPulang.value = false;
+        checkJadwalMasukBtn.value = true;
+        // isActiveBtnMasuk.value = true;
+        // isActiveBtnPulang.value = false;
       } else {
-        isActiveBtnMasuk.value = false;
+        checkJadwalMasukBtn.value = false;
+        // isActiveBtnMasuk.value = false;
       }
     } catch (e) {
       print(e.toString());
@@ -205,7 +208,7 @@ class PresensiController extends GetxController {
             "Berhasil presensi masuk.\nStatus : ${json['data']['status']}");
         Get.offAllNamed(RouteNames.home);
       } else {
-        snackbarfailed("Terjadi Kesalahan Untuk Presensi Masuk.");
+        snackbarfailed(json['errors']);
       }
     } catch (e) {
       print(e.toString());
@@ -252,8 +255,7 @@ class PresensiController extends GetxController {
             "Berhasil presensi pulang.\nStatus : ${json['data']['status']}");
         Get.offAllNamed(RouteNames.home);
       } else {
-        snackbarfailed(
-            "Terjadi Kesalahan Untuk Presensi PuisLoadingPresensiPulang.");
+        snackbarfailed(json['errors']);
       }
     } catch (e) {
       print(e.toString());
