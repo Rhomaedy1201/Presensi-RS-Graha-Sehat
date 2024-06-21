@@ -67,29 +67,50 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                             ),
                           ),
                         )
-                      : ListView.builder(
-                          itemCount:
-                              historiPresensiC.historiPresensiM!.data.length,
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            var data = historiPresensiC.historiPresensiM!.data;
-                            if (data[index].presensi != null) {
-                              no++;
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: cardHistoris(
-                                  no,
-                                  data[index].tanggal.fullDateAll(),
-                                  data[index].presensi!.masuk,
-                                  data[index].presensi!.pulang,
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount:
+                                historiPresensiC.historiPresensiM!.data.length,
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var data =
+                                  historiPresensiC.historiPresensiM!.data;
+                              if (data[index].presensi != null) {
+                                no++;
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: cardHistoris(
+                                    no,
+                                    data[index].tanggal.fullDateAll(),
+                                    data[index].presensi!.masuk,
+                                    data[index].presensi!.pulang,
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
                         ),
+              // : Expanded(
+              //     child: ListView.builder(
+              //       itemCount: 30,
+              //       shrinkWrap: true,
+              //       physics: const AlwaysScrollableScrollPhysics(),
+              //       itemBuilder: (context, index) {
+              //         return Padding(
+              //           padding: const EdgeInsets.only(top: 10),
+              //           child: cardHistoris(
+              //             1,
+              //             "12-01-2002",
+              //             "00:00",
+              //             "00:00",
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   ),
             ],
           ),
         ),
