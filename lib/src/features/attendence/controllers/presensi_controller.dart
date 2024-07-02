@@ -160,7 +160,7 @@ class PresensiController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
-      if (json['data'] != null) {
+      if (json['data'] != "null" || json['data'] != null) {
         isActiveBtnPulang.value = false;
         isActiveBtnMasuk.value = false;
       }

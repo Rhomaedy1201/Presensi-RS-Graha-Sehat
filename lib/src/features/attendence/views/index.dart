@@ -488,23 +488,42 @@ class _PresensiViewState extends State<PresensiView> {
                                                             .value
                                                         ? null
                                                         : () {
-                                                            if (presensiC
-                                                                .isLoadingPresensiPulang
-                                                                .value) {
+                                                            if (const Distance()
+                                                                    .distance(
+                                                                        latLng,
+                                                                        LatLng(
+                                                                          double.parse(presensiC
+                                                                              .latitude
+                                                                              .value),
+                                                                          double.parse(presensiC
+                                                                              .longitude
+                                                                              .value),
+                                                                        )) <=
+                                                                int.parse(
+                                                                    presensiC
+                                                                        .radius
+                                                                        .value)) {
+                                                              if (presensiC
+                                                                  .isLoadingPresensiPulang
+                                                                  .value) {
+                                                              } else {
+                                                                presensiC.presensiPulang(
+                                                                    presensiC
+                                                                        .idLokasi
+                                                                        .value,
+                                                                    latLng
+                                                                        .latitude
+                                                                        .toString(),
+                                                                    latLng
+                                                                        .longitude
+                                                                        .toString(),
+                                                                    ipAddressC
+                                                                        .ipAdressv
+                                                                        .value);
+                                                              }
                                                             } else {
-                                                              presensiC.presensiPulang(
-                                                                  presensiC
-                                                                      .idLokasi
-                                                                      .value,
-                                                                  latLng
-                                                                      .latitude
-                                                                      .toString(),
-                                                                  latLng
-                                                                      .longitude
-                                                                      .toString(),
-                                                                  ipAddressC
-                                                                      .ipAdressv
-                                                                      .value);
+                                                              snackbarfailed(
+                                                                  "Anda Diluar area kantor");
                                                             }
                                                           },
                                                     label: Text(
