@@ -22,153 +22,279 @@ class _TukarShiftViewState extends State<TukarShiftView> {
   String? valKaryawan;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: cGrey_200,
-      appBar: AppBar(
-        backgroundColor: cPrimary,
-        centerTitle: true,
-        title: Text(
-          'Tukar Shift',
-          style: customTextStyle(FontWeight.w500, 20, cBlack),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    final List<String> tabs = <String>[
+      'Pengajuan',
+      'Progress',
+      'Konfirm',
+      'Selesai'
+    ];
+    return DefaultTabController(
+      length: tabs.length,
+      child: Scaffold(
+        backgroundColor: cGrey_200,
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverAppBar(
+                  backgroundColor: cPrimary,
+                  foregroundColor: cBlack,
+                  centerTitle: true,
+                  title: const Text(
+                    'Tukar Shift',
+                  ),
+                  titleTextStyle: customTextStyle(FontWeight.w500, 20, cBlack),
+                  pinned: true,
+                  expandedHeight: 120,
+                  forceElevated: innerBoxIsScrolled,
+                  bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(50),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(5),
+                              ),
+                            ),
+                            child: TabBar(
+                              dividerColor: Colors.white,
+                              unselectedLabelColor: Colors.black,
+                              labelColor: Colors.white,
+                              labelStyle: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w500),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicator: const BoxDecoration(
+                                color: cPrimary,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                              ),
+                              tabs: tabs
+                                  .map((String name) => Tab(text: name))
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: TabBarView(
             children: [
-              Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                  color: cWhite,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: cGrey_400,
-                      blurRadius: 15,
-                      offset: Offset(1, 1), // Shadow position
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
+              Scaffold(
+                body: Padding(
+                  padding: const EdgeInsets.only(top: 130),
+                  child: SingleChildScrollView(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
-                      ),
-                      child: Text(
-                        "Pihak Pertama",
-                        style: customTextStyle(FontWeight.w500, 13, cBlack),
-                      ),
-                    ),
-                    Container(
-                      width: Get.width,
-                      height: 3,
-                      color: cGrey_300,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 12),
+                          vertical: 20, horizontal: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          formTanggal1(context),
-                          spaceHeight(10),
-                          dropdownShift1(),
+                          Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              color: cWhite,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: cGrey_400,
+                                  blurRadius: 15,
+                                  offset: Offset(1, 1), // Shadow position
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 10,
+                                  ),
+                                  child: Text(
+                                    "Pihak Pertama",
+                                    style: customTextStyle(
+                                        FontWeight.w500, 13, cBlack),
+                                  ),
+                                ),
+                                Container(
+                                  width: Get.width,
+                                  height: 3,
+                                  color: cGrey_300,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      formTanggal1(context),
+                                      spaceHeight(10),
+                                      dropdownShift1(),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          spaceHeight(15),
+                          Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              color: cWhite,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: cGrey_400,
+                                  blurRadius: 15,
+                                  offset: Offset(1, 1), // Shadow position
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 10,
+                                  ),
+                                  child: Text(
+                                    "Pihak Kedua",
+                                    style: customTextStyle(
+                                        FontWeight.w500, 13, cBlack),
+                                  ),
+                                ),
+                                Container(
+                                  width: Get.width,
+                                  height: 3,
+                                  color: cGrey_300,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      dropdownKaryawan(),
+                                      spaceHeight(2),
+                                      formTanggal2(context),
+                                      spaceHeight(10),
+                                      dropdownShift2(),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          spaceHeight(12),
+                          Text(
+                            "Keterangan : ",
+                            style: customTextStyle(FontWeight.w500, 13, cBlack),
+                          ),
+                          spaceHeight(8),
+                          Text(
+                            "Jika tukar shift dilakukan untuk pihak 1 atau pertama, maka selanjutnya hanya memilih nama karyawan yang akan menggantikan (pihak 2/kedua) tanpa memilih tanggal dan jadwal shift",
+                            style: customTextStyle(FontWeight.w500, 11, cBlack),
+                          ),
                         ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-              spaceHeight(15),
-              Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                  color: cWhite,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: cGrey_400,
-                      blurRadius: 15,
-                      offset: Offset(1, 1), // Shadow position
                     ),
-                  ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
+                bottomNavigationBar: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: SizedBox(
+                    width: Get.width,
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: cPrimary,
+                        shadowColor: cPrimary_400,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ), // Mengatur border radius menjadi 0
+                        ),
                       ),
-                      child: Text(
-                        "Pihak Kedua",
-                        style: customTextStyle(FontWeight.w500, 13, cBlack),
+                      onPressed: () {},
+                      child: const Text(
+                        "Submit Tukar Shift",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: cWhite,
+                        ),
                       ),
                     ),
-                    Container(
-                      width: Get.width,
-                      height: 3,
-                      color: cGrey_300,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          dropdownKaryawan(),
-                          spaceHeight(2),
-                          formTanggal2(context),
-                          spaceHeight(10),
-                          dropdownShift2(),
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
               ),
-              spaceHeight(12),
-              Text(
-                "Keterangan : ",
-                style: customTextStyle(FontWeight.w500, 13, cBlack),
-              ),
-              spaceHeight(8),
-              Text(
-                "Jika tukar shift dilakukan untuk pihak 1 atau pertama, maka selanjutnya hanya memilih nama karyawan yang akan menggantikan (pihak 2/kedua) tanpa memilih tanggal dan jadwal shift",
-                style: customTextStyle(FontWeight.w500, 11, cBlack),
-              ),
+              commingSoon(),
+              commingSoon(),
+              commingSoon(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: SizedBox(
-          width: Get.width,
-          height: 40,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: cPrimary,
-              shadowColor: cPrimary_400,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  10,
-                ), // Mengatur border radius menjadi 0
-              ),
+    );
+  }
+
+  Padding commingSoon() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 50 + 130,
+        bottom: 25,
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            width: Get.width,
+            height: 300,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(5),
             ),
-            onPressed: () {},
-            child: const Text(
-              "Submit Tukar Shift",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: cWhite,
+            child: const Center(
+              child: Text(
+                "Comming  Soon...",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
