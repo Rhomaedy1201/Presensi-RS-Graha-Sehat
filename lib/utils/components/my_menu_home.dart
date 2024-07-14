@@ -51,8 +51,8 @@ class MenuHome {
       'icon': Icons.change_circle_outlined,
       'bg_color': const Color(0xFFDBDAF7),
       'icon_color': const Color(0xFF6E7CF3),
-      'route': null,
-      // 'route': RouteNames.tukarShift,
+      // 'route': null,
+      'route': RouteNames.tukarShift,
     },
     {
       'title': 'Approval',
