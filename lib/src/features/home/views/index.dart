@@ -5,6 +5,7 @@ import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart'
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_dialog.dart';
 import 'package:presensi_gs/utils/components/my_menu_home.dart';
+import 'package:presensi_gs/utils/components/my_shoten_last_name.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
@@ -47,16 +48,45 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Text(
-                          prefsC.isLoading.value ? "..." : prefsC.nama.value,
-                          style: customTextStyle(FontWeight.w700, 17, cBlack),
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            // color: cPrimary,
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: cPrimary, width: 2),
+                            image: const DecorationImage(
+                              image: AssetImage("assets/images/profile.jpg"),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
-                        Text(
-                          prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
-                          style: customTextStyle(FontWeight.w500, 14, cBlack),
+                        spaceWidth(10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: Get.width * 0.6,
+                              child: Text(
+                                prefsC.isLoading.value
+                                    ? "..."
+                                    : shortenLastName(prefsC.nama.value),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: customTextStyle(
+                                    FontWeight.w700, 17, cBlack),
+                              ),
+                            ),
+                            Text(
+                              prefsC.isLoading.value
+                                  ? "..."
+                                  : prefsC.jabatan.value,
+                              style:
+                                  customTextStyle(FontWeight.w500, 14, cBlack),
+                            ),
+                          ],
                         ),
                       ],
                     ),
