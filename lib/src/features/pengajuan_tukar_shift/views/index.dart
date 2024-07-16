@@ -23,10 +23,17 @@ class _TukarShiftViewState extends State<TukarShiftView> {
 
   DateTime tglPihak1 = DateTime.now();
   DateTime tglPihak2 = DateTime.now();
-  String valJenis = 'TUKAR SHIFT';
+  String? valJenis = '1';
   String? valJadwalShift1;
   String? valJadwalShift2;
   String? valKaryawan;
+
+  final List listJenis = [
+    {'id': '1', 'name': 'TUKAR SHIFT'},
+    {'id': '2', 'name': 'TUKAR OFF 1 (TAMBAH)'},
+    {'id': '3', 'name': 'TUKAR OFF 2 (HAPUS)'}
+  ];
+
   @override
   Widget build(BuildContext context) {
     final List<String> tabs = <String>[
@@ -293,11 +300,30 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        dropdownKaryawan(),
-                                        spaceHeight(2),
-                                        formTanggal2(context),
-                                        spaceHeight(10),
-                                        dropdownShift2(),
+                                        if (valJenis == "1")
+                                          Column(
+                                            children: [
+                                              dropdownKaryawan(),
+                                              spaceHeight(2),
+                                              dropdownShift2(),
+                                            ],
+                                          ),
+                                        if (valJenis == "2")
+                                          Column(
+                                            children: [
+                                              ketTukarOff1(),
+                                              spaceHeight(10),
+                                              dropdownKaryawan(),
+                                            ],
+                                          ),
+                                        if (valJenis == "3")
+                                          Column(
+                                            children: [
+                                              ketTukarOff2(),
+                                              spaceHeight(10),
+                                              dropdownKaryawan(),
+                                            ],
+                                          ),
                                       ],
                                     ),
                                   )
@@ -358,6 +384,146 @@ class _TukarShiftViewState extends State<TukarShiftView> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget ketTukarOff1() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+                width: 4,
+                height: 4,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.black)),
+            spaceWidth(4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Jadwal ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                  TextSpan(
+                    text: "PIHAK 1",
+                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
+                  ),
+                  TextSpan(
+                    text: " menjadi libur",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        spaceHeight(5),
+        Row(
+          children: [
+            Container(
+                width: 4,
+                height: 4,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.black)),
+            spaceWidth(4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Jadwal kerja ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                  TextSpan(
+                    text: "PIHAK 1",
+                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
+                  ),
+                  TextSpan(
+                    text: " akan di tambahkan atau di gantikan ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                  TextSpan(
+                    text: "PIHAK 2",
+                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget ketTukarOff2() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+                width: 4,
+                height: 4,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.black)),
+            spaceWidth(4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Jadwal ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                  TextSpan(
+                    text: "PIHAK 1",
+                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
+                  ),
+                  TextSpan(
+                    text: " menjadi libur",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        spaceHeight(5),
+        Row(
+          children: [
+            Container(
+                width: 4,
+                height: 4,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.black)),
+            spaceWidth(4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Jadwal kerja ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                  TextSpan(
+                    text: "PIHAK 1",
+                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
+                  ),
+                  TextSpan(
+                    text: " dan jadwal ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                  TextSpan(
+                    text: "PIHAK 2 ",
+                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
+                  ),
+                  TextSpan(
+                    text: " otomatis tergantikan ",
+                    style: customTextStyle(FontWeight.w600, 10, cBlack),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -446,20 +612,16 @@ class _TukarShiftViewState extends State<TukarShiftView> {
               ),
               onChanged: (String? newValue) {
                 setState(() {
-                  valJadwalShift1 = newValue!;
+                  valJenis = newValue!;
                 });
               },
-              items: <String>[
-                'TUKAR SHIFT',
-                'TUKAR OFF 1 (TAMBAH)',
-                'TUKAR OFF 2 (HAPUS)'
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: listJenis.map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(
-                  value: value,
+                  value: value['id'],
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
-                      value,
+                      value['name'],
                       style: customTextStyle(FontWeight.w500, 13, cGrey_900),
                     ),
                   ),
@@ -547,10 +709,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Jadwal Shift",
-          style: customTextStyle(FontWeight.w600, 11, cBlack),
-        ),
+        requiredText("Jadwal Shift", FontWeight.w600, 11, cBlack),
         Container(
           width: Get.width,
           height: 55,
@@ -618,10 +777,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Nama Karyawan",
-          style: customTextStyle(FontWeight.w600, 11, cBlack),
-        ),
+        requiredText("Nama", FontWeight.w600, 11, cBlack),
         Container(
           width: Get.width,
           height: 55,
@@ -760,90 +916,6 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget formTanggal2(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Tanggal",
-          style: customTextStyle(FontWeight.w600, 11, cBlack),
-        ),
-        spaceHeight(5),
-        InkWell(
-          onTap: () async {
-            if (GetPlatform.isAndroid) {
-              final date = await datePicker(context, DateTime.now());
-              if (mounted) {
-                setState(() {
-                  tglPihak2 = date ?? DateTime.now();
-                });
-              }
-            } else if (GetPlatform.isIOS) {
-              showCupertinoModalPopup(
-                context: context,
-                builder: (_) => Container(
-                  height: 400,
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 300,
-                        child: CupertinoDatePicker(
-                          initialDateTime: DateTime.now(),
-                          maximumDate: DateTime.now(),
-                          maximumYear: DateTime.now().year,
-                          minimumYear: 2024,
-                          mode: CupertinoDatePickerMode.date,
-                          onDateTimeChanged: (val) {
-                            setState(() {
-                              tglPihak2 = val;
-                            });
-                          },
-                        ),
-                      ),
-                      // Close the modal
-                      CupertinoButton(
-                        child: const Text('OK'),
-                        onPressed: () => Navigator.of(context).pop(),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }
-          },
-          child: Container(
-            height: 40,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-              border: Border.all(color: cGrey_400, width: 1.5),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    tglPihak2.fullDate().toString(),
-                    style: customTextStyle(FontWeight.w500, 13, cGrey_900),
-                  ),
-                  const Icon(
-                    Icons.date_range_outlined,
-                    size: 25,
-                    color: cPrimary,
-                  )
-                ],
-              ),
-            ),
           ),
         ),
       ],
