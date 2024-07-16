@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
-import 'package:presensi_gs/utils/components/my_datepicker.dart';
 import 'package:presensi_gs/utils/components/my_required_text.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -305,7 +303,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                                             children: [
                                               dropdownKaryawan(),
                                               spaceHeight(2),
-                                              dropdownShift2(),
+                                              dropdownShift2(), //
                                             ],
                                           ),
                                         if (valJenis == "2")
@@ -705,70 +703,73 @@ class _TukarShiftViewState extends State<TukarShiftView> {
     );
   }
 
-  Column dropdownShift2() {
+  Column dropdownShift2(TukarJadwalController tukarJadwalC) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         requiredText("Jadwal Shift", FontWeight.w600, 11, cBlack),
-        Container(
-          width: Get.width,
-          height: 55,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(7),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7),
-            child: DropdownButtonFormField<String>(
-              hint: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  "Pilih Shift",
-                  style: customTextStyle(FontWeight.w500, 13, cGrey_900),
-                ),
-              ),
-              isDense: true,
-              isExpanded: true,
-              value: valJadwalShift2,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(8),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
-                ),
-                border: OutlineInputBorder(
+        tukarJadwalC.isLoading.value
+            ? const CircularProgressIndicator()
+            : Container(
+                width: Get.width,
+                height: 55,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+                    Radius.circular(7),
                   ),
                 ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  valJadwalShift2 = newValue!;
-                });
-              },
-              items: <String>['Pagi', 'Malam']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text(
-                      value,
-                      style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: DropdownButtonFormField<String>(
+                    hint: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        "Pilih Shift",
+                        style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                      ),
                     ),
+                    isDense: true,
+                    isExpanded: true,
+                    value: valJadwalShift2,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(8),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        valJadwalShift2 = newValue!;
+                      });
+                    },
+                    items: <String>['Pagi', 'Malam']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            value,
+                            style:
+                                customTextStyle(FontWeight.w500, 13, cGrey_900),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
+                ),
+              ),
       ],
     );
   }
@@ -821,14 +822,14 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                   valKaryawan = newValue!;
                 });
               },
-              items: <String>['Agus', 'Lukman']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: tukarJadwalC.karyawanPerUnitM!.data
+                  .map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(
-                  value: value,
+                  value: value.nip,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
-                      value,
+                      value.nama,
                       style: customTextStyle(FontWeight.w500, 13, cGrey_900),
                     ),
                   ),
