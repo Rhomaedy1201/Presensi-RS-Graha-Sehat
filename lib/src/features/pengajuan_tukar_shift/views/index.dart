@@ -303,7 +303,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                                             children: [
                                               dropdownKaryawan(),
                                               spaceHeight(2),
-                                              dropdownShift2(), //
+                                              dropdownShift2(tukarJadwalC),
                                             ],
                                           ),
                                         if (valJenis == "2")
@@ -682,7 +682,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                         valJadwalShift1 = newValue!;
                       });
                     },
-                    items: tukarJadwalC.jadwalOnTukarJadwalM!.data
+                    items: tukarJadwalC.jadwalOnTukarJadwalM?.data
                         .map<DropdownMenuItem<String>>((value) {
                       return DropdownMenuItem<String>(
                         value: value.id.toString(),
@@ -708,7 +708,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         requiredText("Jadwal Shift", FontWeight.w600, 11, cBlack),
-        tukarJadwalC.isLoading.value
+        tukarJadwalC.isLoading2.value
             ? const CircularProgressIndicator()
             : Container(
                 width: Get.width,
@@ -753,14 +753,14 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                         valJadwalShift2 = newValue!;
                       });
                     },
-                    items: <String>['Pagi', 'Malam']
-                        .map<DropdownMenuItem<String>>((String value) {
+                    items: tukarJadwalC.jadwalOnTukarJadwalM2?.data
+                        .map<DropdownMenuItem<String>>((value) {
                       return DropdownMenuItem<String>(
-                        value: value,
+                        value: value.id.toString(),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: Text(
-                            value,
+                            "TGL: ${value.tanggal.simpleDateRevers()} | SHIFT: ${value.shift} (${value.jamMasuk} - ${value.jamPulang})",
                             style:
                                 customTextStyle(FontWeight.w500, 13, cGrey_900),
                           ),
@@ -779,65 +779,70 @@ class _TukarShiftViewState extends State<TukarShiftView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         requiredText("Nama", FontWeight.w600, 11, cBlack),
-        Container(
-          width: Get.width,
-          height: 55,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(7),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7),
-            child: DropdownButtonFormField<String>(
-              hint: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  "Pilih Karyawan",
-                  style: customTextStyle(FontWeight.w500, 13, cGrey_900),
-                ),
-              ),
-              isDense: true,
-              isExpanded: true,
-              value: valKaryawan,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(8),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
-                ),
-                border: OutlineInputBorder(
+        tukarJadwalC.isLoadingKarayawan.value
+            ? const CircularProgressIndicator()
+            : Container(
+                width: Get.width,
+                height: 55,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+                    Radius.circular(7),
                   ),
                 ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  valKaryawan = newValue!;
-                });
-              },
-              items: tukarJadwalC.karyawanPerUnitM!.data
-                  .map<DropdownMenuItem<String>>((value) {
-                return DropdownMenuItem<String>(
-                  value: value.nip,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text(
-                      value.nama,
-                      style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: DropdownButtonFormField<String>(
+                    hint: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        "Pilih Karyawan",
+                        style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                      ),
                     ),
+                    isDense: true,
+                    isExpanded: true,
+                    value: valKaryawan,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(8),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        valKaryawan = null;
+                        valKaryawan = newValue!;
+                        tukarJadwalC.getJadwalOnTukarJadwalPihak2(valKaryawan);
+                      });
+                    },
+                    items: tukarJadwalC.karyawanPerUnitM!.data
+                        .map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value.nip,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            value.nama,
+                            style:
+                                customTextStyle(FontWeight.w500, 13, cGrey_900),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
+                ),
+              ),
       ],
     );
   }
