@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/http/models/acc_atasan_model.dart';
 import 'package:presensi_gs/http/models/jadwal_on_tukar_jadwal.dart';
 import 'package:presensi_gs/http/models/jadwal_on_tukar_jadwal2.dart';
 import 'package:presensi_gs/http/models/karyawan_per_unit_model.dart';
@@ -13,8 +14,11 @@ class TukarJadwalController extends GetxController {
   JadwalOnTukarJadwalModel? jadwalOnTukarJadwalM;
   JadwalOnTukarJadwalModel2? jadwalOnTukarJadwalM2;
   KaryawanPerUnitModel? karyawanPerUnitM;
+  AccAtasanModel? accAtasanM;
+
   var isLoading = false.obs;
   var isLoading2 = false.obs;
+  var isLoadingAcc = false.obs;
   var isLoadingKarayawan = false.obs;
 
   @override
@@ -23,6 +27,7 @@ class TukarJadwalController extends GetxController {
     getJadwalOnTukarJadwal();
     // getJadwalOnTukarJadwalPihak2();
     getKaryawanPerUnit();
+    getAccAtasan();
   }
 
   Future<void> getJadwalOnTukarJadwal() async {
@@ -118,6 +123,38 @@ class TukarJadwalController extends GetxController {
       print(e.toString());
     } finally {
       isLoadingKarayawan(false);
+    }
+  }
+
+  Future<void> getAccAtasan() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingAcc(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/tukar-jadwal/acc-by-atasan"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        accAtasanM = AccAtasanModel.fromJson(json);
+        print(json);
+      } else {
+        debugPrint(response.body.toString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingAcc(false);
     }
   }
 }

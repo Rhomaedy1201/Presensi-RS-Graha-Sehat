@@ -329,16 +329,90 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                               ),
                             ),
                             spaceHeight(12),
-                            Text(
-                              "Keterangan : ",
-                              style:
-                                  customTextStyle(FontWeight.w500, 13, cBlack),
-                            ),
-                            spaceHeight(8),
-                            Text(
-                              "Jika tukar shift dilakukan untuk pihak 1 atau pertama, maka selanjutnya hanya memilih nama karyawan yang akan menggantikan (pihak 2/kedua) tanpa memilih tanggal dan jadwal shift",
-                              style:
-                                  customTextStyle(FontWeight.w500, 11, cBlack),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "ACC Atasan",
+                                  style: customTextStyle(
+                                      FontWeight.w600, 11, cBlack),
+                                ),
+                                spaceHeight(5),
+                                Container(
+                                  height: 38,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    color: cGrey_200,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                    border: Border.all(
+                                        color: cGrey_400, width: 1.5),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          tukarJadwalC.isLoadingAcc.value
+                                              ? "..."
+                                              : "(${tukarJadwalC.accAtasanM!.data.nip}) - ${tukarJadwalC.accAtasanM!.data.nama}",
+                                          style: customTextStyle(
+                                              FontWeight.w500, 13, cGrey_900),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                spaceHeight(10),
+                                Text(
+                                  "Keterangan",
+                                  style: customTextStyle(
+                                      FontWeight.w600, 11, cBlack),
+                                ),
+                                spaceHeight(5),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: cGrey_400,
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextField(
+                                          autocorrect: false,
+                                          maxLines: 1,
+                                          controller: null,
+                                          enableSuggestions: false,
+                                          style: customTextStyle(
+                                              FontWeight.w400, 12, cBlack),
+                                          decoration: const InputDecoration(
+                                            hintText: "Masukkan Nip",
+                                            hintStyle: TextStyle(
+                                              color: cGrey_700,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            border: InputBorder.none,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 0),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
