@@ -4,6 +4,7 @@ import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart'
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_required_text.dart';
+import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
@@ -396,7 +397,7 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                                           style: customTextStyle(
                                               FontWeight.w400, 12, cBlack),
                                           decoration: const InputDecoration(
-                                            hintText: "Masukkan Nip",
+                                            hintText: "Keterangan",
                                             hintStyle: TextStyle(
                                               color: cGrey_700,
                                               fontSize: 12,
@@ -435,7 +436,41 @@ class _TukarShiftViewState extends State<TukarShiftView> {
                             ), // Mengatur border radius menjadi 0
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (valJadwalShift1 == null) {
+                            snackbarfailed(
+                                "Jadwal Shift pihak pertama wajib di isi!");
+                          } else {
+                            if (valKaryawan == null) {
+                              snackbarfailed("Nama pihak kedua wajib di isi!");
+                            } else {
+                              if (valJenis == '1') {
+                                if (valJadwalShift2 == null) {
+                                  snackbarfailed(
+                                      "Jadwal Shift pihak kedua wajib di isi!");
+                                } else {
+                                  tukarJadwalC.postTukarShift(
+                                    valJadwalShift1,
+                                    valJadwalShift2,
+                                    prefsC.nip.value,
+                                    valKaryawan,
+                                    tukarJadwalC.accAtasanM!.data.nip,
+                                    valJenis,
+                                  );
+                                }
+                              } else {
+                                tukarJadwalC.postTukarShift(
+                                  valJadwalShift1,
+                                  valJadwalShift2,
+                                  prefsC.nip.value,
+                                  valKaryawan,
+                                  tukarJadwalC.accAtasanM!.data.nip,
+                                  valJenis,
+                                );
+                              }
+                            }
+                          }
+                        },
                         child: const Text(
                           "Submit Tukar Shift",
                           style: TextStyle(

@@ -7,6 +7,7 @@ import 'package:presensi_gs/http/models/jadwal_on_tukar_jadwal.dart';
 import 'package:presensi_gs/http/models/jadwal_on_tukar_jadwal2.dart';
 import 'package:presensi_gs/http/models/karyawan_per_unit_model.dart';
 import 'package:presensi_gs/utils/base_url.dart';
+import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -148,6 +149,45 @@ class TukarJadwalController extends GetxController {
       if (response.statusCode == 200) {
         accAtasanM = AccAtasanModel.fromJson(json);
         print(json);
+      } else {
+        debugPrint(response.body.toString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingAcc(false);
+    }
+  }
+
+  Future<void> postTukarShift(jp1, jp2, nip1, nip2, acc, jenis) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingAcc(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+      Map body = {
+        "jadwal_pihak1": jp1,
+        "jadwal_pihak2": jp2,
+        "nip_pihak1": nip1.toString(),
+        "nip_pihak2": nip2.toString(),
+        "acc_by": acc.toString(),
+        "jenis": jenis,
+      };
+      http.Response response = await http.post(
+        Uri.parse("$base_url/tukar-jadwal"),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        Get.back();
+        snackbarSuccess("Berhasil submit tukar shift");
       } else {
         debugPrint(response.body.toString());
       }
