@@ -37,7 +37,7 @@ class Data {
   String sex;
   String statusUser;
   int idUnit;
-  dynamic createdAt;
+  String? createdAt;
   DateTime updatedAt;
   int idJabatan;
   String namaJabatan;
@@ -94,9 +94,9 @@ class Jabatan {
   int id;
   String nip;
   int idJabatan;
-  dynamic idParent;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String? idParent;
+  String? createdAt;
+  String? updatedAt;
   String namaJabatan;
   MJabatan mJabatan;
 

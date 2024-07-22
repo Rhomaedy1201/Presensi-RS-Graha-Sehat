@@ -20,6 +20,7 @@ class TukarJadwalController extends GetxController {
   var isLoading = false.obs;
   var isLoading2 = false.obs;
   var isLoadingAcc = false.obs;
+  var isLoadingSubmit = false.obs;
   var isLoadingKarayawan = false.obs;
 
   @override
@@ -116,7 +117,6 @@ class TukarJadwalController extends GetxController {
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         karyawanPerUnitM = KaryawanPerUnitModel.fromJson(json);
-        print(json);
       } else {
         debugPrint(response.body.toString());
       }
@@ -148,7 +148,6 @@ class TukarJadwalController extends GetxController {
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         accAtasanM = AccAtasanModel.fromJson(json);
-        print(json);
       } else {
         debugPrint(response.body.toString());
       }
@@ -167,7 +166,7 @@ class TukarJadwalController extends GetxController {
       'Authorization': 'Bearer $token',
     };
     try {
-      isLoadingAcc(true);
+      isLoadingSubmit(true);
       if (token == null) {
         throw Exception("Token not found");
       }
@@ -194,7 +193,7 @@ class TukarJadwalController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoadingAcc(false);
+      isLoadingSubmit(false);
     }
   }
 }
