@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/confirm_components_tukar_shift.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/progress_components_tukar_shift.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/selesai_components_tukar_shift.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_required_text.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
@@ -476,63 +479,62 @@ class _TukarShiftViewState extends State<TukarShiftView>
                         ), // Mengatur border radius menjadi 0
                       ),
                     ),
-                    onPressed: () {
-                      if (valJadwalShift1 == null) {
-                        snackbarfailed(
-                            "Jadwal Shift pihak pertama wajib di isi!");
-                      } else {
-                        if (valKaryawan == null) {
-                          snackbarfailed("Nama pihak kedua wajib di isi!");
-                        } else {
-                          if (valJenis == '1') {
-                            if (valJadwalShift2 == null) {
+                    onPressed: tukarJadwalC.isLoadingSubmit.value
+                        ? null
+                        : () {
+                            if (valJadwalShift1 == null) {
                               snackbarfailed(
-                                  "Jadwal Shift pihak kedua wajib di isi!");
+                                  "Jadwal Shift pihak pertama wajib di isi!");
                             } else {
-                              // tukarJadwalC.postTukarShift(
-                              //   valJadwalShift1,
-                              //   valJadwalShift2,
-                              //   prefsC.nip.value,
-                              //   valKaryawan,
-                              //   tukarJadwalC.accAtasanM!.data.nip,
-                              //   valJenis,
-                              // );
+                              if (valKaryawan == null) {
+                                snackbarfailed(
+                                    "Nama pihak kedua wajib di isi!");
+                              } else {
+                                if (valJenis == '1') {
+                                  if (valJadwalShift2 == null) {
+                                    snackbarfailed(
+                                        "Jadwal Shift pihak kedua wajib di isi!");
+                                  } else {
+                                    tukarJadwalC.postTukarShift(
+                                      valJadwalShift1,
+                                      valJadwalShift2,
+                                      prefsC.nip.value,
+                                      valKaryawan,
+                                      tukarJadwalC.accAtasanM!.data.nip,
+                                      valJenis,
+                                    );
+                                  }
+                                } else {
+                                  tukarJadwalC.postTukarShift(
+                                    valJadwalShift1,
+                                    valJadwalShift2,
+                                    prefsC.nip.value,
+                                    valKaryawan,
+                                    tukarJadwalC.accAtasanM!.data.nip,
+                                    valJenis,
+                                  );
+                                }
+                              }
                             }
-                          } else {
-                            // tukarJadwalC.postTukarShift(
-                            //   valJadwalShift1,
-                            //   valJadwalShift2,
-                            //   prefsC.nip.value,
-                            //   valKaryawan,
-                            //   tukarJadwalC.accAtasanM!.data.nip,
-                            //   valJenis,
-                            // );
-                          }
-                        }
-                      }
-                    },
-                    child: const Text(
-                      "Submit Tukar Shift",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: cWhite,
-                      ),
-                    ),
+                          },
+                    child: tukarJadwalC.isLoadingSubmit.value
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            "Submit Tukar Shift",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: cWhite,
+                            ),
+                          ),
                   ),
                 ),
               ),
             ),
           ),
-          const Center(
-            child: Text("It's rainy here"),
-          ),
-          const Center(
-            child: Text("It's sunny here"),
-          ),
-          const Center(
-            child: Text("It's sunny here"),
-          ),
+          ProgressComponentsTukarShift(),
+          ConfirmComponentsTukarShift(),
+          SelesaiComponentsTukarShift(),
         ],
       ),
     );
