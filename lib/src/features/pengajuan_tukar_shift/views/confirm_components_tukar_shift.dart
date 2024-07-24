@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -153,119 +152,114 @@ class ConfirmComponentsTukarShiftState
   }
 
   Widget dataCards() {
-    return GestureDetector(
-      // onTap: () {
-      //   Get.toNamed(RouteNames.detailPengajuanView);
-      // },
-      child: Column(
-        children: [
-          Container(
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: cWhite,
-              borderRadius: BorderRadius.circular(7),
-              boxShadow: const [
-                BoxShadow(
-                  color: cGrey_400,
-                  blurRadius: 3,
-                  offset: Offset(1, 1), // Shadow position
+    return Column(
+      children: [
+        Container(
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: cWhite,
+            borderRadius: BorderRadius.circular(7),
+            boxShadow: const [
+              BoxShadow(
+                color: cGrey_400,
+                blurRadius: 3,
+                offset: Offset(1, 1), // Shadow position
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                user1(),
+                spaceHeight(6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Center(
+                      child: Icon(
+                        Icons.swap_vert_outlined,
+                        size: 22,
+                        color: cGrey_600,
+                      ),
+                    ),
+                    Text(
+                      "Tukar Shift",
+                      style: customTextStyle(FontWeight.w500, 12, cBlack),
+                    )
+                  ],
                 ),
+                spaceHeight(6),
+                user2(),
+                spaceHeight(15),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(
+                        width: Get.width,
+                        height: 30,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cPrimary,
+                            shadowColor: cPrimary_400,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                5,
+                              ), // Mengatur border radius menjadi 0
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "Terima",
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: cWhite,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    spaceWidth(5),
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(
+                        width: Get.width,
+                        height: 30,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cRed,
+                            shadowColor: cPrimary_400,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                5,
+                              ), // Mengatur border radius menjadi 0
+                            ),
+                          ),
+                          onPressed: () {
+                            showInputDialog(context);
+                          },
+                          child: const Text(
+                            "Tolak",
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: cWhite,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  user1(),
-                  spaceHeight(6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Center(
-                        child: Icon(
-                          Icons.swap_vert_outlined,
-                          size: 22,
-                          color: cGrey_600,
-                        ),
-                      ),
-                      Text(
-                        "Tukar Shift",
-                        style: customTextStyle(FontWeight.w500, 12, cBlack),
-                      )
-                    ],
-                  ),
-                  spaceHeight(6),
-                  user2(),
-                  spaceHeight(15),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: Get.width,
-                          height: 30,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: cPrimary,
-                              shadowColor: cPrimary_400,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  5,
-                                ), // Mengatur border radius menjadi 0
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: const Text(
-                              "Terima",
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: cWhite,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      spaceWidth(5),
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: Get.width,
-                          height: 30,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: cRed,
-                              shadowColor: cPrimary_400,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  5,
-                                ), // Mengatur border radius menjadi 0
-                              ),
-                            ),
-                            onPressed: () {
-                              showInputDialog(context);
-                            },
-                            child: const Text(
-                              "Tolak",
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: cWhite,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
