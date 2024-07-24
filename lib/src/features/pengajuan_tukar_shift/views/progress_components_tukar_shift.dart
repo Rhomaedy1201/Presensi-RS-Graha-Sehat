@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/routes/route_name.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/progress_ts_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -17,142 +18,99 @@ class ProgressComponentsTukarShift extends StatefulWidget {
 
 class _ProgressComponentsTukarShiftState
     extends State<ProgressComponentsTukarShift> {
+  ProgressTukarShiftController progressTukarShiftC =
+      Get.find<ProgressTukarShiftController>();
+
   DateTime tglAwal = DateTime.now();
   DateTime tglAkhir = DateTime.now();
   String? status;
   String? tipePengajuan;
   bool filterShow = true;
+
+  @override
+  void initState() {
+    super.initState();
+    progressTukarShiftC.getProgress();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      child: Column(
-        children: [
-          Container(
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: cWhite,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  color: cGrey_400,
-                  blurRadius: 15,
-                  offset: Offset(1, 1), // Shadow position
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: RefreshIndicator(
+        onRefresh: () async {
+          print("Refresh");
+        },
+        child: Obx(
+          () => progressTukarShiftC.isLoading.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 15),
+                  itemCount:
+                      progressTukarShiftC.progressTukarJadwalM!.data.length,
+                  itemBuilder: (context, index) {
+                    var data = progressTukarShiftC.progressTukarJadwalM?.data;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: dataCards(
+                        // Pihak 1
+                        data?[index].pihak1.nama,
+                        data?[index].pihak1.nip,
+                        data?[index].pihak1.namaJabatan,
+                        data?[index].tglPihak1.simpleDateRevers(),
+                        data?[index].tglPihak2.simpleDateRevers(),
+                        data?[index].shiftPihak1,
+                        data?[index].shiftPihak2,
+                        // Pihak 2
+                        data?[index].pihak2.nama,
+                        data?[index].pihak2.nip,
+                        data?[index].pihak2.namaJabatan,
+                        data?[index].tglPihak2.simpleDateRevers(),
+                        data?[index].tglPihak1.simpleDateRevers(),
+                        data?[index].shiftPihak2,
+                        data?[index].shiftPihak1,
+                        // ACC
+                        data?[index].accPihak2,
+                        data?[index].acc.nama,
+                        data?[index].accByAt,
+                        data?[index].accSdm,
+                        data?[index].accStatus,
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Filter",
-                        style: customTextStyle(FontWeight.w500, 13, cBlack),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          filterShow = !filterShow;
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: cWhite,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: cGrey_400,
-                                blurRadius: 7,
-                                offset: Offset(1, 1), // Shadow position
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Icon(
-                            filterShow
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down_sharp,
-                            size: 25,
-                            color: cBlack,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                !filterShow
-                    ? Container()
-                    : Container(
-                        width: Get.width,
-                        height: 3,
-                        color: cGrey_300,
-                      ),
-                !filterShow
-                    ? Container()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: formTglAwal(context),
-                                ),
-                                spaceWidth(10),
-                                Expanded(
-                                  flex: 1,
-                                  child: formTglAkhir(context),
-                                ),
-                              ],
-                            ),
-                            spaceHeight(10),
-                            SizedBox(
-                              width: Get.width,
-                              height: 35,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: cPrimary,
-                                  shadowColor: cPrimary_400,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      7,
-                                    ), // Mengatur border radius menjadi 0
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  "Filter",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: cWhite,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            spaceHeight(3)
-                          ],
-                        ),
-                      ),
-              ],
-            ),
-          ),
-          spaceHeight(10),
-          dataCards(),
-        ],
+        ),
       ),
     );
   }
 
-  Widget dataCards() {
+  Widget dataCards(
+    // pihak 1
+    nama1,
+    nip1,
+    jabatan1,
+    tglUtama1,
+    tglGanti1,
+    kdShiftUtama1,
+    kdShiftGanti1,
+    // Pihak 2
+    nama2,
+    nip2,
+    jabatan2,
+    tglUtama2,
+    tglGanti2,
+    kdShiftUtama2,
+    kdShiftGanti2,
+    // ACC
+    accPihak2,
+    namaAtasan,
+    accAtasan,
+    accSdm,
+    accStatus,
+  ) {
     return GestureDetector(
       onTap: () {
         Get.toNamed(RouteNames.detailPengajuanView);
@@ -178,7 +136,15 @@ class _ProgressComponentsTukarShiftState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  user1(),
+                  user1(
+                    nama1,
+                    nip1,
+                    jabatan1,
+                    tglUtama1,
+                    tglGanti1,
+                    kdShiftUtama1,
+                    kdShiftGanti1,
+                  ),
                   spaceHeight(6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +163,15 @@ class _ProgressComponentsTukarShiftState
                     ],
                   ),
                   spaceHeight(6),
-                  user2(),
+                  user2(
+                    nama2,
+                    nip2,
+                    jabatan2,
+                    tglUtama2,
+                    tglGanti2,
+                    kdShiftUtama2,
+                    kdShiftGanti2,
+                  ),
                   spaceHeight(15),
                   Container(
                     width: Get.width,
@@ -217,16 +191,14 @@ class _ProgressComponentsTukarShiftState
                               Row(
                                 children: [
                                   Text(
-                                    "Pihak 1 :",
+                                    "Pihak 2 :",
                                     style: customTextStyle(
                                         FontWeight.w600, 12, cBlack),
                                   ),
                                   spaceWidth(3),
-                                  const Icon(
-                                    Icons.check_circle_outline,
-                                    size: 17,
-                                    color: cPrimary,
-                                  )
+                                  accPihak2 != null
+                                      ? iconCheck()
+                                      : iconWaiting()
                                 ],
                               ),
                               Row(
@@ -237,16 +209,14 @@ class _ProgressComponentsTukarShiftState
                                         FontWeight.w600, 12, cBlack),
                                   ),
                                   Text(
-                                    "Choki pardede",
+                                    namaAtasan,
                                     style: customTextStyle(
                                         FontWeight.w900, 12, cBlack),
                                   ),
                                   spaceWidth(3),
-                                  const Icon(
-                                    Icons.timer_outlined,
-                                    size: 17,
-                                    color: cGrey_900,
-                                  )
+                                  accAtasan != null
+                                      ? iconCheck()
+                                      : iconWaiting(),
                                 ],
                               ),
                               Row(
@@ -257,11 +227,7 @@ class _ProgressComponentsTukarShiftState
                                         FontWeight.w600, 12, cBlack),
                                   ),
                                   spaceWidth(3),
-                                  const Icon(
-                                    Icons.timer_outlined,
-                                    size: 17,
-                                    color: cGrey_900,
-                                  )
+                                  accSdm != null ? iconCheck() : iconWaiting(),
                                 ],
                               ),
                               Row(
@@ -272,11 +238,9 @@ class _ProgressComponentsTukarShiftState
                                         FontWeight.w900, 12, cBlack),
                                   ),
                                   spaceWidth(3),
-                                  const Icon(
-                                    Icons.timer_outlined,
-                                    size: 17,
-                                    color: cGrey_900,
-                                  )
+                                  accStatus != null
+                                      ? iconCheck()
+                                      : iconWaiting(),
                                 ],
                               ),
                             ],
@@ -311,7 +275,24 @@ class _ProgressComponentsTukarShiftState
     );
   }
 
-  Widget user1() {
+  iconCheck() {
+    return const Icon(
+      Icons.check_circle_outline,
+      size: 17,
+      color: cPrimary,
+    );
+  }
+
+  iconWaiting() {
+    return const Icon(
+      Icons.timer_outlined,
+      size: 17,
+      color: cGrey_900,
+    );
+  }
+
+  Widget user1(nama1, nip1, jabatan1, tglUtama1, tglGanti1, kdShiftUtama1,
+      kdShiftGanti1) {
     return Column(
       children: [
         Row(
@@ -333,12 +314,12 @@ class _ProgressComponentsTukarShiftState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Muhammad Rhomaedi",
+                  nama1,
                   style: customTextStyle(FontWeight.w600, 12, cBlack),
                 ),
                 spaceHeight(1),
                 Text(
-                  "012377 | UNIT IT",
+                  "$nip1 | $jabatan1",
                   style: customTextStyle(FontWeight.w600, 10, cPrimary),
                 ),
                 spaceHeight(10),
@@ -363,7 +344,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglUtama1,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -378,7 +359,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglGanti1,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -409,7 +390,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "KD : PAGI 1",
+                              "KD : $kdShiftUtama1",
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -424,7 +405,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "PAGI 3",
+                              kdShiftGanti1,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -445,7 +426,15 @@ class _ProgressComponentsTukarShiftState
     );
   }
 
-  Column user2() {
+  Widget user2(
+    nama2,
+    nip2,
+    jabatan2,
+    tglUtama2,
+    tglGanti2,
+    kdShiftUtama2,
+    kdShiftGanti2,
+  ) {
     return Column(
       children: [
         Row(
@@ -467,12 +456,12 @@ class _ProgressComponentsTukarShiftState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Muhammad Rhomaedi",
+                  nama2,
                   style: customTextStyle(FontWeight.w600, 12, cBlack),
                 ),
                 spaceHeight(1),
                 Text(
-                  "012377 | UNIT IT",
+                  "$nip2 | $jabatan2",
                   style: customTextStyle(FontWeight.w600, 10, cPrimary),
                 ),
                 spaceHeight(10),
@@ -497,7 +486,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglUtama2,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -512,7 +501,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglGanti2,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -543,7 +532,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "KD : PAGI 1",
+                              "KD : $kdShiftUtama2",
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -558,7 +547,7 @@ class _ProgressComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "PAGI 3",
+                              kdShiftGanti2,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
