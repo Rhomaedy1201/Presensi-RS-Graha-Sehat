@@ -35,11 +35,11 @@ class Datum {
   int id;
   String nip;
   DateTime tanggal;
-  String kodeShift;
-  String shift;
-  String jamMasuk;
-  String jamPulang;
-  String tanggalCast;
+  String? kodeShift;
+  String? shift;
+  String? jamMasuk;
+  String? jamPulang;
+  String? tanggalCast;
 
   Datum({
     required this.id,

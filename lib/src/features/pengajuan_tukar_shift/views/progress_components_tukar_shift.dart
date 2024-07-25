@@ -52,49 +52,60 @@ class _ProgressComponentsTukarShiftState
               : !progressTukarShiftC.isEmptyData.value
                   ? Center(
                       child: Text(
-                        "Progress Pengajuan Kosong!.",
-                        style: customTextStyle(FontWeight.w600, 17, cBlack),
+                        "Progress Pengajuan Masih\nKosong!.",
+                        textAlign: TextAlign.center,
+                        style: customTextStyle(FontWeight.w400, 17, cBlack),
                       ),
                     )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 15),
-                      itemCount:
-                          progressTukarShiftC.progressTukarJadwalM!.data.length,
-                      itemBuilder: (context, index) {
-                        var data =
-                            progressTukarShiftC.progressTukarJadwalM?.data;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: dataCards(
-                            // Pihak 1
-                            data?[index].pihak1.nama,
-                            data?[index].pihak1.nip,
-                            data?[index].pihak1.namaJabatan,
-                            data?[index].tglPihak1.simpleDateRevers(),
-                            data?[index].tglPihak2.simpleDateRevers(),
-                            data?[index].shiftPihak1,
-                            data?[index].shiftPihak2,
-                            // Pihak 2
-                            data?[index].pihak2.nama,
-                            data?[index].pihak2.nip,
-                            data?[index].pihak2.namaJabatan,
-                            data?[index].tglPihak2.simpleDateRevers(),
-                            data?[index].tglPihak1.simpleDateRevers(),
-                            data?[index].shiftPihak2,
-                            data?[index].shiftPihak1,
-                            // ACC
-                            data?[index].accPihak2,
-                            data?[index].acc.nama,
-                            data?[index].accByAt,
-                            data?[index].accSdm,
-                            data?[index].accStatus,
-                            data?[index].ket,
-                            data?[index].id,
+                  : progressTukarShiftC
+                              .progressTukarJadwalM?.data[0].pihak1.nip ==
+                          tukarJadwalC.nipUser.value
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.only(top: 15),
+                          itemCount: progressTukarShiftC
+                              .progressTukarJadwalM!.data.length,
+                          itemBuilder: (context, index) {
+                            var data =
+                                progressTukarShiftC.progressTukarJadwalM?.data;
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: dataCards(
+                                // Pihak 1
+                                data?[index].pihak1.nama,
+                                data?[index].pihak1.nip,
+                                data?[index].pihak1.namaJabatan,
+                                data?[index].tglPihak1.simpleDateRevers(),
+                                data?[index].tglPihak2.simpleDateRevers(),
+                                data?[index].shiftPihak1,
+                                data?[index].shiftPihak2,
+                                // Pihak 2
+                                data?[index].pihak2.nama,
+                                data?[index].pihak2.nip,
+                                data?[index].pihak2.namaJabatan,
+                                data?[index].tglPihak2.simpleDateRevers(),
+                                data?[index].tglPihak1.simpleDateRevers(),
+                                data?[index].shiftPihak2,
+                                data?[index].shiftPihak1,
+                                // ACC
+                                data?[index].accPihak2,
+                                data?[index].acc.nama,
+                                data?[index].accByAt,
+                                data?[index].accSdm,
+                                data?[index].accStatus,
+                                data?[index].ket,
+                                data?[index].id,
+                              ),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Text(
+                            "Progress Pengajuan Masih\nKosong!.",
+                            textAlign: TextAlign.center,
+                            style: customTextStyle(FontWeight.w400, 17, cBlack),
                           ),
-                        );
-                      },
-                    ),
+                        ),
         ),
       ),
     );
@@ -126,271 +137,258 @@ class _ProgressComponentsTukarShiftState
     ket,
     idProgress,
   ) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(RouteNames.detailPengajuanView);
-      },
-      child: Column(
-        children: [
-          Container(
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: cWhite,
-              borderRadius: BorderRadius.circular(7),
-              boxShadow: const [
-                BoxShadow(
-                  color: cGrey_400,
-                  blurRadius: 3,
-                  offset: Offset(1, 1), // Shadow position
+    return Column(
+      children: [
+        Container(
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: cWhite,
+            borderRadius: BorderRadius.circular(7),
+            boxShadow: const [
+              BoxShadow(
+                color: cGrey_400,
+                blurRadius: 3,
+                offset: Offset(1, 1), // Shadow position
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                user1(
+                  nama1,
+                  nip1,
+                  jabatan1,
+                  tglUtama1,
+                  tglGanti1,
+                  kdShiftUtama1,
+                  kdShiftGanti1,
+                ),
+                spaceHeight(6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Center(
+                      child: Icon(
+                        Icons.swap_vert_outlined,
+                        size: 22,
+                        color: cGrey_600,
+                      ),
+                    ),
+                    Text(
+                      "Tukar Shift",
+                      style: customTextStyle(FontWeight.w500, 12, cBlack),
+                    )
+                  ],
+                ),
+                spaceHeight(6),
+                user2(
+                  nama2,
+                  nip2,
+                  jabatan2,
+                  tglUtama2,
+                  tglGanti2,
+                  kdShiftUtama2,
+                  kdShiftGanti2,
+                ),
+                spaceHeight(15),
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: cGrey_500, width: 1.5),
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, top: 3, bottom: 3, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Pihak 2 :",
+                                  style: customTextStyle(
+                                      FontWeight.w600, 12, cBlack),
+                                ),
+                                spaceWidth(3),
+                                accPihak2 != null ? iconCheck() : iconWaiting()
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Atasan : ",
+                                  style: customTextStyle(
+                                      FontWeight.w600, 12, cBlack),
+                                ),
+                                Text(
+                                  namaAtasan,
+                                  style: customTextStyle(
+                                      FontWeight.w900, 12, cBlack),
+                                ),
+                                spaceWidth(3),
+                                accAtasan != null ? iconCheck() : iconWaiting(),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "ACC SDM : ",
+                                  style: customTextStyle(
+                                      FontWeight.w600, 12, cBlack),
+                                ),
+                                spaceWidth(3),
+                                accSdm != null ? iconCheck() : iconWaiting(),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "PENGAJUAN BERHASIL :",
+                                  style: customTextStyle(
+                                      FontWeight.w900, 12, cBlack),
+                                ),
+                                spaceWidth(3),
+                                accStatus != null ? iconCheck() : iconWaiting(),
+                              ],
+                            ),
+                          ],
+                        ),
+                        tukarJadwalC.nipUser.value == nip1 && accPihak2 == null
+                            ? InkWell(
+                                onTap: () {
+                                  Get.defaultDialog(
+                                    title: "Warning!",
+                                    backgroundColor: cWhite,
+                                    radius: 10,
+                                    barrierDismissible: true,
+                                    titleStyle: customTextStyle(
+                                        FontWeight.w500, 18, cBlack),
+                                    titlePadding:
+                                        const EdgeInsets.only(top: 15),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        10, 10, 10, 0),
+                                    content: Column(
+                                      children: [
+                                        const Text(
+                                          "Apakah anda ingin delete pengajuan ini?",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 20, 10, 0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    shadowColor:
+                                                        Colors.transparent,
+                                                    primary: cGrey_500,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.0),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    "Batal",
+                                                    style: customTextStyle(
+                                                        FontWeight.w500,
+                                                        12,
+                                                        cBlack),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    progressTukarShiftC
+                                                        .deleteProgress(
+                                                            idProgress);
+                                                    Get.back();
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    shadowColor:
+                                                        Colors.transparent,
+                                                    primary: cPrimary,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.0),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    "OK",
+                                                    style: customTextStyle(
+                                                        FontWeight.w500,
+                                                        12,
+                                                        cBlack),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                    color: cRed_100,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: const Icon(
+                                    Icons.delete_forever,
+                                    size: 25,
+                                    color: cRed,
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
+                  ),
+                ),
+                spaceHeight(4),
+                Row(
+                  children: [
+                    Text(
+                      "Ket : ",
+                      style: customTextStyle(FontWeight.w500, 12, cBlack),
+                    ),
+                    Text(
+                      ket,
+                      style: customTextStyle(FontWeight.w800, 12, cBlack),
+                    ),
+                  ],
                 ),
               ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  user1(
-                    nama1,
-                    nip1,
-                    jabatan1,
-                    tglUtama1,
-                    tglGanti1,
-                    kdShiftUtama1,
-                    kdShiftGanti1,
-                  ),
-                  spaceHeight(6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Center(
-                        child: Icon(
-                          Icons.swap_vert_outlined,
-                          size: 22,
-                          color: cGrey_600,
-                        ),
-                      ),
-                      Text(
-                        "Tukar Shift",
-                        style: customTextStyle(FontWeight.w500, 12, cBlack),
-                      )
-                    ],
-                  ),
-                  spaceHeight(6),
-                  user2(
-                    nama2,
-                    nip2,
-                    jabatan2,
-                    tglUtama2,
-                    tglGanti2,
-                    kdShiftUtama2,
-                    kdShiftGanti2,
-                  ),
-                  spaceHeight(15),
-                  Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: cGrey_500, width: 1.5),
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10, top: 3, bottom: 3, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Pihak 2 :",
-                                    style: customTextStyle(
-                                        FontWeight.w600, 12, cBlack),
-                                  ),
-                                  spaceWidth(3),
-                                  accPihak2 != null
-                                      ? iconCheck()
-                                      : iconWaiting()
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Atasan : ",
-                                    style: customTextStyle(
-                                        FontWeight.w600, 12, cBlack),
-                                  ),
-                                  Text(
-                                    namaAtasan,
-                                    style: customTextStyle(
-                                        FontWeight.w900, 12, cBlack),
-                                  ),
-                                  spaceWidth(3),
-                                  accAtasan != null
-                                      ? iconCheck()
-                                      : iconWaiting(),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "ACC SDM : ",
-                                    style: customTextStyle(
-                                        FontWeight.w600, 12, cBlack),
-                                  ),
-                                  spaceWidth(3),
-                                  accSdm != null ? iconCheck() : iconWaiting(),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "PENGAJUAN BERHASIL :",
-                                    style: customTextStyle(
-                                        FontWeight.w900, 12, cBlack),
-                                  ),
-                                  spaceWidth(3),
-                                  accStatus != null
-                                      ? iconCheck()
-                                      : iconWaiting(),
-                                ],
-                              ),
-                            ],
-                          ),
-                          tukarJadwalC.nipUser.value == nip1 &&
-                                  accPihak2 == null
-                              ? InkWell(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                      title: "Warning!",
-                                      backgroundColor: cWhite,
-                                      radius: 10,
-                                      barrierDismissible: true,
-                                      titleStyle: customTextStyle(
-                                          FontWeight.w500, 18, cBlack),
-                                      titlePadding:
-                                          const EdgeInsets.only(top: 15),
-                                      contentPadding: const EdgeInsets.fromLTRB(
-                                          10, 10, 10, 0),
-                                      content: Column(
-                                        children: [
-                                          const Text(
-                                            "Apakah anda ingin delete pengajuan ini?",
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                10, 20, 10, 0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: ElevatedButton(
-                                                    onPressed: () {
-                                                      Get.back();
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      shadowColor:
-                                                          Colors.transparent,
-                                                      primary: cGrey_500,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20.0),
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "Batal",
-                                                      style: customTextStyle(
-                                                          FontWeight.w500,
-                                                          12,
-                                                          cBlack),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Expanded(
-                                                  child: ElevatedButton(
-                                                    onPressed: () {
-                                                      progressTukarShiftC
-                                                          .deleteProgress(
-                                                              idProgress);
-                                                      Get.back();
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      shadowColor:
-                                                          Colors.transparent,
-                                                      primary: cPrimary,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20.0),
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "OK",
-                                                      style: customTextStyle(
-                                                          FontWeight.w500,
-                                                          12,
-                                                          cBlack),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                      color: cRed_100,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      size: 25,
-                                      color: cRed,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  spaceHeight(4),
-                  Row(
-                    children: [
-                      Text(
-                        "Ket : ",
-                        style: customTextStyle(FontWeight.w500, 12, cBlack),
-                      ),
-                      Text(
-                        ket,
-                        style: customTextStyle(FontWeight.w800, 12, cBlack),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
