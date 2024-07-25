@@ -30,7 +30,7 @@ class _ProgressComponentsTukarShiftState
   @override
   void initState() {
     super.initState();
-    progressTukarShiftC.getProgress();
+    // progressTukarShiftC.getProgress();
   }
 
   @override
@@ -46,42 +46,50 @@ class _ProgressComponentsTukarShiftState
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(top: 15),
-                  itemCount:
-                      progressTukarShiftC.progressTukarJadwalM!.data.length,
-                  itemBuilder: (context, index) {
-                    var data = progressTukarShiftC.progressTukarJadwalM?.data;
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: dataCards(
-                        // Pihak 1
-                        data?[index].pihak1.nama,
-                        data?[index].pihak1.nip,
-                        data?[index].pihak1.namaJabatan,
-                        data?[index].tglPihak1.simpleDateRevers(),
-                        data?[index].tglPihak2.simpleDateRevers(),
-                        data?[index].shiftPihak1,
-                        data?[index].shiftPihak2,
-                        // Pihak 2
-                        data?[index].pihak2.nama,
-                        data?[index].pihak2.nip,
-                        data?[index].pihak2.namaJabatan,
-                        data?[index].tglPihak2.simpleDateRevers(),
-                        data?[index].tglPihak1.simpleDateRevers(),
-                        data?[index].shiftPihak2,
-                        data?[index].shiftPihak1,
-                        // ACC
-                        data?[index].accPihak2,
-                        data?[index].acc.nama,
-                        data?[index].accByAt,
-                        data?[index].accSdm,
-                        data?[index].accStatus,
+              : !progressTukarShiftC.isEmptyData.value
+                  ? Center(
+                      child: Text(
+                        "Progress Pengajuan Kosong!.",
+                        style: customTextStyle(FontWeight.w600, 17, cBlack),
                       ),
-                    );
-                  },
-                ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(top: 15),
+                      itemCount:
+                          progressTukarShiftC.progressTukarJadwalM!.data.length,
+                      itemBuilder: (context, index) {
+                        var data =
+                            progressTukarShiftC.progressTukarJadwalM?.data;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: dataCards(
+                            // Pihak 1
+                            data?[index].pihak1.nama,
+                            data?[index].pihak1.nip,
+                            data?[index].pihak1.namaJabatan,
+                            data?[index].tglPihak1.simpleDateRevers(),
+                            data?[index].tglPihak2.simpleDateRevers(),
+                            data?[index].shiftPihak1,
+                            data?[index].shiftPihak2,
+                            // Pihak 2
+                            data?[index].pihak2.nama,
+                            data?[index].pihak2.nip,
+                            data?[index].pihak2.namaJabatan,
+                            data?[index].tglPihak2.simpleDateRevers(),
+                            data?[index].tglPihak1.simpleDateRevers(),
+                            data?[index].shiftPihak2,
+                            data?[index].shiftPihak1,
+                            // ACC
+                            data?[index].accPihak2,
+                            data?[index].acc.nama,
+                            data?[index].accByAt,
+                            data?[index].accSdm,
+                            data?[index].accStatus,
+                          ),
+                        );
+                      },
+                    ),
         ),
       ),
     );

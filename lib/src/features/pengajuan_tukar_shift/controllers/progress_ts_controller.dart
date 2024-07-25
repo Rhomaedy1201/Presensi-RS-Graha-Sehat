@@ -10,10 +10,11 @@ import 'package:http/http.dart' as http;
 class ProgressTukarShiftController extends GetxController {
   ProgressTukarJadwalModel? progressTukarJadwalM;
   var isLoading = false.obs;
+  var isEmptyData = true.obs;
 
   @override
   void onInit() {
-    // getProgress();
+    getProgress();
     super.onInit();
   }
 
@@ -38,7 +39,11 @@ class ProgressTukarShiftController extends GetxController {
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         progressTukarJadwalM = ProgressTukarJadwalModel.fromJson(json);
-        print(json);
+        if (progressTukarJadwalM!.data.isEmpty) {
+          isEmptyData(false);
+        } else {
+          isEmptyData(true);
+        }
       } else {
         debugPrint(response.body.toString());
       }
