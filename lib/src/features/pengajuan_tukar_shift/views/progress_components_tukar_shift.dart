@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/progress_ts_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_alert.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
@@ -20,6 +22,7 @@ class _ProgressComponentsTukarShiftState
     extends State<ProgressComponentsTukarShift> {
   ProgressTukarShiftController progressTukarShiftC =
       Get.find<ProgressTukarShiftController>();
+  TukarJadwalController tukarJadwalC = Get.find<TukarJadwalController>();
 
   DateTime tglAwal = DateTime.now();
   DateTime tglAkhir = DateTime.now();
@@ -30,7 +33,7 @@ class _ProgressComponentsTukarShiftState
   @override
   void initState() {
     super.initState();
-    // progressTukarShiftC.getProgress();
+    progressTukarShiftC.getProgress();
   }
 
   @override
@@ -86,6 +89,8 @@ class _ProgressComponentsTukarShiftState
                             data?[index].accByAt,
                             data?[index].accSdm,
                             data?[index].accStatus,
+                            data?[index].ket,
+                            data?[index].id,
                           ),
                         );
                       },
@@ -118,6 +123,8 @@ class _ProgressComponentsTukarShiftState
     accAtasan,
     accSdm,
     accStatus,
+    ket,
+    idProgress,
   ) {
     return GestureDetector(
       onTap: () {
@@ -253,27 +260,131 @@ class _ProgressComponentsTukarShiftState
                               ),
                             ],
                           ),
-                          InkWell(
-                            onTap: () {
-                              print("object");
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: cRed_100,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Icon(
-                                Icons.delete_forever,
-                                size: 25,
-                                color: cRed,
-                              ),
-                            ),
-                          ),
+                          tukarJadwalC.nipUser.value == nip1 &&
+                                  accPihak2 == null
+                              ? InkWell(
+                                  onTap: () {
+                                    Get.defaultDialog(
+                                      title: "Warning!",
+                                      backgroundColor: cWhite,
+                                      radius: 10,
+                                      barrierDismissible: true,
+                                      titleStyle: customTextStyle(
+                                          FontWeight.w500, 18, cBlack),
+                                      titlePadding:
+                                          const EdgeInsets.only(top: 15),
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                          10, 10, 10, 0),
+                                      content: Column(
+                                        children: [
+                                          const Text(
+                                            "Apakah anda ingin delete pengajuan ini?",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 20, 10, 0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Get.back();
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shadowColor:
+                                                          Colors.transparent,
+                                                      primary: cGrey_500,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20.0),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      "Batal",
+                                                      style: customTextStyle(
+                                                          FontWeight.w500,
+                                                          12,
+                                                          cBlack),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      progressTukarShiftC
+                                                          .deleteProgress(
+                                                              idProgress);
+                                                      Get.back();
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shadowColor:
+                                                          Colors.transparent,
+                                                      primary: cPrimary,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20.0),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      "OK",
+                                                      style: customTextStyle(
+                                                          FontWeight.w500,
+                                                          12,
+                                                          cBlack),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                      color: cRed_100,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      size: 25,
+                                      color: cRed,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  spaceHeight(4),
+                  Row(
+                    children: [
+                      Text(
+                        "Ket : ",
+                        style: customTextStyle(FontWeight.w500, 12, cBlack),
+                      ),
+                      Text(
+                        ket,
+                        style: customTextStyle(FontWeight.w800, 12, cBlack),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -435,7 +435,8 @@ class _TukarShiftViewState extends State<TukarShiftView>
                                           TextField(
                                             autocorrect: false,
                                             maxLines: 1,
-                                            controller: null,
+                                            controller:
+                                                tukarJadwalC.ketController,
                                             enableSuggestions: false,
                                             style: customTextStyle(
                                                 FontWeight.w400, 12, cBlack),

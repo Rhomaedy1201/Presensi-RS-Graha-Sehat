@@ -16,12 +16,14 @@ class TukarJadwalController extends GetxController {
   JadwalOnTukarJadwalModel2? jadwalOnTukarJadwalM2;
   KaryawanPerUnitModel? karyawanPerUnitM;
   AccAtasanModel? accAtasanM;
+  TextEditingController ketController = TextEditingController();
 
   var isLoading = false.obs;
   var isLoading2 = false.obs;
   var isLoadingAcc = false.obs;
   var isLoadingSubmit = false.obs;
   var isLoadingKarayawan = false.obs;
+  var nipUser = "".obs;
 
   @override
   void onInit() {
@@ -36,6 +38,7 @@ class TukarJadwalController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final nip = prefs.getString('nip');
+    nipUser.value = nip ?? "";
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -177,6 +180,7 @@ class TukarJadwalController extends GetxController {
         "nip_pihak2": nip2.toString(),
         "acc_by": acc.toString(),
         "jenis": jenis,
+        "ket": ketController.text,
       };
       http.Response response = await http.post(
         Uri.parse("$base_url/tukar-jadwal"),
