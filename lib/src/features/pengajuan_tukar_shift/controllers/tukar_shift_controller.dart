@@ -24,6 +24,7 @@ class TukarJadwalController extends GetxController {
   var isLoadingSubmit = false.obs;
   var isLoadingKarayawan = false.obs;
   var nipUser = "".obs;
+  var roleUser = "".obs;
 
   @override
   void onInit() {
@@ -38,7 +39,9 @@ class TukarJadwalController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final nip = prefs.getString('nip');
+    final role = prefs.getString('role');
     nipUser.value = nip ?? "";
+    roleUser.value = role ?? "";
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',

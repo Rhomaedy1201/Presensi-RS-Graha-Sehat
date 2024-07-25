@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/confirm_ts_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -16,6 +18,9 @@ class ConfirmComponentsTukarShift extends StatefulWidget {
 
 class ConfirmComponentsTukarShiftState
     extends State<ConfirmComponentsTukarShift> {
+  ConfirmTukarShiftController confirmTukarShiftC =
+      Get.find<ConfirmTukarShiftController>();
+  TukarJadwalController tukarJadwalC = Get.find<TukarJadwalController>();
   DateTime tglAwal = DateTime.now();
   DateTime tglAkhir = DateTime.now();
   String? status;
@@ -23,136 +28,139 @@ class ConfirmComponentsTukarShiftState
   bool filterShow = true;
 
   @override
+  void initState() {
+    confirmTukarShiftC.getConfirm();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      child: Column(
-        children: [
-          Container(
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: cWhite,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  color: cGrey_400,
-                  blurRadius: 15,
-                  offset: Offset(1, 1), // Shadow position
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Filter",
-                        style: customTextStyle(FontWeight.w500, 13, cBlack),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          filterShow = !filterShow;
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: cWhite,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: cGrey_400,
-                                blurRadius: 7,
-                                offset: Offset(1, 1), // Shadow position
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(5),
+      child: Obx(
+        () => confirmTukarShiftC.isLoading.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : !confirmTukarShiftC.isEmptyData.value
+                ? Center(
+                    child: Text(
+                      "Progress Pengajuan Masih\nKosong!.",
+                      textAlign: TextAlign.center,
+                      style: customTextStyle(FontWeight.w400, 17, cBlack),
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        confirmTukarShiftC.confirmTukarJadwalM!.data.length,
+                    itemBuilder: (context, index) {
+                      var data = confirmTukarShiftC.confirmTukarJadwalM?.data;
+                      if (tukarJadwalC.nipUser.value ==
+                              data?[index].pihak2.nip &&
+                          data?[index].accPihak2 == null) {
+                        return dataCards(
+                          // Pihak 1
+                          data?[index].pihak1.nama,
+                          data?[index].pihak1.nip,
+                          data?[index].pihak1.namaJabatan,
+                          data?[index].tglPihak1.simpleDateRevers(),
+                          data?[index].tglPihak2.simpleDateRevers(),
+                          data?[index].shiftPihak1,
+                          data?[index].shiftPihak2,
+                          // Pihak 2
+                          data?[index].pihak2.nama,
+                          data?[index].pihak2.nip,
+                          data?[index].pihak2.namaJabatan,
+                          data?[index].tglPihak2.simpleDateRevers(),
+                          data?[index].tglPihak1.simpleDateRevers(),
+                          data?[index].shiftPihak2,
+                          data?[index].shiftPihak1,
+                          "acc1",
+                          data?[index].id,
+                        );
+                      } else if (tukarJadwalC.nipUser.value ==
+                              data?[index].acc.nip &&
+                          data?[index].accByAt == null) {
+                        return dataCards(
+                          // Pihak 1
+                          data?[index].pihak1.nama,
+                          data?[index].pihak1.nip,
+                          data?[index].pihak1.namaJabatan,
+                          data?[index].tglPihak1.simpleDateRevers(),
+                          data?[index].tglPihak2.simpleDateRevers(),
+                          data?[index].shiftPihak1,
+                          data?[index].shiftPihak2,
+                          // Pihak 2
+                          data?[index].pihak2.nama,
+                          data?[index].pihak2.nip,
+                          data?[index].pihak2.namaJabatan,
+                          data?[index].tglPihak2.simpleDateRevers(),
+                          data?[index].tglPihak1.simpleDateRevers(),
+                          data?[index].shiftPihak2,
+                          data?[index].shiftPihak1,
+                          "acc2",
+                          data?[index].id,
+                        );
+                      } else if (tukarJadwalC.roleUser.value == "SDM" &&
+                          data?[index].accSdm == null) {
+                        return dataCards(
+                          // Pihak 1
+                          data?[index].pihak1.nama,
+                          data?[index].pihak1.nip,
+                          data?[index].pihak1.namaJabatan,
+                          data?[index].tglPihak1.simpleDateRevers(),
+                          data?[index].tglPihak2.simpleDateRevers(),
+                          data?[index].shiftPihak1,
+                          data?[index].shiftPihak2,
+                          // Pihak 2
+                          data?[index].pihak2.nama,
+                          data?[index].pihak2.nip,
+                          data?[index].pihak2.namaJabatan,
+                          data?[index].tglPihak2.simpleDateRevers(),
+                          data?[index].tglPihak1.simpleDateRevers(),
+                          data?[index].shiftPihak2,
+                          data?[index].shiftPihak1,
+                          "sdm",
+                          data?[index].id,
+                        );
+                      } else {
+                        return Padding(
+                          padding: EdgeInsets.only(top: Get.height / 2.7),
+                          child: Text(
+                            "Confirmasi Pengajuan Masih\nKosong!.",
+                            textAlign: TextAlign.center,
+                            style: customTextStyle(FontWeight.w400, 17, cBlack),
                           ),
-                          child: Icon(
-                            filterShow
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down_sharp,
-                            size: 25,
-                            color: cBlack,
-                          ),
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+                    },
                   ),
-                ),
-                !filterShow
-                    ? Container()
-                    : Container(
-                        width: Get.width,
-                        height: 3,
-                        color: cGrey_300,
-                      ),
-                !filterShow
-                    ? Container()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: formTglAwal(context),
-                                ),
-                                spaceWidth(10),
-                                Expanded(
-                                  flex: 1,
-                                  child: formTglAkhir(context),
-                                ),
-                              ],
-                            ),
-                            spaceHeight(10),
-                            SizedBox(
-                              width: Get.width,
-                              height: 35,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: cPrimary,
-                                  shadowColor: cPrimary_400,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      7,
-                                    ), // Mengatur border radius menjadi 0
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  "Filter",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: cWhite,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            spaceHeight(3)
-                          ],
-                        ),
-                      ),
-              ],
-            ),
-          ),
-          spaceHeight(10),
-          dataCards(),
-        ],
       ),
     );
   }
 
-  Widget dataCards() {
+  Widget dataCards(
+    // pihak 1
+    nama1,
+    nip1,
+    jabatan1,
+    tglUtama1,
+    tglGanti1,
+    kdShiftUtama1,
+    kdShiftGanti1,
+    // Pihak 2
+    nama2,
+    nip2,
+    jabatan2,
+    tglUtama2,
+    tglGanti2,
+    kdShiftUtama2,
+    kdShiftGanti2,
+    // Confirm
+    type,
+    idIzin,
+  ) {
     return Column(
       children: [
         Container(
@@ -174,7 +182,15 @@ class ConfirmComponentsTukarShiftState
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                user1(),
+                user1(
+                  nama1,
+                  nip1,
+                  jabatan1,
+                  tglUtama1,
+                  tglGanti1,
+                  kdShiftUtama1,
+                  kdShiftGanti1,
+                ),
                 spaceHeight(6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +209,15 @@ class ConfirmComponentsTukarShiftState
                   ],
                 ),
                 spaceHeight(6),
-                user2(),
+                user2(
+                  nama2,
+                  nip2,
+                  jabatan2,
+                  tglUtama2,
+                  tglGanti2,
+                  kdShiftUtama2,
+                  kdShiftGanti2,
+                ),
                 spaceHeight(15),
                 Row(
                   children: [
@@ -212,7 +236,9 @@ class ConfirmComponentsTukarShiftState
                               ), // Mengatur border radius menjadi 0
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            confirmTukarShiftC.accConfirm(type, idIzin);
+                          },
                           child: const Text(
                             "Terima",
                             style: TextStyle(
@@ -315,7 +341,8 @@ class ConfirmComponentsTukarShiftState
     );
   }
 
-  Widget user1() {
+  Widget user1(nama1, nip1, jabatan1, tglUtama1, tglGanti1, kdShiftUtama1,
+      kdShiftGanti1) {
     return Column(
       children: [
         Row(
@@ -337,12 +364,12 @@ class ConfirmComponentsTukarShiftState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Muhammad Rhomaedi",
+                  nama1,
                   style: customTextStyle(FontWeight.w600, 12, cBlack),
                 ),
                 spaceHeight(1),
                 Text(
-                  "012377 | UNIT IT",
+                  "$nip1 | $jabatan1",
                   style: customTextStyle(FontWeight.w600, 10, cPrimary),
                 ),
                 spaceHeight(10),
@@ -367,7 +394,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglUtama1,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -382,7 +409,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglGanti1,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -413,7 +440,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "KD : PAGI 1",
+                              "KD : $kdShiftUtama1",
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -428,7 +455,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "PAGI 3",
+                              kdShiftGanti1,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -449,7 +476,15 @@ class ConfirmComponentsTukarShiftState
     );
   }
 
-  Column user2() {
+  Widget user2(
+    nama2,
+    nip2,
+    jabatan2,
+    tglUtama2,
+    tglGanti2,
+    kdShiftUtama2,
+    kdShiftGanti2,
+  ) {
     return Column(
       children: [
         Row(
@@ -471,12 +506,12 @@ class ConfirmComponentsTukarShiftState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Muhammad Rhomaedi",
+                  nama2,
                   style: customTextStyle(FontWeight.w600, 12, cBlack),
                 ),
                 spaceHeight(1),
                 Text(
-                  "012377 | UNIT IT",
+                  "$nip2 | $jabatan2",
                   style: customTextStyle(FontWeight.w600, 10, cPrimary),
                 ),
                 spaceHeight(10),
@@ -501,7 +536,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglUtama2,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -516,7 +551,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "20-07-2024",
+                              tglGanti2,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -547,7 +582,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "KD : PAGI 1",
+                              "KD : $kdShiftUtama2",
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
@@ -562,7 +597,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                             spaceWidth(5),
                             Text(
-                              "PAGI 3",
+                              kdShiftGanti2,
                               style: customTextStyle(
                                 FontWeight.w600,
                                 10,
