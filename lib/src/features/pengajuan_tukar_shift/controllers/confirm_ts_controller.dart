@@ -69,10 +69,7 @@ class ConfirmTukarShiftController extends GetxController {
         throw Exception("Token not found");
       }
 
-      Map body = {
-        "type": type, // acc1,acc3, sdm,
-        "id_izin": idIzin
-      };
+      Map body = {"jenis": type, "id_tukar": idIzin};
 
       http.Response response = await http.post(
         Uri.parse("$base_url/tukar-jadwal/acc-submit"),
@@ -82,6 +79,40 @@ class ConfirmTukarShiftController extends GetxController {
 
       if (response.statusCode == 200) {
         snackbarSuccess("Berhasil Menerima Pengajuan.");
+        getConfirm();
+      } else {
+        debugPrint(response.body.toString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingAcc(false);
+    }
+  }
+
+  Future<void> tolakConfirm(id, ket, jenis) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingAcc(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      Map body = {'ket': ket, 'jenis': jenis};
+
+      http.Response response = await http.put(
+        Uri.parse("$base_url/tolak/form/$id"),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        snackbarSuccess("Berhasil Menolak Pengajuan.");
         getConfirm();
       } else {
         debugPrint(response.body.toString());

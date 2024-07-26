@@ -7,6 +7,7 @@ import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/progress_co
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/selesai_components_tukar_shift.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_required_text.dart';
+import 'package:presensi_gs/utils/components/my_shoten_last_name.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -1070,7 +1071,7 @@ class _TukarShiftViewState extends State<TukarShiftView>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        shortenLastName(name),
                         style: customTextStyle(FontWeight.w500, 13, cGrey_900),
                       ),
                     ],

@@ -76,7 +76,7 @@ class ConfirmComponentsTukarShiftState
                           data?[index].tglPihak1.simpleDateRevers(),
                           data?[index].shiftPihak2,
                           data?[index].shiftPihak1,
-                          "acc1",
+                          "pihak2",
                           data?[index].id,
                         );
                       } else if (tukarJadwalC.nipUser.value ==
@@ -99,11 +99,12 @@ class ConfirmComponentsTukarShiftState
                           data?[index].tglPihak1.simpleDateRevers(),
                           data?[index].shiftPihak2,
                           data?[index].shiftPihak1,
-                          "acc2",
+                          "atasan",
                           data?[index].id,
                         );
                       } else if (tukarJadwalC.roleUser.value == "SDM" &&
-                          data?[index].accSdm == null) {
+                          data?[index].accSdm == null &&
+                          data?[index].accByAt != null) {
                         return dataCards(
                           // Pihak 1
                           data?[index].pihak1.nama,
@@ -267,7 +268,7 @@ class ConfirmComponentsTukarShiftState
                             ),
                           ),
                           onPressed: () {
-                            showInputDialog(context);
+                            showInputDialog(context, idIzin);
                           },
                           child: const Text(
                             "Tolak",
@@ -290,7 +291,7 @@ class ConfirmComponentsTukarShiftState
     );
   }
 
-  void showInputDialog(BuildContext context) {
+  void showInputDialog(BuildContext context, id) {
     final TextEditingController _controller = TextEditingController();
 
     showDialog(
@@ -318,17 +319,18 @@ class ConfirmComponentsTukarShiftState
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Save'),
+              child: const Text('Save'),
               onPressed: () {
                 String input = _controller.text;
                 // Lakukan sesuatu dengan inputan
                 print('Input: $input');
+                confirmTukarShiftC.tolakConfirm(id, input, "TUKARJADWAL");
                 Navigator.of(context).pop();
               },
             ),
