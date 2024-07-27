@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/confirm_ts_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/progress_ts_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/selesai_ts_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
 
 class TukarShiftBinding extends Bindings {
@@ -14,6 +15,9 @@ class TukarShiftBinding extends Bindings {
     );
     Get.lazyPut<ConfirmTukarShiftController>(
       () => ConfirmTukarShiftController(),
+    );
+    Get.lazyPut<SelesaiTukarShiftController>(
+      () => SelesaiTukarShiftController(),
     );
   }
 }

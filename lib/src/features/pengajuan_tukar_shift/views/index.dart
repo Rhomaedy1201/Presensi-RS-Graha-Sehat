@@ -52,13 +52,6 @@ class _TukarShiftViewState extends State<TukarShiftView>
 
   @override
   Widget build(BuildContext context) {
-    final List<String> tabs = <String>[
-      'Pengajuan',
-      'Progress',
-      'Konfirm',
-      'Selesai'
-    ];
-
     return Scaffold(
       backgroundColor: cGrey_200,
       appBar: AppBar(
