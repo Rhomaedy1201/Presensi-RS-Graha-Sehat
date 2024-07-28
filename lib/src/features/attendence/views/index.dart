@@ -55,6 +55,7 @@ class _PresensiViewState extends State<PresensiView> {
 
   @override
   void dispose() {
+    print(1);
     _timer?.cancel();
     super.dispose();
   }
@@ -169,6 +170,49 @@ class _PresensiViewState extends State<PresensiView> {
     }
   }
 
+  LatLng _getClosestPointOnCircle(LatLng center, LatLng point, double radius) {
+    final Distance distance = Distance();
+
+    // Menghitung jarak dari pusat lingkaran ke titik marker
+    final double distanceToPoint = distance.as(LengthUnit.Meter, center, point);
+
+    if (distanceToPoint <= radius) {
+      return point; // Jika di dalam radius, tidak perlu menggambar garis
+    }
+
+    // Menghitung proporsi untuk menemukan titik pada lingkaran
+    final double ratio = radius / distanceToPoint;
+    final double lat =
+        center.latitude + (point.latitude - center.latitude) * ratio;
+    final double lng =
+        center.longitude + (point.longitude - center.longitude) * ratio;
+
+    return LatLng(lat, lng);
+  }
+
+  double _calculateZoomLevel(double distanceInMeters) {
+    // Konversi jarak maksimum yang ingin ditampilkan (dalam meter) menjadi tingkat zoom
+    // Contoh: jarak maksimum 1000 meter di zoom level tertentu bisa diatur secara linear atau logaritmik
+    if (distanceInMeters < 100) {
+      return 18; // Zoom level tertinggi untuk jarak yang sangat dekat
+    } else if (distanceInMeters < 500) {
+      return 16;
+    } else if (distanceInMeters < 1000) {
+      return 15;
+    } else if (distanceInMeters < 2000) {
+      return 14;
+    } else if (distanceInMeters < 5000) {
+      return 13;
+    } else {
+      return 12; // Zoom level yang lebih rendah untuk jarak yang lebih jauh
+    }
+  }
+
+  double _calculateDistanceInMeters(LatLng center, LatLng point) {
+    final Distance distance = Distance();
+    return distance.as(LengthUnit.Meter, center, point);
+  }
+
   @override
   Widget build(BuildContext context) {
     Duration elapsedTime = Duration();
@@ -188,9 +232,27 @@ class _PresensiViewState extends State<PresensiView> {
           ),
           _ntpTime == null
               ? const CircularProgressIndicator()
-              : Text(
-                  _ntpTime!.add(elapsedTime).getTimeSecond(),
-                  style: customTextStyle(FontWeight.w500, 20, cBlack),
+              : Row(
+                  children: [
+                    Text(
+                      _ntpTime!.add(elapsedTime).getTimeSecond(),
+                      style: customTextStyle(FontWeight.w500, 20, cBlack),
+                    ),
+                    spaceWidth(10),
+                    InkWell(
+                      onTap: () {
+                        presensiC.getLokasi();
+                      },
+                      child: const Column(
+                        children: [
+                          Icon(
+                            Icons.refresh,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
         ],
       ),
@@ -229,13 +291,17 @@ class _PresensiViewState extends State<PresensiView> {
                                       Flexible(
                                         child: FlutterMap(
                                           options: MapOptions(
-                                            initialCenter: LatLng(
-                                              double.parse(
-                                                  presensiC.latitude.value),
-                                              double.parse(
-                                                  presensiC.longitude.value),
-                                            ),
-                                            initialZoom: 18,
+                                            initialCenter: latLng,
+                                            initialZoom: _calculateZoomLevel(
+                                              _calculateDistanceInMeters(
+                                                  LatLng(
+                                                    double.parse(presensiC
+                                                        .latitude.value),
+                                                    double.parse(presensiC
+                                                        .longitude.value),
+                                                  ),
+                                                  latLng),
+                                            ).toDouble(),
                                           ),
                                           children: [
                                             TileLayer(
@@ -290,6 +356,28 @@ class _PresensiViewState extends State<PresensiView> {
                                                 ),
                                               ],
                                             ),
+                                            PolylineLayer(
+                                              polylines: [
+                                                Polyline(
+                                                  points: [
+                                                    latLng,
+                                                    _getClosestPointOnCircle(
+                                                      LatLng(
+                                                        double.parse(presensiC
+                                                            .latitude.value),
+                                                        double.parse(presensiC
+                                                            .longitude.value),
+                                                      ),
+                                                      latLng,
+                                                      double.parse(presensiC
+                                                          .radius.value),
+                                                    )
+                                                  ],
+                                                  strokeWidth: 4,
+                                                  color: cPrimary,
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -311,7 +399,8 @@ class _PresensiViewState extends State<PresensiView> {
                                                         .longitude.value),
                                                   ),
                                                 ) <=
-                                                40)
+                                                double.parse(
+                                                    presensiC.radius.value))
                                             ? Container(
                                                 color: cPrimary,
                                                 child: Padding(
