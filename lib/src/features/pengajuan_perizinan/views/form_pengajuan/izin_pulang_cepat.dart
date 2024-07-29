@@ -8,10 +8,14 @@ import 'package:presensi_gs/utils/constant.dart';
 
 class FormIzinPulangCepat extends StatelessWidget {
   final Function(DateTime) callbackSetState;
+  final Function(TextEditingController) callbackSetStateKet;
   DateTime jamIzinPulangCepat;
+  TextEditingController ketPulangCepat = TextEditingController();
   FormIzinPulangCepat({
     required this.callbackSetState,
+    required this.callbackSetStateKet,
     required this.jamIzinPulangCepat,
+    required this.ketPulangCepat,
   });
 
   @override
@@ -38,7 +42,7 @@ class FormIzinPulangCepat extends StatelessWidget {
               vertical: 10,
             ),
             child: Text(
-              "Form izin Pulang Cepat",
+              "FORM IZIN PULANG CEPAT",
               style: customTextStyle(FontWeight.w500, 13, cBlack),
             ),
           ),
@@ -176,7 +180,7 @@ class FormIzinPulangCepat extends StatelessWidget {
                     scrollPadding: EdgeInsets.zero,
                     autocorrect: false,
                     maxLines: null,
-                    // controller: loginController.passwordController,
+                    controller: ketPulangCepat,
                     enableSuggestions: false,
                     style: customTextStyle(
                       FontWeight.w400,

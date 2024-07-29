@@ -11,17 +11,21 @@ class FormIzinCutiTahunan extends StatelessWidget {
   final Function(DateTime) callbackSetState;
   final Function(DateTime) callbackSetState2;
   final Function(String) callbackSetStateUser;
+  final Function(TextEditingController) callbackSetStateKet;
   DateTime jamIzinCutiTahunan1;
   DateTime jamIzinCutiTahunan2;
   String? userPenggantiCutiTahuan;
+  TextEditingController ketIzinCutiTahunan = TextEditingController();
   FormIzinCutiTahunan({
     super.key,
     required this.callbackSetState,
     required this.callbackSetState2,
     required this.callbackSetStateUser,
+    required this.callbackSetStateKet,
     required this.jamIzinCutiTahunan1,
     required this.jamIzinCutiTahunan2,
     required this.userPenggantiCutiTahuan,
+    required this.ketIzinCutiTahunan,
   });
 
   @override
@@ -367,7 +371,7 @@ class FormIzinCutiTahunan extends StatelessWidget {
                     scrollPadding: EdgeInsets.zero,
                     autocorrect: false,
                     maxLines: null,
-                    // controller: loginController.passwordController,
+                    controller: ketIzinCutiTahunan,
                     enableSuggestions: false,
                     style: customTextStyle(
                       FontWeight.w400,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti.dart';
@@ -11,7 +10,6 @@ import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
-import 'package:presensi_gs/utils/constant.dart';
 
 class PerizinanView extends StatefulWidget {
   const PerizinanView({super.key});
@@ -21,10 +19,15 @@ class PerizinanView extends StatefulWidget {
 }
 
 class _PerizinanViewState extends State<PerizinanView> {
+  // Cuti Tahuan
   DateTime jamIzinCutiTahunan1 = DateTime.now();
   DateTime jamIzinCutiTahunan2 = DateTime.now();
   String? userIzinCutiTahunan;
+  TextEditingController ketIzinCutiTahunan = TextEditingController();
+  // Pulang Cepat
   DateTime jamIzinPulangCepat = DateTime.now();
+  TextEditingController ketPulangCepat = TextEditingController();
+  //
   DateTime tglMelahirkan = DateTime.now();
   DateTime tglMulaiSakit = DateTime.now();
   DateTime tglSelesaiSakit = DateTime.now();
@@ -56,8 +59,18 @@ class _PerizinanViewState extends State<PerizinanView> {
     setState(() {});
   }
 
+  void setStateCallbackCutiTahunanKet(TextEditingController ket) {
+    ketIzinCutiTahunan.text = ket.text;
+    setState(() {});
+  }
+
   void callbackPulangCepat(DateTime newDate) {
     jamIzinPulangCepat = newDate;
+    setState(() {});
+  }
+
+  void callbackPulangCepatKet(TextEditingController ket) {
+    ketPulangCepat.text = ket.text;
     setState(() {});
   }
 
@@ -109,7 +122,7 @@ class _PerizinanViewState extends State<PerizinanView> {
             onPressed: jenisIzin == null
                 ? null
                 : () {
-                    print(userIzinCutiTahunan);
+                    print(ketIzinCutiTahunan.text);
                   },
             child: const Text(
               "Submit Pengajuan",
@@ -164,9 +177,11 @@ class _PerizinanViewState extends State<PerizinanView> {
                       callbackSetState: setStateCallbackCutiTahunan,
                       callbackSetState2: setStateCallbackCutiTahunan2,
                       callbackSetStateUser: setStateCallbackCutiTahunanUser,
+                      callbackSetStateKet: setStateCallbackCutiTahunanKet,
                       jamIzinCutiTahunan1: jamIzinCutiTahunan1,
                       jamIzinCutiTahunan2: jamIzinCutiTahunan2,
                       userPenggantiCutiTahuan: userIzinCutiTahunan,
+                      ketIzinCutiTahunan: ketIzinCutiTahunan,
                     ),
                   ],
                 )
@@ -176,7 +191,9 @@ class _PerizinanViewState extends State<PerizinanView> {
                     spaceHeight(20),
                     FormIzinPulangCepat(
                       callbackSetState: callbackPulangCepat,
+                      callbackSetStateKet: callbackPulangCepatKet,
                       jamIzinPulangCepat: jamIzinPulangCepat,
+                      ketPulangCepat: ketPulangCepat,
                     ),
                   ],
                 )
