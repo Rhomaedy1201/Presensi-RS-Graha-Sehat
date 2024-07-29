@@ -27,8 +27,12 @@ class _PerizinanViewState extends State<PerizinanView> {
   // Pulang Cepat
   DateTime jamIzinPulangCepat = DateTime.now();
   TextEditingController ketPulangCepat = TextEditingController();
+  // Izin Melahirkan
+  DateTime tglMelahirkan1 = DateTime.now();
+  DateTime tglMelahirkan2 = DateTime.now();
+  String? izinMelahirkanUser;
+  TextEditingController izinMelahirkanKet = TextEditingController();
   //
-  DateTime tglMelahirkan = DateTime.now();
   DateTime tglMulaiSakit = DateTime.now();
   DateTime tglSelesaiSakit = DateTime.now();
   DateTime tglMulaiCuti = DateTime.now();
@@ -44,6 +48,7 @@ class _PerizinanViewState extends State<PerizinanView> {
     {'id': 6, 'nama': 'IZIN LAIN LAIN'},
   ];
 
+  // Cuti Tahunan
   void setStateCallbackCutiTahunan(DateTime newDate1) {
     jamIzinCutiTahunan1 = newDate1;
     setState(() {});
@@ -64,6 +69,7 @@ class _PerizinanViewState extends State<PerizinanView> {
     setState(() {});
   }
 
+  // Pulang Cepat
   void callbackPulangCepat(DateTime newDate) {
     jamIzinPulangCepat = newDate;
     setState(() {});
@@ -73,12 +79,29 @@ class _PerizinanViewState extends State<PerizinanView> {
     ketPulangCepat.text = ket.text;
     setState(() {});
   }
+  // Izin Melahirkan
 
   void callbackIzinMelahirkan(DateTime newDate) {
-    tglMelahirkan = newDate;
+    tglMelahirkan1 = newDate;
     setState(() {});
   }
 
+  void callbackIzinMelahirkan2(DateTime newDate) {
+    tglMelahirkan2 = newDate;
+    setState(() {});
+  }
+
+  void callbackIzinMelahirkanUser(String user) {
+    izinMelahirkanUser = user;
+    setState(() {});
+  }
+
+  void callbackIzinMelahirkanKet(TextEditingController ket) {
+    izinMelahirkanKet.text = ket.text;
+    setState(() {});
+  }
+
+  // ----
   void callbackIzinSakit(DateTime tglMulai) {
     tglMulaiSakit = tglMulai;
     setState(() {});
@@ -210,7 +233,13 @@ class _PerizinanViewState extends State<PerizinanView> {
                     spaceHeight(20),
                     FormIzinMelahirkan(
                       callbackSetState: callbackIzinMelahirkan,
-                      tglMelahirkan: tglMelahirkan,
+                      callbackSetState2: callbackIzinMelahirkan2,
+                      callbackSetStateUser: callbackIzinMelahirkanUser,
+                      callbackSetStateKet: callbackIzinMelahirkanKet,
+                      tglMelahirkan1: tglMelahirkan1,
+                      tglMelahirkan2: tglMelahirkan2,
+                      izinMelahirkanUser: izinMelahirkanUser,
+                      izinMelahirkanKet: izinMelahirkanKet,
                     ),
                   ],
                 )
