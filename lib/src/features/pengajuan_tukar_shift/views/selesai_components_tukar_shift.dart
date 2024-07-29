@@ -371,7 +371,7 @@ class SelesaiComponentsTukarShiftState
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Icon(
-                              !selesaiTukarShiftC.isActiveList![i]
+                              selesaiTukarShiftC.isActiveList![i]
                                   ? Icons.arrow_drop_up
                                   : Icons.arrow_drop_down_sharp,
                               size: 20,
@@ -384,7 +384,7 @@ class SelesaiComponentsTukarShiftState
                   ),
                 ],
               ),
-              selesaiTukarShiftC.isActiveList![i]
+              !selesaiTukarShiftC.isActiveList![i]
                   ? Container()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
