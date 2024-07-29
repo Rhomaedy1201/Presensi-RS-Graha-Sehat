@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti.dart';
-import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_keluar_jam_kerja.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti_tahunan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_melahirkan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_pulang_cepat.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_sakit.dart';
@@ -21,7 +21,9 @@ class PerizinanView extends StatefulWidget {
 }
 
 class _PerizinanViewState extends State<PerizinanView> {
-  DateTime jamIzinKeluarJamKerja = DateTime.now();
+  DateTime jamIzinCutiTahunan1 = DateTime.now();
+  DateTime jamIzinCutiTahunan2 = DateTime.now();
+  String? userIzinCutiTahunan;
   DateTime jamIzinPulangCepat = DateTime.now();
   DateTime tglMelahirkan = DateTime.now();
   DateTime tglMulaiSakit = DateTime.now();
@@ -31,16 +33,26 @@ class _PerizinanViewState extends State<PerizinanView> {
 
   String? jenisIzin;
   List pengajuanList = [
-    {'id': 1, 'nama': 'Izin keluar pada jam kerja'},
-    {'id': 2, 'nama': 'Izin pulang cepat'},
-    {'id': 3, 'nama': 'Izin terlambat'},
-    {'id': 4, 'nama': 'Cuti melahirkan'},
-    {'id': 5, 'nama': 'Izin sakit'},
-    {'id': 6, 'nama': 'Izin cuti'},
+    {'id': 1, 'nama': 'IZIN CUTI TAHUNAN'},
+    {'id': 2, 'nama': 'IZIN PULANG CEPAT'},
+    {'id': 3, 'nama': 'IZIN KELUAR'},
+    {'id': 4, 'nama': 'IZIN CUTI MELAHIRKAN'},
+    {'id': 5, 'nama': 'IZIN SAKIT'},
+    {'id': 6, 'nama': 'IZIN LAIN LAIN'},
   ];
 
-  void setStateCallbackKeluarJamKerja(DateTime newDate) {
-    jamIzinKeluarJamKerja = newDate;
+  void setStateCallbackCutiTahunan(DateTime newDate1) {
+    jamIzinCutiTahunan1 = newDate1;
+    setState(() {});
+  }
+
+  void setStateCallbackCutiTahunan2(DateTime newDate2) {
+    jamIzinCutiTahunan2 = newDate2;
+    setState(() {});
+  }
+
+  void setStateCallbackCutiTahunanUser(String user) {
+    userIzinCutiTahunan = user;
     setState(() {});
   }
 
@@ -94,7 +106,11 @@ class _PerizinanViewState extends State<PerizinanView> {
                 ), // Mengatur border radius menjadi 0
               ),
             ),
-            onPressed: jenisIzin == null ? null : () {},
+            onPressed: jenisIzin == null
+                ? null
+                : () {
+                    print(userIzinCutiTahunan);
+                  },
             child: const Text(
               "Submit Pengajuan",
               style: TextStyle(
@@ -144,9 +160,13 @@ class _PerizinanViewState extends State<PerizinanView> {
                 Column(
                   children: [
                     spaceHeight(20),
-                    FormIzinKeluarJamKerja(
-                      callbackSetState: setStateCallbackKeluarJamKerja,
-                      jamIzinKeluarJamKerja: jamIzinKeluarJamKerja,
+                    FormIzinCutiTahunan(
+                      callbackSetState: setStateCallbackCutiTahunan,
+                      callbackSetState2: setStateCallbackCutiTahunan2,
+                      callbackSetStateUser: setStateCallbackCutiTahunanUser,
+                      jamIzinCutiTahunan1: jamIzinCutiTahunan1,
+                      jamIzinCutiTahunan2: jamIzinCutiTahunan2,
+                      userPenggantiCutiTahuan: userIzinCutiTahunan,
                     ),
                   ],
                 )
@@ -210,69 +230,69 @@ class _PerizinanViewState extends State<PerizinanView> {
     );
   }
 
-  InkWell fornJanIzinKeluar(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        showCupertinoModalPopup(
-          context: context,
-          builder: (_) => Container(
-            height: 400,
-            color: const Color.fromARGB(255, 255, 255, 255),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 300,
-                  child: CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
-                    maximumDate: DateTime.now(),
-                    maximumYear: DateTime.now().year,
-                    minimumYear: 2024,
-                    mode: CupertinoDatePickerMode.time,
-                    onDateTimeChanged: (val) {
-                      jamIzinKeluarJamKerja = val;
-                      setState(() {});
-                    },
-                  ),
-                ),
-                // Close the modal
-                CupertinoButton(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-      child: Container(
-        height: 37,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(5),
-          ),
-          border: Border.all(color: cGrey_400, width: 1.5),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                jamIzinKeluarJamKerja.getFullTime().toString(),
-                style: customTextStyle(FontWeight.w500, 13, cGrey_900),
-              ),
-              const Icon(
-                Icons.date_range_outlined,
-                size: 25,
-                color: cPrimary,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // InkWell fornJanIzinKeluar(BuildContext context) {
+  //   return InkWell(
+  //     onTap: () async {
+  //       showCupertinoModalPopup(
+  //         context: context,
+  //         builder: (_) => Container(
+  //           height: 400,
+  //           color: const Color.fromARGB(255, 255, 255, 255),
+  //           child: Column(
+  //             children: [
+  //               SizedBox(
+  //                 height: 300,
+  //                 child: CupertinoDatePicker(
+  //                   initialDateTime: DateTime.now(),
+  //                   maximumDate: DateTime.now(),
+  //                   maximumYear: DateTime.now().year,
+  //                   minimumYear: 2024,
+  //                   mode: CupertinoDatePickerMode.time,
+  //                   onDateTimeChanged: (val) {
+  //                     jamIzinCutiTahunan1 = val;
+  //                     setState(() {});
+  //                   },
+  //                 ),
+  //               ),
+  //               // Close the modal
+  //               CupertinoButton(
+  //                 child: const Text('OK'),
+  //                 onPressed: () => Navigator.of(context).pop(),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //     child: Container(
+  //       height: 37,
+  //       decoration: BoxDecoration(
+  //         borderRadius: const BorderRadius.all(
+  //           Radius.circular(5),
+  //         ),
+  //         border: Border.all(color: cGrey_400, width: 1.5),
+  //       ),
+  //       child: Padding(
+  //         padding: const EdgeInsets.symmetric(horizontal: 12),
+  //         child: Row(
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Text(
+  //               jamIzinCutiTahunan1.getFullTime().toString(),
+  //               style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+  //             ),
+  //             const Icon(
+  //               Icons.date_range_outlined,
+  //               size: 25,
+  //               color: cPrimary,
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Column dropdownJenisIzin() {
     return Column(
