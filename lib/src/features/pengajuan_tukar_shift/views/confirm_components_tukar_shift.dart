@@ -45,7 +45,7 @@ class ConfirmComponentsTukarShiftState
             : !confirmTukarShiftC.isEmptyData.value
                 ? Center(
                     child: Text(
-                      "Progress Pengajuan Masih\nKosong!.",
+                      "Confirmasi Pengajuan Masih\nKosong!.",
                       textAlign: TextAlign.center,
                       style: customTextStyle(FontWeight.w400, 17, cBlack),
                     ),

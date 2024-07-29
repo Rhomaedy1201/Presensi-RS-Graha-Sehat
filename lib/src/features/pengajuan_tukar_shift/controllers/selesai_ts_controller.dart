@@ -12,6 +12,7 @@ class SelesaiTukarShiftController extends GetxController {
 
   var isLoading = false.obs;
   var isEmptyData = true.obs;
+  List<bool>? isActiveList;
 
   @override
   void onInit() {
@@ -39,8 +40,13 @@ class SelesaiTukarShiftController extends GetxController {
 
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
+        var data = json['data'];
         selesaiTukarJadwalM = SelesaiTukarJadwalModel.fromJson(json);
-        if (selesaiTukarJadwalM!.data.isEmpty) {
+        if (data.length > 0) {
+          isActiveList = List.generate(
+            selesaiTukarJadwalM?.data.length ?? 0,
+            (index) => false,
+          );
           isEmptyData(false);
         } else {
           isEmptyData(true);

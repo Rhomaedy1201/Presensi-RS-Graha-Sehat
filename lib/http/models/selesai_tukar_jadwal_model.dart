@@ -44,11 +44,11 @@ class Datum {
   String namaPihak1;
   String nipPihak2;
   String namaPihak2;
-  DateTime accPihak2;
+  DateTime? accPihak2;
   String accBy;
-  dynamic accByAt;
-  dynamic accSdm;
-  dynamic accAt;
+  String? accByAt;
+  String? accSdm;
+  String? accAt;
   int accStatus;
   String ket;
   int jenis;
@@ -58,10 +58,10 @@ class Datum {
   String tglPihak1Cast;
   String tglPihak2Cast;
   Acc acc;
-  dynamic sdm;
+  String? sdm;
   Acc pihak1;
   Acc pihak2;
-  Tolak tolak;
+  Tolak? tolak;
 
   Datum({
     required this.id,
@@ -126,7 +126,7 @@ class Datum {
         sdm: json["sdm"],
         pihak1: Acc.fromJson(json["pihak1"]),
         pihak2: Acc.fromJson(json["pihak2"]),
-        tolak: Tolak.fromJson(json["tolak"]),
+        tolak: json["tolak"] == null ? null : Tolak.fromJson(json["tolak"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -145,7 +145,7 @@ class Datum {
         "nama_pihak1": namaPihak1,
         "nip_pihak2": nipPihak2,
         "nama_pihak2": namaPihak2,
-        "acc_pihak2": accPihak2.toIso8601String(),
+        "acc_pihak2": accPihak2,
         "acc_by": accBy,
         "acc_by_at": accByAt,
         "acc_sdm": accSdm,
@@ -162,7 +162,7 @@ class Datum {
         "sdm": sdm,
         "pihak1": pihak1.toJson(),
         "pihak2": pihak2.toJson(),
-        "tolak": tolak.toJson(),
+        "tolak": tolak?.toJson(),
       };
 }
 
@@ -203,9 +203,9 @@ class Jabatan {
   int id;
   String nip;
   int idJabatan;
-  dynamic idParent;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String? idParent;
+  String? createdAt;
+  String? updatedAt;
   String namaJabatan;
   MJabatan mJabatan;
 
