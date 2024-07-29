@@ -33,7 +33,7 @@ class _TukarShiftViewState extends State<TukarShiftView>
   final List listJenis = [
     {'id': '1', 'name': 'TUKAR SHIFT'},
     {'id': '2', 'name': 'TUKAR OFF 1 (TAMBAH)'},
-    {'id': '3', 'name': 'TUKAR OFF 2 (HAPUS)'}
+    // {'id': '3', 'name': 'TUKAR OFF 2 (HAPUS)'}
   ];
 
   late final TabController _tabController;
@@ -352,14 +352,14 @@ class _TukarShiftViewState extends State<TukarShiftView>
                                                 dropdownKaryawan(),
                                               ],
                                             ),
-                                          if (valJenis == "3")
-                                            Column(
-                                              children: [
-                                                ketTukarOff2(),
-                                                spaceHeight(10),
-                                                dropdownKaryawan(),
-                                              ],
-                                            ),
+                                          // if (valJenis == "3")
+                                          //   Column(
+                                          //     children: [
+                                          //       ketTukarOff2(),
+                                          //       spaceHeight(10),
+                                          //       dropdownKaryawan(),
+                                          //     ],
+                                          //   ),
                                         ],
                                       ),
                                     )
@@ -603,77 +603,77 @@ class _TukarShiftViewState extends State<TukarShiftView>
     );
   }
 
-  Widget ketTukarOff2() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Container(
-                width: 4,
-                height: 4,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.black)),
-            spaceWidth(4),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Jadwal ",
-                    style: customTextStyle(FontWeight.w600, 10, cBlack),
-                  ),
-                  TextSpan(
-                    text: "PIHAK 1",
-                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
-                  ),
-                  TextSpan(
-                    text: " menjadi libur",
-                    style: customTextStyle(FontWeight.w600, 10, cBlack),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        spaceHeight(5),
-        Row(
-          children: [
-            Container(
-                width: 4,
-                height: 4,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.black)),
-            spaceWidth(4),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Jadwal kerja ",
-                    style: customTextStyle(FontWeight.w600, 10, cBlack),
-                  ),
-                  TextSpan(
-                    text: "PIHAK 1",
-                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
-                  ),
-                  TextSpan(
-                    text: " dan jadwal ",
-                    style: customTextStyle(FontWeight.w600, 10, cBlack),
-                  ),
-                  TextSpan(
-                    text: "PIHAK 2 ",
-                    style: customTextStyle(FontWeight.w600, 10, Colors.red),
-                  ),
-                  TextSpan(
-                    text: " otomatis tergantikan ",
-                    style: customTextStyle(FontWeight.w600, 10, cBlack),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // Widget ketTukarOff2() {
+  //   return Column(
+  //     children: [
+  //       Row(
+  //         children: [
+  //           Container(
+  //               width: 4,
+  //               height: 4,
+  //               decoration: const BoxDecoration(
+  //                   shape: BoxShape.circle, color: Colors.black)),
+  //           spaceWidth(4),
+  //           RichText(
+  //             text: TextSpan(
+  //               children: [
+  //                 TextSpan(
+  //                   text: "Jadwal ",
+  //                   style: customTextStyle(FontWeight.w600, 10, cBlack),
+  //                 ),
+  //                 TextSpan(
+  //                   text: "PIHAK 1",
+  //                   style: customTextStyle(FontWeight.w600, 10, Colors.red),
+  //                 ),
+  //                 TextSpan(
+  //                   text: " menjadi libur",
+  //                   style: customTextStyle(FontWeight.w600, 10, cBlack),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       spaceHeight(5),
+  //       Row(
+  //         children: [
+  //           Container(
+  //               width: 4,
+  //               height: 4,
+  //               decoration: const BoxDecoration(
+  //                   shape: BoxShape.circle, color: Colors.black)),
+  //           spaceWidth(4),
+  //           RichText(
+  //             text: TextSpan(
+  //               children: [
+  //                 TextSpan(
+  //                   text: "Jadwal kerja ",
+  //                   style: customTextStyle(FontWeight.w600, 10, cBlack),
+  //                 ),
+  //                 TextSpan(
+  //                   text: "PIHAK 1",
+  //                   style: customTextStyle(FontWeight.w600, 10, Colors.red),
+  //                 ),
+  //                 TextSpan(
+  //                   text: " dan jadwal ",
+  //                   style: customTextStyle(FontWeight.w600, 10, cBlack),
+  //                 ),
+  //                 TextSpan(
+  //                   text: "PIHAK 2 ",
+  //                   style: customTextStyle(FontWeight.w600, 10, Colors.red),
+  //                 ),
+  //                 TextSpan(
+  //                   text: " otomatis tergantikan ",
+  //                   style: customTextStyle(FontWeight.w600, 10, cBlack),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Padding commingSoon() {
     return Padding(
