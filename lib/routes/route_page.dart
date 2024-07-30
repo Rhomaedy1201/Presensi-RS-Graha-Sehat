@@ -13,6 +13,7 @@ import 'package:presensi_gs/src/features/home/views/index.dart';
 import 'package:presensi_gs/src/features/jadwal/bindings/jadwal_binding.dart';
 import 'package:presensi_gs/src/features/jadwal/views/index.dart';
 import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/bindings/perizinan_binding.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/bindings/tukar_shift_binding.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/index.dart';
@@ -69,6 +70,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.perizinanView,
       page: () => const PerizinanView(),
+      binding: PerizinanBinding(),
     ),
     GetPage(
       name: RouteNames.approvalView,
