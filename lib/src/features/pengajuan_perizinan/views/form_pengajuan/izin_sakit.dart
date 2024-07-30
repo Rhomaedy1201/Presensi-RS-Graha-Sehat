@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/controllers/pengajuan_izin_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_required_text.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -9,6 +10,8 @@ import 'package:presensi_gs/utils/constant.dart';
 import 'package:file_picker/file_picker.dart';
 
 class FormIzinSakit extends StatelessWidget {
+  PengajuanIzinController pengajuanIzinC = Get.find<PengajuanIzinController>();
+
   final Function(DateTime) callbackSetState;
   final Function(DateTime) callbackSetState2;
   final Function(String) callbackSetStateUser;
@@ -41,82 +44,91 @@ class FormIzinSakit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Get.width,
-      decoration: BoxDecoration(
-        color: cWhite,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: cGrey_400,
-            blurRadius: 15,
-            offset: Offset(1, 1), // Shadow position
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 10,
-            ),
-            child: Text(
-              "FORM IZIN SAKIT",
-              style: customTextStyle(FontWeight.w500, 13, cBlack),
-            ),
-          ),
-          Container(
-            width: Get.width,
-            height: 3,
-            color: cGrey_300,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 12,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          requiredText("Mulai", FontWeight.w600, 11, cBlack),
-                          spaceHeight(5),
-                          formJamIzin(context)
-                        ],
-                      ),
+    return Obx(
+      () => pengajuanIzinC.isLoadingKarayawan.value
+          ? Padding(
+              padding: EdgeInsets.only(top: Get.height * 0.3),
+              child: const CircularProgressIndicator(),
+            )
+          : Container(
+              width: Get.width,
+              decoration: BoxDecoration(
+                color: cWhite,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    color: cGrey_400,
+                    blurRadius: 15,
+                    offset: Offset(1, 1), // Shadow position
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
                     ),
-                    spaceWidth(7),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          requiredText("Akhir", FontWeight.w600, 11, cBlack),
-                          spaceHeight(5),
-                          formJamIzin2(context)
-                        ],
-                      ),
+                    child: Text(
+                      "FORM IZIN SAKIT",
+                      style: customTextStyle(FontWeight.w500, 13, cBlack),
                     ),
-                  ],
-                ),
-                spaceHeight(10),
-                dropdownUser(),
-                formKeterangan(),
-                spaceHeight(10),
-                formFile(),
-              ],
+                  ),
+                  Container(
+                    width: Get.width,
+                    height: 3,
+                    color: cGrey_300,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 12,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  requiredText(
+                                      "Mulai", FontWeight.w600, 11, cBlack),
+                                  spaceHeight(5),
+                                  formJamIzin(context)
+                                ],
+                              ),
+                            ),
+                            spaceWidth(7),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  requiredText(
+                                      "Akhir", FontWeight.w600, 11, cBlack),
+                                  spaceHeight(5),
+                                  formJamIzin2(context)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        spaceHeight(10),
+                        dropdownUser(),
+                        formKeterangan(),
+                        spaceHeight(10),
+                        formFile(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          )
-        ],
-      ),
     );
   }
 
@@ -367,13 +379,14 @@ class FormIzinSakit extends StatelessWidget {
                 izinSakitUser = newValue!;
                 callbackSetStateUser(newValue);
               },
-              items: ["Jinn", "TONI"].map<DropdownMenuItem<String>>((value) {
+              items: pengajuanIzinC.karyawanPerUnitM?.data
+                  .map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(
-                  value: value.toString(),
+                  value: value.nip.toString(),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
-                      value,
+                      value.nama,
                       style: customTextStyle(FontWeight.w500, 13, cGrey_900),
                     ),
                   ),

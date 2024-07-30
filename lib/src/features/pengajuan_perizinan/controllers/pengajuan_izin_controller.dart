@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -44,7 +45,9 @@ class PengajuanIzinController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
+      // Timer(const Duration(seconds: 1), () {
       isLoadingKarayawan(false);
+      // });
     }
   }
 }
