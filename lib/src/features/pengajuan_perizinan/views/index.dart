@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_lain_lain.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti_tahunan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_melahirkan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_pulang_cepat.dart';
@@ -32,9 +32,12 @@ class _PerizinanViewState extends State<PerizinanView> {
   DateTime tglMelahirkan2 = DateTime.now();
   String? izinMelahirkanUser;
   TextEditingController izinMelahirkanKet = TextEditingController();
+  // Izin lain lain
+  DateTime tglMulaiLainLain = DateTime.now();
+  DateTime tglSelesaiLainLain = DateTime.now();
+  String? izinLainLainUser;
+  TextEditingController izinLainLainKet = TextEditingController();
   //
-  DateTime tglMulaiSakit = DateTime.now();
-  DateTime tglSelesaiSakit = DateTime.now();
   DateTime tglMulaiCuti = DateTime.now();
   DateTime tglSelesaiCuti = DateTime.now();
 
@@ -101,17 +104,28 @@ class _PerizinanViewState extends State<PerizinanView> {
     setState(() {});
   }
 
-  // ----
-  void callbackIzinSakit(DateTime tglMulai) {
-    tglMulaiSakit = tglMulai;
+  // Izin lain lain
+  void callbackIzinLainLain(DateTime tglMulai) {
+    tglMulaiLainLain = tglMulai;
     setState(() {});
   }
 
-  void callbackIzinSakit2(DateTime tglSelesai) {
-    tglSelesaiSakit = tglSelesai;
+  void callbackIzinLainLain2(DateTime tglSelesai) {
+    tglSelesaiLainLain = tglSelesai;
     setState(() {});
   }
 
+  void callbackIzinLainLainUser(String user) {
+    izinLainLainUser = user;
+    setState(() {});
+  }
+
+  void callbackIzinLainLainKet(TextEditingController ket) {
+    izinLainLainKet.text = ket.text;
+    setState(() {});
+  }
+
+  // ---
   void callbackIzinCuti(DateTime tglMulai) {
     tglMulaiCuti = tglMulai;
     setState(() {});
@@ -248,10 +262,10 @@ class _PerizinanViewState extends State<PerizinanView> {
                   children: [
                     spaceHeight(20),
                     FormIzinSakit(
-                      callbackSetState: callbackIzinSakit,
-                      callbackSetState2: callbackIzinSakit2,
-                      tglMulai: tglMulaiSakit,
-                      tglSelesai: tglSelesaiSakit,
+                      callbackSetState: callbackIzinLainLain,
+                      callbackSetState2: callbackIzinLainLain2,
+                      tglMulai: tglMulaiLainLain,
+                      tglSelesai: tglSelesaiLainLain,
                     ),
                   ],
                 )
@@ -259,11 +273,15 @@ class _PerizinanViewState extends State<PerizinanView> {
                 Column(
                   children: [
                     spaceHeight(20),
-                    FormIzinCuti(
-                      callbackSetState: callbackIzinCuti,
-                      callbackSetState2: callbackIzinCuti2,
+                    FormIzinLainLain(
+                      callbackSetState: callbackIzinLainLain,
+                      callbackSetState2: callbackIzinLainLain2,
+                      callbackSetStateUser: callbackIzinLainLainUser,
+                      callbackSetStateKet: callbackIzinLainLainKet,
                       tglMulai: tglMulaiCuti,
                       tglSelesai: tglSelesaiCuti,
+                      izinLainLainUser: izinLainLainUser,
+                      izinLainLainKet: izinLainLainKet,
                     ),
                   ],
                 )

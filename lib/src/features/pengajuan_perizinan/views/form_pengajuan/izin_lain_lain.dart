@@ -2,20 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_required_text.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
 
-class FormIzinCuti extends StatelessWidget {
+class FormIzinLainLain extends StatelessWidget {
   final Function(DateTime) callbackSetState;
   final Function(DateTime) callbackSetState2;
+  final Function(String) callbackSetStateUser;
+  final Function(TextEditingController) callbackSetStateKet;
   DateTime tglMulai;
   DateTime tglSelesai;
-  FormIzinCuti({
+  String? izinLainLainUser;
+  TextEditingController izinLainLainKet = TextEditingController();
+  FormIzinLainLain({
     required this.callbackSetState,
     required this.callbackSetState2,
+    required this.callbackSetStateUser,
+    required this.callbackSetStateKet,
     required this.tglMulai,
     required this.tglSelesai,
+    required this.izinLainLainUser,
+    required this.izinLainLainKet,
   });
 
   @override
@@ -59,48 +68,36 @@ class FormIzinCuti extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Text(
-                      "Tanggal Mulai",
-                      style: customTextStyle(FontWeight.w600, 11, cBlack),
-                    ),
-                    spaceHeight(5),
-                    formTglMulai(context),
-                    spaceHeight(10),
-                    Text(
-                      "Tanggal Selesai",
-                      style: customTextStyle(FontWeight.w600, 11, cBlack),
-                    ),
-                    spaceHeight(5),
-                    formTglSelesai(context),
-                    spaceHeight(10),
-                    formKeterangan(),
-                    spaceHeight(10),
-                    Text(
-                      "Saldo Cuti",
-                      style: customTextStyle(FontWeight.w600, 11, cBlack),
-                    ),
-                    spaceHeight(5),
-                    Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: cGrey_400, width: 1.5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 7),
-                        child: Text(
-                          "12",
-                          style: customTextStyle(FontWeight.w600, 13, cBlack),
-                        ),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          requiredText("Mulai", FontWeight.w600, 11, cBlack),
+                          spaceHeight(5),
+                          formJamIzin(context)
+                        ],
                       ),
                     ),
-                    spaceHeight(5),
+                    spaceWidth(7),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          requiredText("Akhir", FontWeight.w600, 11, cBlack),
+                          spaceHeight(5),
+                          formJamIzin2(context)
+                        ],
+                      ),
+                    ),
                   ],
                 ),
+                spaceHeight(10),
+                dropdownUser(),
+                formKeterangan(),
               ],
             ),
           )
@@ -109,7 +106,7 @@ class FormIzinCuti extends StatelessWidget {
     );
   }
 
-  InkWell formTglMulai(BuildContext context) {
+  InkWell formJamIzin(BuildContext context) {
     return InkWell(
       onTap: () async {
         showCupertinoModalPopup(
@@ -138,7 +135,7 @@ class FormIzinCuti extends StatelessWidget {
                   child: const Text('OK'),
                   onPressed: () {
                     print(
-                      tglMulai.dateTime().toString(),
+                      tglMulai.getFullTime().toString(),
                     );
                     Navigator.of(context).pop();
                   },
@@ -163,12 +160,12 @@ class FormIzinCuti extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                tglMulai.fullDateAll().toString(),
+                tglMulai.simpleDateRevers().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
                 Icons.date_range_outlined,
-                size: 25,
+                size: 20,
                 color: cPrimary,
               )
             ],
@@ -178,7 +175,7 @@ class FormIzinCuti extends StatelessWidget {
     );
   }
 
-  InkWell formTglSelesai(BuildContext context) {
+  InkWell formJamIzin2(BuildContext context) {
     return InkWell(
       onTap: () async {
         showCupertinoModalPopup(
@@ -207,7 +204,7 @@ class FormIzinCuti extends StatelessWidget {
                   child: const Text('OK'),
                   onPressed: () {
                     print(
-                      tglSelesai.dateTime().toString(),
+                      tglSelesai.getFullTime().toString(),
                     );
                     Navigator.of(context).pop();
                   },
@@ -232,18 +229,94 @@ class FormIzinCuti extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                tglSelesai.fullDateAll().toString(),
+                tglSelesai.simpleDateRevers().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
                 Icons.date_range_outlined,
-                size: 25,
+                size: 20,
                 color: cPrimary,
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Column dropdownUser() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              "Pengganti ",
+              style: customTextStyle(FontWeight.w600, 11, cBlack),
+            ),
+            Text(
+              "(Opstional)",
+              style: customTextStyle(FontWeight.w500, 10, cBlack),
+            ),
+          ],
+        ),
+        Container(
+          width: Get.width,
+          height: 50,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(7),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 7),
+            child: DropdownButtonFormField<String>(
+              hint: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  "Pilih pengganti",
+                  style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                ),
+              ),
+              isDense: true,
+              isExpanded: true,
+              value: izinLainLainUser,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(8),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                filled: true,
+                fillColor: cWhite,
+              ),
+              onChanged: (String? newValue) {
+                izinLainLainUser = newValue!;
+                callbackSetStateUser(newValue);
+              },
+              items: ["Jinn", "TONI"].map<DropdownMenuItem<String>>((value) {
+                return DropdownMenuItem<String>(
+                  value: value.toString(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      value,
+                      style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -278,7 +351,7 @@ class FormIzinCuti extends StatelessWidget {
                     scrollPadding: EdgeInsets.zero,
                     autocorrect: false,
                     maxLines: null,
-                    // controller: loginController.passwordController,
+                    controller: izinLainLainKet,
                     enableSuggestions: false,
                     style: customTextStyle(
                       FontWeight.w400,
