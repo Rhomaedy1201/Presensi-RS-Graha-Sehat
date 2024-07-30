@@ -5,7 +5,7 @@ import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajua
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_melahirkan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_pulang_cepat.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_sakit.dart';
-import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_terlambat.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_keluar.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -43,9 +43,11 @@ class _PerizinanViewState extends State<PerizinanView> {
   String? izinSakitUser;
   TextEditingController izinSakitKet = TextEditingController();
   String? fileNameSakit;
-  //
-  DateTime tglMulaiCuti = DateTime.now();
-  DateTime tglSelesaiCuti = DateTime.now();
+  // Izin Sakit
+  DateTime jamMulaiKeluar = DateTime.now();
+  DateTime jamSelesaiKeluar = DateTime.now();
+  TextEditingController izinKeluarKet = TextEditingController();
+  String? fileNameKeluar;
 
   String? jenisIzin;
   List pengajuanList = [
@@ -157,14 +159,24 @@ class _PerizinanViewState extends State<PerizinanView> {
     setState(() {});
   }
 
-  // ---
-  void callbackIzinCuti(DateTime tglMulai) {
-    tglMulaiCuti = tglMulai;
+  // Izin Keluar
+  void callbackIzinKeluar(DateTime jamMulai) {
+    jamMulaiKeluar = jamMulai;
     setState(() {});
   }
 
-  void callbackIzinCuti2(DateTime tglSelesai) {
-    tglSelesaiCuti = tglSelesai;
+  void callbackIzinKeluar2(DateTime jamSelesai) {
+    jamSelesaiKeluar = jamSelesai;
+    setState(() {});
+  }
+
+  void callbackIzinKeluarKet(TextEditingController ket) {
+    izinKeluarKet.text = ket.text;
+    setState(() {});
+  }
+
+  void callbackIzinKeluarFile(String file) {
+    fileNameKeluar = file;
     setState(() {});
   }
 
@@ -270,7 +282,16 @@ class _PerizinanViewState extends State<PerizinanView> {
                 Column(
                   children: [
                     spaceHeight(20),
-                    const FormIzinTerlambat(),
+                    FormIzinKeluar(
+                      callbackSetState: callbackIzinKeluar,
+                      callbackSetState2: callbackIzinKeluar2,
+                      callbackSetStateKet: callbackIzinKeluarKet,
+                      callbackSetStateFile: callbackIzinKeluarFile,
+                      jamMulai: jamMulaiKeluar,
+                      jamSelesai: jamSelesaiKeluar,
+                      izinSakitKet: izinKeluarKet,
+                      fileName: fileNameKeluar,
+                    ),
                   ],
                 )
               else if (jenisIzin == '4')
@@ -316,8 +337,8 @@ class _PerizinanViewState extends State<PerizinanView> {
                       callbackSetState2: callbackIzinLainLain2,
                       callbackSetStateUser: callbackIzinLainLainUser,
                       callbackSetStateKet: callbackIzinLainLainKet,
-                      tglMulai: tglMulaiCuti,
-                      tglSelesai: tglSelesaiCuti,
+                      tglMulai: tglMulaiLainLain,
+                      tglSelesai: tglSelesaiLainLain,
                       izinLainLainUser: izinLainLainUser,
                       izinLainLainKet: izinLainLainKet,
                     ),
