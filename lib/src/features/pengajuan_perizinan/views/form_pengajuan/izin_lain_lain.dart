@@ -51,7 +51,7 @@ class FormIzinLainLain extends StatelessWidget {
               vertical: 10,
             ),
             child: Text(
-              "Form izin Cuti",
+              "FORM IZIN LAIN LAIN",
               style: customTextStyle(FontWeight.w500, 13, cBlack),
             ),
           ),

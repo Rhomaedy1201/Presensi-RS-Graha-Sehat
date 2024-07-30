@@ -37,6 +37,12 @@ class _PerizinanViewState extends State<PerizinanView> {
   DateTime tglSelesaiLainLain = DateTime.now();
   String? izinLainLainUser;
   TextEditingController izinLainLainKet = TextEditingController();
+  // Izin Sakit
+  DateTime tglMulaiSakit = DateTime.now();
+  DateTime tglSelesaiSakit = DateTime.now();
+  String? izinSakitUser;
+  TextEditingController izinSakitKet = TextEditingController();
+  String? fileNameSakit;
   //
   DateTime tglMulaiCuti = DateTime.now();
   DateTime tglSelesaiCuti = DateTime.now();
@@ -122,6 +128,32 @@ class _PerizinanViewState extends State<PerizinanView> {
 
   void callbackIzinLainLainKet(TextEditingController ket) {
     izinLainLainKet.text = ket.text;
+    setState(() {});
+  }
+
+  // Izin Sakit
+  void callbackIzinSakit(DateTime tglMulai) {
+    tglMulaiSakit = tglMulai;
+    setState(() {});
+  }
+
+  void callbackIzinSakit2(DateTime tglSelesai) {
+    tglSelesaiSakit = tglSelesai;
+    setState(() {});
+  }
+
+  void callbackIzinSakitUser(String user) {
+    izinSakitUser = user;
+    setState(() {});
+  }
+
+  void callbackIzinSakitKet(TextEditingController ket) {
+    izinSakitKet.text = ket.text;
+    setState(() {});
+  }
+
+  void callbackIzinSakitFile(String file) {
+    fileNameSakit = file;
     setState(() {});
   }
 
@@ -262,10 +294,16 @@ class _PerizinanViewState extends State<PerizinanView> {
                   children: [
                     spaceHeight(20),
                     FormIzinSakit(
-                      callbackSetState: callbackIzinLainLain,
-                      callbackSetState2: callbackIzinLainLain2,
-                      tglMulai: tglMulaiLainLain,
-                      tglSelesai: tglSelesaiLainLain,
+                      callbackSetState: callbackIzinSakit,
+                      callbackSetState2: callbackIzinSakit2,
+                      callbackSetStateUser: callbackIzinSakitUser,
+                      callbackSetStateKet: callbackIzinSakitKet,
+                      callbackSetStateFile: callbackIzinSakitFile,
+                      tglMulai: tglMulaiSakit,
+                      tglSelesai: tglSelesaiSakit,
+                      izinSakitUser: izinSakitUser,
+                      izinSakitKet: izinSakitKet,
+                      fileName: fileNameSakit,
                     ),
                   ],
                 )

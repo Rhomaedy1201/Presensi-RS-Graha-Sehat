@@ -2,21 +2,42 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_required_text.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
+import 'package:file_picker/file_picker.dart';
 
 class FormIzinSakit extends StatelessWidget {
   final Function(DateTime) callbackSetState;
   final Function(DateTime) callbackSetState2;
+  final Function(String) callbackSetStateUser;
+  final Function(TextEditingController) callbackSetStateKet;
+  final Function(String) callbackSetStateFile;
   DateTime tglMulai;
   DateTime tglSelesai;
+  String? izinSakitUser;
+  TextEditingController izinSakitKet = TextEditingController();
+  String? fileName;
   FormIzinSakit({
     required this.callbackSetState,
     required this.callbackSetState2,
+    required this.callbackSetStateUser,
+    required this.callbackSetStateKet,
+    required this.callbackSetStateFile,
     required this.tglMulai,
     required this.tglSelesai,
+    required this.izinSakitUser,
+    required this.izinSakitKet,
+    required this.fileName,
   });
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      callbackSetStateFile(result.files.single.name);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +63,7 @@ class FormIzinSakit extends StatelessWidget {
               vertical: 10,
             ),
             child: Text(
-              "Form izin Sakit",
+              "FORM IZIN SAKIT",
               style: customTextStyle(FontWeight.w500, 13, cBlack),
             ),
           ),
@@ -59,26 +80,38 @@ class FormIzinSakit extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Text(
-                      "Tanggal Mulai",
-                      style: customTextStyle(FontWeight.w600, 11, cBlack),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          requiredText("Mulai", FontWeight.w600, 11, cBlack),
+                          spaceHeight(5),
+                          formJamIzin(context)
+                        ],
+                      ),
                     ),
-                    spaceHeight(5),
-                    formTglMulai(context),
-                    spaceHeight(10),
-                    Text(
-                      "Tanggal Selesai",
-                      style: customTextStyle(FontWeight.w600, 11, cBlack),
+                    spaceWidth(7),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          requiredText("Akhir", FontWeight.w600, 11, cBlack),
+                          spaceHeight(5),
+                          formJamIzin2(context)
+                        ],
+                      ),
                     ),
-                    spaceHeight(5),
-                    formTglSelesai(context),
-                    spaceHeight(10),
-                    formKeterangan(),
                   ],
                 ),
+                spaceHeight(10),
+                dropdownUser(),
+                formKeterangan(),
+                spaceHeight(10),
+                formFile(),
               ],
             ),
           )
@@ -87,7 +120,59 @@ class FormIzinSakit extends StatelessWidget {
     );
   }
 
-  InkWell formTglMulai(BuildContext context) {
+  Widget formFile() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Upload",
+          style: customTextStyle(FontWeight.w600, 11, cBlack),
+        ),
+        spaceHeight(5),
+        GestureDetector(
+          onTap: _pickFile,
+          child: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: cPrimary, width: 2),
+              color: const Color(0xFFF2FFFE),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 7),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.upload_file,
+                    color: cPrimary,
+                    size: 30,
+                  ),
+                  spaceHeight(5),
+                  Text(
+                    'Upload file disini...',
+                    style: customTextStyle(FontWeight.w500, 13, cPrimary),
+                  ),
+                  if (fileName != null) ...[
+                    SizedBox(height: 10),
+                    Text(
+                      'Selected file: $fileName',
+                      style: TextStyle(
+                        color: Colors.brown,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  InkWell formJamIzin(BuildContext context) {
     return InkWell(
       onTap: () async {
         showCupertinoModalPopup(
@@ -116,7 +201,7 @@ class FormIzinSakit extends StatelessWidget {
                   child: const Text('OK'),
                   onPressed: () {
                     print(
-                      tglMulai.dateTime().toString(),
+                      tglMulai.getFullTime().toString(),
                     );
                     Navigator.of(context).pop();
                   },
@@ -141,12 +226,12 @@ class FormIzinSakit extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                tglMulai.fullDateAll().toString(),
+                tglMulai.simpleDateRevers().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
                 Icons.date_range_outlined,
-                size: 25,
+                size: 20,
                 color: cPrimary,
               )
             ],
@@ -156,7 +241,7 @@ class FormIzinSakit extends StatelessWidget {
     );
   }
 
-  InkWell formTglSelesai(BuildContext context) {
+  InkWell formJamIzin2(BuildContext context) {
     return InkWell(
       onTap: () async {
         showCupertinoModalPopup(
@@ -185,7 +270,7 @@ class FormIzinSakit extends StatelessWidget {
                   child: const Text('OK'),
                   onPressed: () {
                     print(
-                      tglSelesai.dateTime().toString(),
+                      tglSelesai.getFullTime().toString(),
                     );
                     Navigator.of(context).pop();
                   },
@@ -210,18 +295,94 @@ class FormIzinSakit extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                tglSelesai.fullDateAll().toString(),
+                tglSelesai.simpleDateRevers().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
                 Icons.date_range_outlined,
-                size: 25,
+                size: 20,
                 color: cPrimary,
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Column dropdownUser() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              "Pengganti ",
+              style: customTextStyle(FontWeight.w600, 11, cBlack),
+            ),
+            Text(
+              "(Opstional)",
+              style: customTextStyle(FontWeight.w500, 10, cBlack),
+            ),
+          ],
+        ),
+        Container(
+          width: Get.width,
+          height: 50,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(7),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 7),
+            child: DropdownButtonFormField<String>(
+              hint: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  "Pilih pengganti",
+                  style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                ),
+              ),
+              isDense: true,
+              isExpanded: true,
+              value: izinSakitUser,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(8),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                filled: true,
+                fillColor: cWhite,
+              ),
+              onChanged: (String? newValue) {
+                izinSakitUser = newValue!;
+                callbackSetStateUser(newValue);
+              },
+              items: ["Jinn", "TONI"].map<DropdownMenuItem<String>>((value) {
+                return DropdownMenuItem<String>(
+                  value: value.toString(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      value,
+                      style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -256,7 +417,7 @@ class FormIzinSakit extends StatelessWidget {
                     scrollPadding: EdgeInsets.zero,
                     autocorrect: false,
                     maxLines: null,
-                    // controller: loginController.passwordController,
+                    controller: izinSakitKet,
                     enableSuggestions: false,
                     style: customTextStyle(
                       FontWeight.w400,

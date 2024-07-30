@@ -24,6 +24,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   dart_ipify: ^1.1.1
   flutter_launcher_icons: ^0.13.1
+  file_picker: ^8.0.0+1
 
 dev_dependencies:
   flutter_test:
