@@ -182,7 +182,7 @@ class SelesaiComponentsTukarShiftState
                     : Expanded(
                         child: ListView.builder(
                           itemCount: selesaiTukarShiftC
-                              .selesaiTukarJadwalM!.data.length,
+                              .selesaiTukarJadwalM?.data.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             var data =

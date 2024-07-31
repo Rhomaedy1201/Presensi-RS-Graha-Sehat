@@ -53,7 +53,7 @@ class ConfirmComponentsTukarShiftState
                 : ListView.builder(
                     shrinkWrap: true,
                     itemCount:
-                        confirmTukarShiftC.confirmTukarJadwalM!.data.length,
+                        confirmTukarShiftC.confirmTukarJadwalM?.data.length,
                     itemBuilder: (context, index) {
                       var data = confirmTukarShiftC.confirmTukarJadwalM?.data;
                       if (tukarJadwalC.nipUser.value ==

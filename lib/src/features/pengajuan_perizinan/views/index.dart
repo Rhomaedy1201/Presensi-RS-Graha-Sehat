@@ -18,10 +18,11 @@ class PerizinanView extends StatefulWidget {
   State<PerizinanView> createState() => _PerizinanViewState();
 }
 
-class _PerizinanViewState extends State<PerizinanView> {
+class _PerizinanViewState extends State<PerizinanView>
+    with TickerProviderStateMixin {
   // Cuti Tahuan
-  DateTime jamIzinCutiTahunan1 = DateTime.now();
-  DateTime jamIzinCutiTahunan2 = DateTime.now();
+  DateTime tglIzinCutiTahunan1 = DateTime.now();
+  DateTime tglIzinCutiTahunan2 = DateTime.now();
   String? userIzinCutiTahunan;
   TextEditingController ketIzinCutiTahunan = TextEditingController();
   // Pulang Cepat
@@ -61,12 +62,12 @@ class _PerizinanViewState extends State<PerizinanView> {
 
   // Cuti Tahunan
   void setStateCallbackCutiTahunan(DateTime newDate1) {
-    jamIzinCutiTahunan1 = newDate1;
+    tglIzinCutiTahunan1 = newDate1;
     setState(() {});
   }
 
   void setStateCallbackCutiTahunan2(DateTime newDate2) {
-    jamIzinCutiTahunan2 = newDate2;
+    tglIzinCutiTahunan2 = newDate2;
     setState(() {});
   }
 
@@ -180,242 +181,305 @@ class _PerizinanViewState extends State<PerizinanView> {
     setState(() {});
   }
 
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cGrey_200,
-      appBar: myAppBar("Pengajuan Izin"),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: SizedBox(
-          width: Get.width,
-          height: 40,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: cPrimary,
-              shadowColor: cPrimary_400,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  10,
-                ), // Mengatur border radius menjadi 0
-              ),
+      appBar: AppBar(
+        backgroundColor: cPrimary,
+        centerTitle: true,
+        title: Text(
+          "Perizinan",
+          style: customTextStyle(FontWeight.w500, 20, cBlack),
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(55),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 10,
             ),
-            onPressed: jenisIzin == null
-                ? null
-                : () {
-                    print(ketIzinCutiTahunan.text);
-                  },
-            child: const Text(
-              "Submit Pengajuan",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+            child: Container(
+              decoration: const BoxDecoration(
                 color: cWhite,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(2.5),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: cWhite,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  child: TabBar(
+                    onTap: (value) {
+                      print("object");
+                    },
+                    dividerColor: cWhite,
+                    unselectedLabelColor: Colors.black,
+                    labelColor: cWhite,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicator: const BoxDecoration(
+                      color: cPrimary,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    controller: _tabController,
+                    tabs: const <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Pengajuan",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 10),
+                        ),
+                      ),
+                      Text(
+                        "on Progress",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Need Approval",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Selesai",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Column(
-            children: [
-              Container(
+      body: TabBarView(
+        controller: _tabController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          Scaffold(
+            backgroundColor: cGrey_200,
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: SizedBox(
                 width: Get.width,
-                decoration: BoxDecoration(
-                  color: cWhite,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: cGrey_400,
-                      blurRadius: 15,
-                      offset: Offset(1, 1), // Shadow position
+                height: 40,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: cPrimary,
+                    shadowColor: cPrimary_400,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ), // Mengatur border radius menjadi 0
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          dropdownJenisIzin(),
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
+                  onPressed: jenisIzin == null
+                      ? null
+                      : () {
+                          if (jenisIzin == '1') {
+                          } else if (jenisIzin == '2') {
+                          } else if (jenisIzin == '3') {
+                          } else if (jenisIzin == '4') {
+                          } else if (jenisIzin == '5') {
+                          } else if (jenisIzin == '6') {}
+                        },
+                  child: const Text(
+                    "Submit Pengajuan",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: cWhite,
+                    ),
+                  ),
                 ),
               ),
-              if (jenisIzin == '1')
-                Column(
-                  children: [
-                    spaceHeight(20),
-                    FormIzinCutiTahunan(
-                      callbackSetState: setStateCallbackCutiTahunan,
-                      callbackSetState2: setStateCallbackCutiTahunan2,
-                      callbackSetStateUser: setStateCallbackCutiTahunanUser,
-                      callbackSetStateKet: setStateCallbackCutiTahunanKet,
-                      jamIzinCutiTahunan1: jamIzinCutiTahunan1,
-                      jamIzinCutiTahunan2: jamIzinCutiTahunan2,
-                      userPenggantiCutiTahuan: userIzinCutiTahunan,
-                      ketIzinCutiTahunan: ketIzinCutiTahunan,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Column(
+                children: [
+                  Container(
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: cWhite,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: cGrey_400,
+                          blurRadius: 15,
+                          offset: Offset(1, 1), // Shadow position
+                        ),
+                      ],
                     ),
-                  ],
-                )
-              else if (jenisIzin == '2')
-                Column(
-                  children: [
-                    spaceHeight(20),
-                    FormIzinPulangCepat(
-                      callbackSetState: callbackPulangCepat,
-                      callbackSetStateKet: callbackPulangCepatKet,
-                      jamIzinPulangCepat: jamIzinPulangCepat,
-                      ketPulangCepat: ketPulangCepat,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              dropdownJenisIzin(),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                  ],
-                )
-              else if (jenisIzin == '3')
-                Column(
-                  children: [
-                    spaceHeight(20),
-                    FormIzinKeluar(
-                      callbackSetState: callbackIzinKeluar,
-                      callbackSetState2: callbackIzinKeluar2,
-                      callbackSetStateKet: callbackIzinKeluarKet,
-                      callbackSetStateFile: callbackIzinKeluarFile,
-                      jamMulai: jamMulaiKeluar,
-                      jamSelesai: jamSelesaiKeluar,
-                      izinSakitKet: izinKeluarKet,
-                      fileName: fileNameKeluar,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          if (jenisIzin == '1')
+                            Column(
+                              children: [
+                                spaceHeight(20),
+                                FormIzinCutiTahunan(
+                                  callbackSetState: setStateCallbackCutiTahunan,
+                                  callbackSetState2:
+                                      setStateCallbackCutiTahunan2,
+                                  callbackSetStateUser:
+                                      setStateCallbackCutiTahunanUser,
+                                  callbackSetStateKet:
+                                      setStateCallbackCutiTahunanKet,
+                                  jamIzinCutiTahunan1: tglIzinCutiTahunan1,
+                                  jamIzinCutiTahunan2: tglIzinCutiTahunan2,
+                                  userPenggantiCutiTahuan: userIzinCutiTahunan,
+                                  ketIzinCutiTahunan: ketIzinCutiTahunan,
+                                ),
+                              ],
+                            )
+                          else if (jenisIzin == '2')
+                            Column(
+                              children: [
+                                spaceHeight(20),
+                                FormIzinPulangCepat(
+                                  callbackSetState: callbackPulangCepat,
+                                  callbackSetStateKet: callbackPulangCepatKet,
+                                  jamIzinPulangCepat: jamIzinPulangCepat,
+                                  ketPulangCepat: ketPulangCepat,
+                                ),
+                              ],
+                            )
+                          else if (jenisIzin == '3')
+                            Column(
+                              children: [
+                                spaceHeight(20),
+                                FormIzinKeluar(
+                                  callbackSetState: callbackIzinKeluar,
+                                  callbackSetState2: callbackIzinKeluar2,
+                                  callbackSetStateKet: callbackIzinKeluarKet,
+                                  callbackSetStateFile: callbackIzinKeluarFile,
+                                  jamMulai: jamMulaiKeluar,
+                                  jamSelesai: jamSelesaiKeluar,
+                                  izinSakitKet: izinKeluarKet,
+                                  fileName: fileNameKeluar,
+                                ),
+                              ],
+                            )
+                          else if (jenisIzin == '4')
+                            Column(
+                              children: [
+                                spaceHeight(20),
+                                FormIzinMelahirkan(
+                                  callbackSetState: callbackIzinMelahirkan,
+                                  callbackSetState2: callbackIzinMelahirkan2,
+                                  callbackSetStateUser:
+                                      callbackIzinMelahirkanUser,
+                                  callbackSetStateKet:
+                                      callbackIzinMelahirkanKet,
+                                  tglMelahirkan1: tglMelahirkan1,
+                                  tglMelahirkan2: tglMelahirkan2,
+                                  izinMelahirkanUser: izinMelahirkanUser,
+                                  izinMelahirkanKet: izinMelahirkanKet,
+                                ),
+                              ],
+                            )
+                          else if (jenisIzin == '5')
+                            Column(
+                              children: [
+                                spaceHeight(20),
+                                FormIzinSakit(
+                                  callbackSetState: callbackIzinSakit,
+                                  callbackSetState2: callbackIzinSakit2,
+                                  callbackSetStateUser: callbackIzinSakitUser,
+                                  callbackSetStateKet: callbackIzinSakitKet,
+                                  callbackSetStateFile: callbackIzinSakitFile,
+                                  tglMulai: tglMulaiSakit,
+                                  tglSelesai: tglSelesaiSakit,
+                                  izinSakitUser: izinSakitUser,
+                                  izinSakitKet: izinSakitKet,
+                                  fileName: fileNameSakit,
+                                ),
+                              ],
+                            )
+                          else if (jenisIzin == '6')
+                            Column(
+                              children: [
+                                spaceHeight(20),
+                                FormIzinLainLain(
+                                  callbackSetState: callbackIzinLainLain,
+                                  callbackSetState2: callbackIzinLainLain2,
+                                  callbackSetStateUser:
+                                      callbackIzinLainLainUser,
+                                  callbackSetStateKet: callbackIzinLainLainKet,
+                                  tglMulai: tglMulaiLainLain,
+                                  tglSelesai: tglSelesaiLainLain,
+                                  izinLainLainUser: izinLainLainUser,
+                                  izinLainLainKet: izinLainLainKet,
+                                ),
+                              ],
+                            )
+                          else
+                            Container(),
+                        ],
+                      ),
                     ),
-                  ],
-                )
-              else if (jenisIzin == '4')
-                Column(
-                  children: [
-                    spaceHeight(20),
-                    FormIzinMelahirkan(
-                      callbackSetState: callbackIzinMelahirkan,
-                      callbackSetState2: callbackIzinMelahirkan2,
-                      callbackSetStateUser: callbackIzinMelahirkanUser,
-                      callbackSetStateKet: callbackIzinMelahirkanKet,
-                      tglMelahirkan1: tglMelahirkan1,
-                      tglMelahirkan2: tglMelahirkan2,
-                      izinMelahirkanUser: izinMelahirkanUser,
-                      izinMelahirkanKet: izinMelahirkanKet,
-                    ),
-                  ],
-                )
-              else if (jenisIzin == '5')
-                Column(
-                  children: [
-                    spaceHeight(20),
-                    FormIzinSakit(
-                      callbackSetState: callbackIzinSakit,
-                      callbackSetState2: callbackIzinSakit2,
-                      callbackSetStateUser: callbackIzinSakitUser,
-                      callbackSetStateKet: callbackIzinSakitKet,
-                      callbackSetStateFile: callbackIzinSakitFile,
-                      tglMulai: tglMulaiSakit,
-                      tglSelesai: tglSelesaiSakit,
-                      izinSakitUser: izinSakitUser,
-                      izinSakitKet: izinSakitKet,
-                      fileName: fileNameSakit,
-                    ),
-                  ],
-                )
-              else if (jenisIzin == '6')
-                Column(
-                  children: [
-                    spaceHeight(20),
-                    FormIzinLainLain(
-                      callbackSetState: callbackIzinLainLain,
-                      callbackSetState2: callbackIzinLainLain2,
-                      callbackSetStateUser: callbackIzinLainLainUser,
-                      callbackSetStateKet: callbackIzinLainLainKet,
-                      tglMulai: tglMulaiLainLain,
-                      tglSelesai: tglSelesaiLainLain,
-                      izinLainLainUser: izinLainLainUser,
-                      izinLainLainKet: izinLainLainKet,
-                    ),
-                  ],
-                )
-              else
-                Container()
-            ],
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+          Center(
+            child: Text("It's rainy here"),
+          ),
+          Center(
+            child: Text("It's sunny here"),
+          ),
+          Center(
+            child: Text("It's sunny here"),
+          ),
+        ],
       ),
     );
   }
-
-  // InkWell fornJanIzinKeluar(BuildContext context) {
-  //   return InkWell(
-  //     onTap: () async {
-  //       showCupertinoModalPopup(
-  //         context: context,
-  //         builder: (_) => Container(
-  //           height: 400,
-  //           color: const Color.fromARGB(255, 255, 255, 255),
-  //           child: Column(
-  //             children: [
-  //               SizedBox(
-  //                 height: 300,
-  //                 child: CupertinoDatePicker(
-  //                   initialDateTime: DateTime.now(),
-  //                   maximumDate: DateTime.now(),
-  //                   maximumYear: DateTime.now().year,
-  //                   minimumYear: 2024,
-  //                   mode: CupertinoDatePickerMode.time,
-  //                   onDateTimeChanged: (val) {
-  //                     jamIzinCutiTahunan1 = val;
-  //                     setState(() {});
-  //                   },
-  //                 ),
-  //               ),
-  //               // Close the modal
-  //               CupertinoButton(
-  //                 child: const Text('OK'),
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //               )
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //     child: Container(
-  //       height: 37,
-  //       decoration: BoxDecoration(
-  //         borderRadius: const BorderRadius.all(
-  //           Radius.circular(5),
-  //         ),
-  //         border: Border.all(color: cGrey_400, width: 1.5),
-  //       ),
-  //       child: Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 12),
-  //         child: Row(
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             Text(
-  //               jamIzinCutiTahunan1.getFullTime().toString(),
-  //               style: customTextStyle(FontWeight.w500, 13, cGrey_900),
-  //             ),
-  //             const Icon(
-  //               Icons.date_range_outlined,
-  //               size: 25,
-  //               color: cPrimary,
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Column dropdownJenisIzin() {
     return Column(
