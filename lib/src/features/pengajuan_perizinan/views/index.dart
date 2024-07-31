@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/views/components/progress.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_lain_lain.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_cuti_tahunan.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_melahirkan.dart';
@@ -467,9 +468,7 @@ class _PerizinanViewState extends State<PerizinanView>
               ),
             ),
           ),
-          Center(
-            child: Text("It's rainy here"),
-          ),
+          ProgressIzin(),
           Center(
             child: Text("It's sunny here"),
           ),
