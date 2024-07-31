@@ -41,6 +41,32 @@ class ProgressIzin extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Text(
+                          "Tgl Pengajuan : 12-01-2024 asss",
+                          style: customTextStyle(FontWeight.w500, 11, cBlack),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: cPrimary,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 3, vertical: 1),
+                            child: Text(
+                              "Izin Sakit (S)",
+                              style:
+                                  customTextStyle(FontWeight.w600, 10, cWhite),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    spaceHeight(8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -80,31 +106,17 @@ class ProgressIzin extends StatelessWidget {
                             )
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: cPrimary,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 3, vertical: 1),
-                                child: Text(
-                                  "Izin Sakit (S)",
-                                  style: customTextStyle(
-                                      FontWeight.w600, 10, cWhite),
-                                ),
-                              ),
-                            ),
-                            spaceHeight(5),
-                            Text(
-                              "Tgl Pengajuan : 12-01-2024",
-                              style:
-                                  customTextStyle(FontWeight.w500, 10, cBlack),
-                            ),
-                          ],
+                        Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            color: cRed_100,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: const Icon(
+                            Icons.delete_forever,
+                            size: 18,
+                            color: cRed,
+                          ),
                         ),
                       ],
                     ),
