@@ -5,8 +5,8 @@ import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
-class ProgressIzin extends StatelessWidget {
-  const ProgressIzin({super.key});
+class KonfirmasiIzin extends StatelessWidget {
+  const KonfirmasiIzin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,23 +105,6 @@ class ProgressIzin extends StatelessWidget {
                               ],
                             )
                           ],
-                        ),
-                        InkWell(
-                          onTap: () {
-                            print("delete");
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              color: cRed_100,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Icon(
-                              Icons.delete_forever,
-                              size: 20,
-                              color: cRed,
-                            ),
-                          ),
                         ),
                       ],
                     ),
