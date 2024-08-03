@@ -12,7 +12,9 @@ class KonfirmasiIzin extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(DetailIzin());
+        Get.to(DetailIzin(
+          type: "konfirmasi",
+        ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),

@@ -6,7 +6,8 @@ import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
 class DetailIzin extends StatelessWidget {
-  const DetailIzin({super.key});
+  String type;
+  DetailIzin({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +130,7 @@ class DetailIzin extends StatelessWidget {
                             ),
                             spaceHeight(2),
                             Text(
-                              "(12-01-2024) - (13-01-2024)",
+                              "12-01-2024 -> 13-01-2024",
                               style:
                                   customTextStyle(FontWeight.w500, 10, cBlack),
                             ),
