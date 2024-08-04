@@ -55,7 +55,6 @@ class _PresensiViewState extends State<PresensiView> {
 
   @override
   void dispose() {
-    print(1);
     _timer?.cancel();
     super.dispose();
   }

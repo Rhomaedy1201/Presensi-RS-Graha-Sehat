@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/http/models/selesai_tukar_jadwal_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:presensi_gs/utils/base_url.dart';
+import 'package:presensi_gs/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelesaiTukarShiftController extends GetxController {
@@ -17,10 +18,10 @@ class SelesaiTukarShiftController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getSelesai();
+    getSelesai(DateTime.now());
   }
 
-  Future<void> getSelesai() async {
+  Future<void> getSelesai(DateTime tgl) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     var headers = {
@@ -34,7 +35,8 @@ class SelesaiTukarShiftController extends GetxController {
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/tukar-jadwal/history"),
+        Uri.parse(
+            "$base_url/tukar-jadwal/history?month=${tgl.getMonthNumber()}&year=${tgl.getYear()}"),
         headers: headers,
       );
 

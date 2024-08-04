@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/selesai_ts_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/controllers/tukar_shift_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
@@ -24,14 +23,13 @@ class SelesaiComponentsTukarShiftState
   TukarJadwalController tukarJadwalC = Get.find<TukarJadwalController>();
 
   DateTime tglAwal = DateTime.now();
-  DateTime tglAkhir = DateTime.now();
   String? status;
   String? tipePengajuan;
   bool filterShow = true;
 
   @override
   void initState() {
-    selesaiTukarShiftC.getSelesai();
+    selesaiTukarShiftC.getSelesai(tglAwal);
     super.initState();
   }
 
@@ -117,19 +115,7 @@ class SelesaiComponentsTukarShiftState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: formTglAwal(context),
-                                    ),
-                                    spaceWidth(10),
-                                    Expanded(
-                                      flex: 1,
-                                      child: formTglAkhir(context),
-                                    ),
-                                  ],
-                                ),
+                                formTglAwal(context),
                                 spaceHeight(10),
                                 SizedBox(
                                   width: Get.width,
@@ -144,7 +130,9 @@ class SelesaiComponentsTukarShiftState
                                         ), // Mengatur border radius menjadi 0
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      selesaiTukarShiftC.getSelesai(tglAwal);
+                                    },
                                     child: const Text(
                                       "Filter",
                                       style: TextStyle(
@@ -173,7 +161,7 @@ class SelesaiComponentsTukarShiftState
                         padding: EdgeInsets.only(top: Get.height * 0.2),
                         child: Center(
                           child: Text(
-                            "Pengajuan Selesai Masih\nKosong!.",
+                            "Pengajuan Selesai Masih\nKosong Pada ${tglAwal.getMonthAndYear()}.",
                             textAlign: TextAlign.center,
                             style: customTextStyle(FontWeight.w400, 17, cBlack),
                           ),
@@ -615,7 +603,7 @@ class SelesaiComponentsTukarShiftState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Tanggal Awal",
+          "Tanggal",
           style: customTextStyle(FontWeight.w500, 11, cBlack),
         ),
         spaceHeight(5),
@@ -631,11 +619,11 @@ class SelesaiComponentsTukarShiftState
                     SizedBox(
                       height: 300,
                       child: CupertinoDatePicker(
-                        initialDateTime: DateTime.now(),
+                        initialDateTime: tglAwal,
                         maximumDate: DateTime.now(),
                         maximumYear: DateTime.now().year,
                         minimumYear: 2024,
-                        mode: CupertinoDatePickerMode.date,
+                        mode: CupertinoDatePickerMode.monthYear,
                         onDateTimeChanged: (val) {
                           tglAwal = val;
                           setState(() {});
@@ -672,86 +660,7 @@ class SelesaiComponentsTukarShiftState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tglAwal.fullDateAll().toString(),
-                    style: customTextStyle(FontWeight.w500, 12, cGrey_900),
-                  ),
-                  const Icon(
-                    Icons.date_range_outlined,
-                    size: 22,
-                    color: cPrimary,
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget formTglAkhir(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Tanggal Akhir",
-          style: customTextStyle(FontWeight.w500, 11, cBlack),
-        ),
-        spaceHeight(5),
-        InkWell(
-          onTap: () async {
-            showCupertinoModalPopup(
-              context: context,
-              builder: (_) => Container(
-                height: 400,
-                color: const Color.fromARGB(255, 255, 255, 255),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 300,
-                      child: CupertinoDatePicker(
-                        initialDateTime: DateTime.now(),
-                        maximumDate: DateTime.now(),
-                        maximumYear: DateTime.now().year,
-                        minimumYear: 2024,
-                        mode: CupertinoDatePickerMode.date,
-                        onDateTimeChanged: (val) {
-                          tglAkhir = val;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                    // Close the modal
-                    CupertinoButton(
-                      child: const Text('OK'),
-                      onPressed: () {
-                        print(
-                          tglAkhir.dateTime().toString(),
-                        );
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-          child: Container(
-            height: 35,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-              border: Border.all(color: cGrey_400, width: 1.5),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    tglAkhir.fullDateAll().toString(),
+                    tglAwal.getMonthAndYear().toString(),
                     style: customTextStyle(FontWeight.w500, 12, cGrey_900),
                   ),
                   const Icon(
