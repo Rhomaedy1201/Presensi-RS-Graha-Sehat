@@ -5,10 +5,17 @@ import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
-class DetailIzin extends StatelessWidget {
+class DetailIzin extends StatefulWidget {
   String type;
-  DetailIzin({super.key, required this.type});
+  var data = {};
 
+  DetailIzin({super.key, required this.type, required this.data});
+
+  @override
+  State<DetailIzin> createState() => _DetailIzinState();
+}
+
+class _DetailIzinState extends State<DetailIzin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +47,7 @@ class DetailIzin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Tgl Pengajuan : 12-01-2024",
+                      "Tgl Pengajuan : ${widget.data['tanggal']}",
                       style: customTextStyle(FontWeight.w500, 11, cBlack),
                     ),
                     Container(
@@ -52,7 +59,7 @@ class DetailIzin extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 3, vertical: 1),
                         child: Text(
-                          "Izin Sakit (S)",
+                          "${widget.data['izin']} (${widget.data['kodeIzin']})",
                           style: customTextStyle(FontWeight.w600, 10, cWhite),
                         ),
                       ),
@@ -85,7 +92,7 @@ class DetailIzin extends StatelessWidget {
                             SizedBox(
                               width: Get.width * 0.7,
                               child: Text(
-                                "Muhammad Rhomaedi",
+                                widget.data['nama'],
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: customTextStyle(
@@ -94,7 +101,7 @@ class DetailIzin extends StatelessWidget {
                             ),
                             spaceHeight(1),
                             Text(
-                              "012377",
+                              widget.data['nip'],
                               style: customTextStyle(
                                   FontWeight.w500, 10, cGrey_700),
                             ),
@@ -130,7 +137,7 @@ class DetailIzin extends StatelessWidget {
                             ),
                             spaceHeight(2),
                             Text(
-                              "12-01-2024 -> 13-01-2024",
+                              "${widget.data['periodeIzin1']} -> ${widget.data['periodeIzin2']}",
                               style:
                                   customTextStyle(FontWeight.w500, 10, cBlack),
                             ),
@@ -154,7 +161,7 @@ class DetailIzin extends StatelessWidget {
                             ),
                             spaceHeight(2),
                             Text(
-                              "SUSANTO, S,Kom (2938237)",
+                              "${widget.data['acc1Name']} (${widget.data['acc1']})",
                               style:
                                   customTextStyle(FontWeight.w500, 10, cBlack),
                             ),
@@ -178,7 +185,7 @@ class DetailIzin extends StatelessWidget {
                             ),
                             spaceHeight(2),
                             Text(
-                              "-",
+                              widget.data['keterangan'] ?? "-",
                               style:
                                   customTextStyle(FontWeight.w500, 10, cBlack),
                             ),
@@ -267,38 +274,118 @@ class DetailIzin extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                               width: 17,
                               height: 17,
                               decoration: BoxDecoration(
-                                color: cPrimary_800,
+                                color: widget.data['acc1At'] != null
+                                    ? cPrimary_800
+                                    : cGrey_500,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.check,
-                                  size: 13,
-                                  color: cWhite,
-                                ),
-                              ),
+                              child: widget.data['accAt'] != null
+                                  ? const Center(
+                                      child: Icon(
+                                        Icons.check,
+                                        size: 13,
+                                        color: cWhite,
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                            Container(
+                              width: 1.7,
+                              height: 30,
+                              color: cGrey_500,
                             ),
                           ],
                         ),
-                        Container(
-                          width: 1.7,
-                          height: 35,
-                          color: cGrey_500,
-                        ),
-                        Container(
-                          width: 17,
-                          height: 17,
-                          decoration: BoxDecoration(
-                            color: cGrey_500,
-                            borderRadius: BorderRadius.circular(10),
+                        if (widget.data['acc2'] != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 17,
+                                height: 17,
+                                decoration: BoxDecoration(
+                                  color: widget.data['acc2At'] != null
+                                      ? cPrimary_800
+                                      : cGrey_500,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: widget.data['accAt'] != null
+                                    ? const Center(
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 13,
+                                          color: cWhite,
+                                        ),
+                                      )
+                                    : Container(),
+                              ),
+                              Container(
+                                width: 1.7,
+                                height: 30,
+                                color: cGrey_500,
+                              ),
+                            ],
                           ),
-                          child: Container(),
+                        if (widget.data['acc3'] != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 17,
+                                height: 17,
+                                decoration: BoxDecoration(
+                                  color: widget.data['acc3At'] != null
+                                      ? cPrimary_800
+                                      : cGrey_500,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: widget.data['accAt'] != null
+                                    ? const Center(
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 13,
+                                          color: cWhite,
+                                        ),
+                                      )
+                                    : Container(),
+                              ),
+                              Container(
+                                width: 1.7,
+                                height: 30,
+                                color: cGrey_500,
+                              ),
+                            ],
+                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 17,
+                              height: 17,
+                              decoration: BoxDecoration(
+                                color: widget.data['accAt'] != null
+                                    ? cPrimary_800
+                                    : cGrey_500,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: widget.data['accAt'] != null
+                                  ? const Center(
+                                      child: Icon(
+                                        Icons.check,
+                                        size: 13,
+                                        color: cWhite,
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -306,14 +393,47 @@ class DetailIzin extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "ACC 1 : CHOKY CANDRA",
-                          style: customTextStyle(FontWeight.w500, 11, cBlack),
+                        Column(
+                          children: [
+                            Text(
+                              "ACC 1 : ${widget.data['acc1Name']}",
+                              style:
+                                  customTextStyle(FontWeight.w500, 11, cBlack),
+                            ),
+                            spaceHeight(30),
+                          ],
                         ),
-                        spaceHeight(35),
-                        Text(
-                          "ACC SDM : ",
-                          style: customTextStyle(FontWeight.w500, 11, cBlack),
+                        if (widget.data['acc2'] != null)
+                          Column(
+                            children: [
+                              Text(
+                                "ACC 2 : ${widget.data['acc2Name']}",
+                                style: customTextStyle(
+                                    FontWeight.w500, 11, cBlack),
+                              ),
+                              spaceHeight(30),
+                            ],
+                          ),
+                        if (widget.data['acc3'] != null)
+                          Column(
+                            children: [
+                              Text(
+                                "ACC 3 : ${widget.data['acc3Name']}",
+                                style: customTextStyle(
+                                    FontWeight.w500, 11, cBlack),
+                              ),
+                              spaceHeight(30),
+                            ],
+                          ),
+                        Column(
+                          children: [
+                            Text(
+                              "ACC SDM : ${widget.data['acc1Name']}",
+                              style:
+                                  customTextStyle(FontWeight.w500, 11, cBlack),
+                            ),
+                            spaceHeight(30),
+                          ],
                         ),
                       ],
                     )

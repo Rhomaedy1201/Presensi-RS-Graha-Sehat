@@ -14,6 +14,7 @@ class PengajuanIzinController extends GetxController {
   KaryawanPerUnitModel? karyawanPerUnitM;
   var isLoadingKarayawan = false.obs;
   var isLoadingSubmit = false.obs;
+  var nipUser = "".obs;
 
   @override
   void onInit() {
@@ -24,6 +25,8 @@ class PengajuanIzinController extends GetxController {
   Future<void> getKaryawanPerUnit() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    final nip = prefs.getString('nip');
+    nipUser.value = nip!;
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
