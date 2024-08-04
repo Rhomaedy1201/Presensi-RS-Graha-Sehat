@@ -132,10 +132,10 @@ class FormIzinMelahirkan extends StatelessWidget {
                 SizedBox(
                   height: 300,
                   child: CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
-                    maximumDate: DateTime.now(),
-                    maximumYear: DateTime.now().year,
-                    minimumYear: 2024,
+                    initialDateTime: tglMelahirkan1,
+                    minimumDate: DateTime.now()
+                        .subtract(const Duration(days: 1)), // set minimum date
+                    minimumYear: DateTime.now().year,
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
                       tglMelahirkan1 = val;
@@ -201,10 +201,10 @@ class FormIzinMelahirkan extends StatelessWidget {
                 SizedBox(
                   height: 300,
                   child: CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
-                    maximumDate: DateTime.now(),
-                    maximumYear: DateTime.now().year,
-                    minimumYear: 2024,
+                    initialDateTime: tglMelahirkan2,
+                    minimumDate: DateTime.now()
+                        .subtract(const Duration(days: 1)), // set minimum date
+                    minimumYear: DateTime.now().year,
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
                       tglMelahirkan2 = val;

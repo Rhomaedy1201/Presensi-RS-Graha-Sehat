@@ -152,10 +152,10 @@ class FormIzinCutiTahunan extends StatelessWidget {
                 SizedBox(
                   height: 300,
                   child: CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
-                    maximumDate: DateTime.now(),
-                    maximumYear: DateTime.now().year,
-                    minimumYear: 2024,
+                    initialDateTime: jamIzinCutiTahunan1,
+                    minimumDate: DateTime.now()
+                        .subtract(const Duration(days: 1)), // set minimum date
+                    minimumYear: DateTime.now().year,
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
                       jamIzinCutiTahunan1 = val;
@@ -221,10 +221,10 @@ class FormIzinCutiTahunan extends StatelessWidget {
                 SizedBox(
                   height: 300,
                   child: CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
-                    maximumDate: DateTime.now(),
-                    maximumYear: DateTime.now().year,
-                    minimumYear: 2024,
+                    initialDateTime: jamIzinCutiTahunan2,
+                    minimumDate: DateTime.now()
+                        .subtract(const Duration(days: 1)), // set minimum date
+                    minimumYear: DateTime.now().year,
                     mode: CupertinoDatePickerMode.date,
                     onDateTimeChanged: (val) {
                       jamIzinCutiTahunan2 = val;
@@ -262,7 +262,7 @@ class FormIzinCutiTahunan extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                jamIzinCutiTahunan1.simpleDateRevers().toString(),
+                jamIzinCutiTahunan2.simpleDateRevers().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
