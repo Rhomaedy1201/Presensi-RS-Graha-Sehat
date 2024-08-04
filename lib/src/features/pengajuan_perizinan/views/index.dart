@@ -45,6 +45,8 @@ class _PerizinanViewState extends State<PerizinanView>
   DateTime tglSelesaiLainLain = DateTime.now();
   String? izinLainLainUser;
   TextEditingController izinLainLainKet = TextEditingController();
+  String? fileNameLain;
+  File? selectedFileLain;
   // Izin Sakit
   DateTime tglMulaiSakit = DateTime.now();
   DateTime tglSelesaiSakit = DateTime.now();
@@ -141,6 +143,16 @@ class _PerizinanViewState extends State<PerizinanView>
 
   void callbackIzinLainLainKet(TextEditingController ket) {
     izinLainLainKet.text = ket.text;
+    setState(() {});
+  }
+
+  void callbackIzinLainFile(String file) {
+    fileNameLain = file;
+    setState(() {});
+  }
+
+  void callbackIzinLainFilePath(File file) {
+    selectedFileLain = file;
     setState(() {});
   }
 
@@ -543,10 +555,15 @@ class _PerizinanViewState extends State<PerizinanView>
                                   callbackSetStateUser:
                                       callbackIzinLainLainUser,
                                   callbackSetStateKet: callbackIzinLainLainKet,
+                                  callbackSetStateFile: callbackIzinLainFile,
+                                  callbackSetStateFilePath:
+                                      callbackIzinLainFilePath,
                                   tglMulai: tglMulaiLainLain,
                                   tglSelesai: tglSelesaiLainLain,
                                   izinLainLainUser: izinLainLainUser,
                                   izinLainLainKet: izinLainLainKet,
+                                  fileName: fileNameLain,
+                                  selectedFile: selectedFileLain,
                                 ),
                               ],
                             )

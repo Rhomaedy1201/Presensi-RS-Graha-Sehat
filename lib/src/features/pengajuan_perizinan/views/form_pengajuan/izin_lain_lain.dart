@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,20 +18,37 @@ class FormIzinLainLain extends StatelessWidget {
   final Function(DateTime) callbackSetState2;
   final Function(String) callbackSetStateUser;
   final Function(TextEditingController) callbackSetStateKet;
+  final Function(String) callbackSetStateFile;
+  final Function(File) callbackSetStateFilePath;
   DateTime tglMulai;
   DateTime tglSelesai;
   String? izinLainLainUser;
   TextEditingController izinLainLainKet = TextEditingController();
+  String? fileName;
+  File? selectedFile;
   FormIzinLainLain({
     required this.callbackSetState,
     required this.callbackSetState2,
     required this.callbackSetStateUser,
     required this.callbackSetStateKet,
+    required this.callbackSetStateFile,
+    required this.callbackSetStateFilePath,
     required this.tglMulai,
     required this.tglSelesai,
     required this.izinLainLainUser,
     required this.izinLainLainKet,
+    required this.fileName,
+    required this.selectedFile,
   });
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      callbackSetStateFile(result.files.single.name);
+      callbackSetStateFilePath(File(filePath));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +129,66 @@ class FormIzinLainLain extends StatelessWidget {
                         spaceHeight(10),
                         dropdownUser(),
                         formKeterangan(),
+                        spaceHeight(10),
+                        formFile(),
                       ],
                     ),
                   )
                 ],
               ),
             ),
+    );
+  }
+
+  Widget formFile() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Upload",
+          style: customTextStyle(FontWeight.w600, 11, cBlack),
+        ),
+        spaceHeight(5),
+        GestureDetector(
+          onTap: _pickFile,
+          child: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: cPrimary, width: 2),
+              color: const Color(0xFFF2FFFE),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 7),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.upload_file,
+                    color: cPrimary,
+                    size: 30,
+                  ),
+                  spaceHeight(5),
+                  Text(
+                    'Upload file disini...',
+                    style: customTextStyle(FontWeight.w500, 13, cPrimary),
+                  ),
+                  if (fileName != null) ...[
+                    SizedBox(height: 10),
+                    Text(
+                      'Selected file: $fileName',
+                      style: TextStyle(
+                        color: Colors.brown,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

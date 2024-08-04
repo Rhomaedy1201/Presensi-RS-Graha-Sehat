@@ -2,14 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:presensi_gs/http/models/progress_izin_model.dart';
 import 'package:presensi_gs/utils/base_url.dart';
-import 'package:http/http.dart' as http;
+import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProgressIzinController extends GetxController {
+class ConfirmIzinControlller extends GetxController {
   ProgressIzinModel? progressIzinM;
   var isLoading = false.obs;
+  var isLoadingAcc = false.obs;
   var isEmptyData = true.obs;
 
   @override
@@ -32,7 +34,7 @@ class ProgressIzinController extends GetxController {
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/izin/progress/by-nip"),
+        Uri.parse("$base_url/izin/confirm/by-nip"),
         headers: headers,
       );
 
@@ -47,10 +49,46 @@ class ProgressIzinController extends GetxController {
       } else {
         debugPrint(response.body.toString());
       }
+      print(json);
     } catch (e) {
       print(e.toString());
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> accConfirm(jenis, int idIzin) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingAcc(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      Map body = {"type": jenis, "id_izin": idIzin};
+
+      http.Response response = await http.put(
+        Uri.parse("$base_url/izin/acc/submit"),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        Get.back();
+        snackbarSuccess("Berhasil Menerima Pengajuan.");
+        getData();
+      } else {
+        debugPrint(response.body.toString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingAcc(false);
     }
   }
 }

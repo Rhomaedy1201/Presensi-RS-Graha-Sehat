@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final progressIzinModel = progressIzinModelFromJson(jsonString);
+
 import 'dart:convert';
 
 ProgressIzinModel progressIzinModelFromJson(String str) =>
@@ -42,19 +46,19 @@ class Datum {
   String acc1;
   String? acc2;
   String? acc3;
-  dynamic acc1At;
+  DateTime? acc1At;
   dynamic acc2At;
   dynamic acc3At;
   String accSdm;
   dynamic accAt;
   String createdBy;
   int accStatus;
-  dynamic ket;
+  String? ket;
   String jenisTable;
   String tanggalCast;
-  AccBy acc1By;
-  AccBy? acc2By;
-  AccBy? acc3By;
+  By acc1By;
+  By? acc2By;
+  By? acc3By;
   IzinCuti izinCuti;
   dynamic izinKrs;
   IzinBukti? izinBukti;
@@ -99,7 +103,8 @@ class Datum {
         acc1: json["acc1"],
         acc2: json["acc2"],
         acc3: json["acc3"],
-        acc1At: json["acc1_at"],
+        acc1At:
+            json["acc1_at"] == null ? null : DateTime.parse(json["acc1_at"]),
         acc2At: json["acc2_at"],
         acc3At: json["acc3_at"],
         accSdm: json["acc_sdm"],
@@ -109,11 +114,9 @@ class Datum {
         ket: json["ket"],
         jenisTable: json["jenis_table"],
         tanggalCast: json["tanggal_cast"],
-        acc1By: AccBy.fromJson(json["acc1_by"]),
-        acc2By:
-            json["acc2_by"] == null ? null : AccBy.fromJson(json["acc2_by"]),
-        acc3By:
-            json["acc3_by"] == null ? null : AccBy.fromJson(json["acc3_by"]),
+        acc1By: By.fromJson(json["acc1_by"]),
+        acc2By: json["acc2_by"] == null ? null : By.fromJson(json["acc2_by"]),
+        acc3By: json["acc3_by"] == null ? null : By.fromJson(json["acc3_by"]),
         izinCuti: IzinCuti.fromJson(json["izin_cuti"]),
         izinKrs: json["izin_krs"],
         izinBukti: json["izin_bukti"] == null
@@ -133,7 +136,7 @@ class Datum {
         "acc1": acc1,
         "acc2": acc2,
         "acc3": acc3,
-        "acc1_at": acc1At,
+        "acc1_at": acc1At?.toIso8601String(),
         "acc2_at": acc2At,
         "acc3_at": acc3At,
         "acc_sdm": accSdm,
@@ -152,14 +155,14 @@ class Datum {
       };
 }
 
-class AccBy {
+class By {
   String nip;
   String nama;
   int idJabatan;
   String namaJabatan;
   List<Jabatan> jabatans;
 
-  AccBy({
+  By({
     required this.nip,
     required this.nama,
     required this.idJabatan,
@@ -167,7 +170,7 @@ class AccBy {
     required this.jabatans,
   });
 
-  factory AccBy.fromJson(Map<String, dynamic> json) => AccBy(
+  factory By.fromJson(Map<String, dynamic> json) => By(
         nip: json["nip"],
         nama: json["nama"],
         idJabatan: json["id_jabatan"],
@@ -232,8 +235,8 @@ class Jabatan {
 class MJabatan {
   int id;
   String nama;
-  String cutiLevel;
-  String level;
+  String? cutiLevel;
+  Level level;
   int idUnit;
   int idParent;
   DateTime createdAt;
@@ -254,7 +257,7 @@ class MJabatan {
         id: json["id"],
         nama: json["nama"],
         cutiLevel: json["cuti_level"],
-        level: json["level"],
+        level: levelValues.map[json["level"]]!,
         idUnit: json["id_unit"],
         idParent: json["id_parent"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -265,13 +268,17 @@ class MJabatan {
         "id": id,
         "nama": nama,
         "cuti_level": cutiLevel,
-        "level": level,
+        "level": levelValues.reverse[level],
         "id_unit": idUnit,
         "id_parent": idParent,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
 }
+
+enum Level { KEPALA, STAF }
+
+final levelValues = EnumValues({"KEPALA": Level.KEPALA, "STAF": Level.STAF});
 
 class IzinBukti {
   int idIzin;
@@ -293,10 +300,10 @@ class IzinCuti {
   int idIzin;
   DateTime mulai;
   DateTime akhir;
-  dynamic pengganti;
+  String pengganti;
   String mulaiCast;
   String akhirCast;
-  dynamic penggantiBy;
+  By penggantiBy;
 
   IzinCuti({
     required this.idIzin,
@@ -315,7 +322,7 @@ class IzinCuti {
         pengganti: json["pengganti"],
         mulaiCast: json["mulai_cast"],
         akhirCast: json["akhir_cast"],
-        penggantiBy: json["pengganti_by"],
+        penggantiBy: By.fromJson(json["pengganti_by"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -327,6 +334,18 @@ class IzinCuti {
         "pengganti": pengganti,
         "mulai_cast": mulaiCast,
         "akhir_cast": akhirCast,
-        "pengganti_by": penggantiBy,
+        "pengganti_by": penggantiBy.toJson(),
       };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

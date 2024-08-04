@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/controllers/confirm_izin_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -16,6 +17,7 @@ class DetailIzin extends StatefulWidget {
 }
 
 class _DetailIzinState extends State<DetailIzin> {
+  ConfirmIzinControlller confirmIzinC = Get.find<ConfirmIzinControlller>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,7 +288,7 @@ class _DetailIzinState extends State<DetailIzin> {
                                     : cGrey_500,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: widget.data['accAt'] != null
+                              child: widget.data['acc1At'] != null
                                   ? const Center(
                                       child: Icon(
                                         Icons.check,
@@ -316,7 +318,7 @@ class _DetailIzinState extends State<DetailIzin> {
                                       : cGrey_500,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: widget.data['accAt'] != null
+                                child: widget.data['acc2At'] != null
                                     ? const Center(
                                         child: Icon(
                                           Icons.check,
@@ -346,7 +348,7 @@ class _DetailIzinState extends State<DetailIzin> {
                                       : cGrey_500,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: widget.data['accAt'] != null
+                                child: widget.data['acc3At'] != null
                                     ? const Center(
                                         child: Icon(
                                           Icons.check,
@@ -436,14 +438,183 @@ class _DetailIzinState extends State<DetailIzin> {
                           ],
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
+                if (widget.type == "konfirmasi")
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          width: Get.width,
+                          height: 30,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: cPrimary,
+                              shadowColor: cPrimary_400,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  5,
+                                ), // Mengatur border radius menjadi 0
+                              ),
+                            ),
+                            onPressed: () {
+                              if (widget.data['nipLogin'] ==
+                                  widget.data['acc1']) {
+                                confirmIzinC.accConfirm(
+                                    "acc1", widget.data['idIzin']);
+                              } else if (widget.data['nipLogin'] ==
+                                  widget.data['acc2']) {
+                                confirmIzinC.accConfirm(
+                                    "acc2", widget.data['idIzin']);
+                              } else if (widget.data['nipLogin'] ==
+                                  widget.data['acc3']) {
+                                confirmIzinC.accConfirm(
+                                    "acc3", widget.data['idIzin']);
+                              } else if (widget.data['nipLogin'] ==
+                                  widget.data['accSdm']) {
+                                confirmIzinC.accConfirm(
+                                    "acc_sdm", widget.data['idIzin']);
+                              }
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (widget.data['nipLogin'] ==
+                                    widget.data['acc1'])
+                                  const Text(
+                                    "Terima ACC 1",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: cWhite,
+                                    ),
+                                  ),
+                                if (widget.data['nipLogin'] ==
+                                    widget.data['acc2'])
+                                  const Text(
+                                    "Terima ACC 2",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: cWhite,
+                                    ),
+                                  ),
+                                if (widget.data['nipLogin'] ==
+                                    widget.data['acc3'])
+                                  const Text(
+                                    "Terima ACC 3",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: cWhite,
+                                    ),
+                                  ),
+                                if (widget.data['nipLogin'] ==
+                                    widget.data['accSdm'])
+                                  const Text(
+                                    "Terima ACC SDM",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: cWhite,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      spaceWidth(5),
+                      Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          width: Get.width,
+                          height: 30,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: cRed,
+                              shadowColor: cPrimary_400,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  5,
+                                ), // Mengatur border radius menjadi 0
+                              ),
+                            ),
+                            onPressed: () {
+                              showInputDialog(context);
+                            },
+                            child: const Text(
+                              "Tolak",
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: cWhite,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void showInputDialog(BuildContext context) {
+    final TextEditingController ketTolakC = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: cWhite,
+          title: Text(
+            'Keterangan',
+            style: customTextStyle(FontWeight.w500, 18, cBlack),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: ketTolakC,
+              maxLines: 4,
+              decoration: InputDecoration(
+                hintText: 'Masukkan Alasan',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                contentPadding: EdgeInsets.all(12.0),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Save'),
+              onPressed: () {
+                String input = ketTolakC.text;
+                // Lakukan sesuatu dengan inputan
+                print('Input: $input');
+                // confirmTukarShiftC.tolakConfirm(id, input, "TUKARJADWAL");
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+        );
+      },
     );
   }
 }
