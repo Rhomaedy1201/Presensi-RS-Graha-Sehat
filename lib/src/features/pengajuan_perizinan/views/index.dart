@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_perizinan/controllers/pengajuan_izin_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/components/konfirmasi.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/components/progress.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/components/selesai.dart';
@@ -10,9 +13,9 @@ import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajua
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_sakit.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/form_pengajuan/izin_keluar.dart';
 import 'package:presensi_gs/utils/colors.dart';
-import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
+import 'package:presensi_gs/utils/constant.dart';
 
 class PerizinanView extends StatefulWidget {
   const PerizinanView({super.key});
@@ -23,6 +26,7 @@ class PerizinanView extends StatefulWidget {
 
 class _PerizinanViewState extends State<PerizinanView>
     with TickerProviderStateMixin {
+  PengajuanIzinController pengajuanIzinC = Get.find<PengajuanIzinController>();
   // Cuti Tahuan
   DateTime tglIzinCutiTahunan1 = DateTime.now();
   DateTime tglIzinCutiTahunan2 = DateTime.now();
@@ -47,20 +51,22 @@ class _PerizinanViewState extends State<PerizinanView>
   String? izinSakitUser;
   TextEditingController izinSakitKet = TextEditingController();
   String? fileNameSakit;
-  // Izin Sakit
+  File? selectedFileSakit;
+  // Izin Keluar
   DateTime jamMulaiKeluar = DateTime.now();
   DateTime jamSelesaiKeluar = DateTime.now();
   TextEditingController izinKeluarKet = TextEditingController();
   String? fileNameKeluar;
+  File? selectedFileKeluar;
 
   String? jenisIzin;
   List pengajuanList = [
-    {'id': 1, 'nama': 'IZIN CUTI TAHUNAN'},
-    {'id': 2, 'nama': 'IZIN PULANG CEPAT'},
-    {'id': 3, 'nama': 'IZIN KELUAR'},
-    {'id': 4, 'nama': 'IZIN CUTI MELAHIRKAN'},
-    {'id': 5, 'nama': 'IZIN SAKIT'},
-    {'id': 6, 'nama': 'IZIN LAIN LAIN'},
+    {'id': "ICT", 'nama': 'IZIN CUTI TAHUNAN'},
+    {'id': "IPC", 'nama': 'IZIN PULANG CEPAT'},
+    {'id': "IK", 'nama': 'IZIN KELUAR'},
+    {'id': "ICM", 'nama': 'IZIN CUTI MELAHIRKAN'},
+    {'id': "IS", 'nama': 'IZIN SAKIT'},
+    {'id': "ILL", 'nama': 'IZIN LAIN LAIN'},
   ];
 
   // Cuti Tahunan
@@ -163,6 +169,11 @@ class _PerizinanViewState extends State<PerizinanView>
     setState(() {});
   }
 
+  void callbackIzinSakitFilePath(File file) {
+    selectedFileSakit = file;
+    setState(() {});
+  }
+
   // Izin Keluar
   void callbackIzinKeluar(DateTime jamMulai) {
     jamMulaiKeluar = jamMulai;
@@ -181,6 +192,11 @@ class _PerizinanViewState extends State<PerizinanView>
 
   void callbackIzinKeluarFile(String file) {
     fileNameKeluar = file;
+    setState(() {});
+  }
+
+  void callbackIzinKeluarFilePath(File file) {
+    selectedFileKeluar = file;
     setState(() {});
   }
 
@@ -304,17 +320,76 @@ class _PerizinanViewState extends State<PerizinanView>
                   ),
                   onPressed: jenisIzin == null
                       ? null
-                      : () {
-                          if (jenisIzin == '1') {
-                          } else if (jenisIzin == '2') {
-                          } else if (jenisIzin == '3') {
-                          } else if (jenisIzin == '4') {
-                          } else if (jenisIzin == '5') {
-                          } else if (jenisIzin == '6') {}
-                        },
-                  child: const Text(
-                    "Submit Pengajuan",
-                    style: TextStyle(
+                      : pengajuanIzinC.isLoadingSubmit.value
+                          ? null
+                          : () {
+                              if (jenisIzin == 'ICT') {
+                                pengajuanIzinC.postPerizinan(
+                                  jenisIzin.toString(),
+                                  "HARI",
+                                  tglIzinCutiTahunan1.simpleDate(),
+                                  tglIzinCutiTahunan2.simpleDate(),
+                                  userIzinCutiTahunan,
+                                  ketIzinCutiTahunan.text,
+                                  null,
+                                );
+                              } else if (jenisIzin == 'IPC') {
+                                pengajuanIzinC.postPerizinan(
+                                  jenisIzin.toString(),
+                                  "JAM",
+                                  jamIzinPulangCepat.getTime(),
+                                  null,
+                                  null,
+                                  ketPulangCepat.text,
+                                  null,
+                                );
+                              } else if (jenisIzin == 'IK') {
+                                pengajuanIzinC.postPerizinan(
+                                  jenisIzin.toString(),
+                                  "JAM",
+                                  jamMulaiKeluar.getTime(),
+                                  jamMulaiKeluar.getTime(),
+                                  null,
+                                  izinKeluarKet.text,
+                                  selectedFileKeluar,
+                                );
+                              } else if (jenisIzin == 'ICM') {
+                                pengajuanIzinC.postPerizinan(
+                                  jenisIzin.toString(),
+                                  "HARI",
+                                  tglMelahirkan1.simpleDate(),
+                                  tglMelahirkan2.simpleDate(),
+                                  izinMelahirkanUser,
+                                  izinMelahirkanKet.text,
+                                  null,
+                                );
+                              } else if (jenisIzin == 'IS') {
+                                pengajuanIzinC.postPerizinan(
+                                  jenisIzin.toString(),
+                                  "HARI",
+                                  tglMulaiSakit.simpleDate(),
+                                  tglSelesaiSakit.simpleDate(),
+                                  izinSakitUser,
+                                  izinSakitKet.text,
+                                  selectedFileSakit,
+                                );
+                              } else if (jenisIzin == 'ILL') {
+                                pengajuanIzinC.postPerizinan(
+                                  jenisIzin.toString(),
+                                  "HARI",
+                                  tglMulaiLainLain.simpleDate(),
+                                  tglSelesaiLainLain.simpleDate(),
+                                  izinLainLainUser,
+                                  izinLainLainKet.text,
+                                  null,
+                                );
+                              }
+                            },
+                  child: Text(
+                    pengajuanIzinC.isLoadingSubmit.value
+                        ? "Loading..."
+                        : "Submit Pengajuan",
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: cWhite,
@@ -360,7 +435,7 @@ class _PerizinanViewState extends State<PerizinanView>
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          if (jenisIzin == '1')
+                          if (jenisIzin == 'ICT')
                             Column(
                               children: [
                                 spaceHeight(20),
@@ -379,7 +454,7 @@ class _PerizinanViewState extends State<PerizinanView>
                                 ),
                               ],
                             )
-                          else if (jenisIzin == '2')
+                          else if (jenisIzin == 'IPC')
                             Column(
                               children: [
                                 spaceHeight(20),
@@ -391,7 +466,7 @@ class _PerizinanViewState extends State<PerizinanView>
                                 ),
                               ],
                             )
-                          else if (jenisIzin == '3')
+                          else if (jenisIzin == 'IK')
                             Column(
                               children: [
                                 spaceHeight(20),
@@ -400,14 +475,17 @@ class _PerizinanViewState extends State<PerizinanView>
                                   callbackSetState2: callbackIzinKeluar2,
                                   callbackSetStateKet: callbackIzinKeluarKet,
                                   callbackSetStateFile: callbackIzinKeluarFile,
+                                  callbackSetStateFilePath:
+                                      callbackIzinKeluarFilePath,
                                   jamMulai: jamMulaiKeluar,
                                   jamSelesai: jamSelesaiKeluar,
                                   izinSakitKet: izinKeluarKet,
                                   fileName: fileNameKeluar,
+                                  selectedFile: selectedFileKeluar,
                                 ),
                               ],
                             )
-                          else if (jenisIzin == '4')
+                          else if (jenisIzin == 'ICM')
                             Column(
                               children: [
                                 spaceHeight(20),
@@ -425,7 +503,7 @@ class _PerizinanViewState extends State<PerizinanView>
                                 ),
                               ],
                             )
-                          else if (jenisIzin == '5')
+                          else if (jenisIzin == 'IS')
                             Column(
                               children: [
                                 spaceHeight(20),
@@ -435,15 +513,18 @@ class _PerizinanViewState extends State<PerizinanView>
                                   callbackSetStateUser: callbackIzinSakitUser,
                                   callbackSetStateKet: callbackIzinSakitKet,
                                   callbackSetStateFile: callbackIzinSakitFile,
+                                  callbackSetStateFilePath:
+                                      callbackIzinSakitFilePath,
                                   tglMulai: tglMulaiSakit,
                                   tglSelesai: tglSelesaiSakit,
                                   izinSakitUser: izinSakitUser,
                                   izinSakitKet: izinSakitKet,
                                   fileName: fileNameSakit,
+                                  selectedFile: selectedFileSakit,
                                 ),
                               ],
                             )
-                          else if (jenisIzin == '6')
+                          else if (jenisIzin == 'ILL')
                             Column(
                               children: [
                                 spaceHeight(20),

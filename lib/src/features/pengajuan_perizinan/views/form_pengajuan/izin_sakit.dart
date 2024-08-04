@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,28 +19,34 @@ class FormIzinSakit extends StatelessWidget {
   final Function(String) callbackSetStateUser;
   final Function(TextEditingController) callbackSetStateKet;
   final Function(String) callbackSetStateFile;
+  final Function(File) callbackSetStateFilePath;
   DateTime tglMulai;
   DateTime tglSelesai;
   String? izinSakitUser;
   TextEditingController izinSakitKet = TextEditingController();
   String? fileName;
+  File? selectedFile;
   FormIzinSakit({
     required this.callbackSetState,
     required this.callbackSetState2,
     required this.callbackSetStateUser,
     required this.callbackSetStateKet,
     required this.callbackSetStateFile,
+    required this.callbackSetStateFilePath,
     required this.tglMulai,
     required this.tglSelesai,
     required this.izinSakitUser,
     required this.izinSakitKet,
     required this.fileName,
+    required this.selectedFile,
   });
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
+      String filePath = result.files.single.path!;
       callbackSetStateFile(result.files.single.name);
+      callbackSetStateFilePath(File(filePath));
     }
   }
 

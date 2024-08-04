@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,25 +15,31 @@ class FormIzinKeluar extends StatelessWidget {
   final Function(DateTime) callbackSetState2;
   final Function(TextEditingController) callbackSetStateKet;
   final Function(String) callbackSetStateFile;
+  final Function(File) callbackSetStateFilePath;
   DateTime jamMulai;
   DateTime jamSelesai;
   TextEditingController izinSakitKet = TextEditingController();
   String? fileName;
+  File? selectedFile;
   FormIzinKeluar({
     required this.callbackSetState,
     required this.callbackSetState2,
     required this.callbackSetStateKet,
     required this.callbackSetStateFile,
+    required this.callbackSetStateFilePath,
     required this.jamMulai,
     required this.jamSelesai,
     required this.izinSakitKet,
     required this.fileName,
+    required this.selectedFile,
   });
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
+      String filePath = result.files.single.path!;
       callbackSetStateFile(result.files.single.name);
+      callbackSetStateFilePath(File(filePath));
     }
   }
 
@@ -149,10 +157,10 @@ class FormIzinKeluar extends StatelessWidget {
                     style: customTextStyle(FontWeight.w500, 13, cPrimary),
                   ),
                   if (fileName != null) ...[
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       'Selected file: $fileName',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.brown,
                         fontSize: 14,
                       ),
@@ -221,7 +229,7 @@ class FormIzinKeluar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                jamMulai.simpleDateRevers().toString(),
+                jamMulai.getFullTime().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
@@ -290,7 +298,7 @@ class FormIzinKeluar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                jamSelesai.getTime().toString(),
+                jamSelesai.getFullTime().toString(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
