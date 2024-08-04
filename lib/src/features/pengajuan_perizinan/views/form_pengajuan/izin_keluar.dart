@@ -261,7 +261,7 @@ class FormIzinKeluar extends StatelessWidget {
                     minimumDate: DateTime.now()
                         .subtract(const Duration(days: 1)), // set minimum date
                     minimumYear: DateTime.now().year,
-                    mode: CupertinoDatePickerMode.date,
+                    mode: CupertinoDatePickerMode.time,
                     onDateTimeChanged: (val) {
                       jamSelesai = val;
                       callbackSetState2(val);

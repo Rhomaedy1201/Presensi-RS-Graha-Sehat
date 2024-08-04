@@ -76,7 +76,7 @@ class PengajuanIzinController extends GetxController {
         throw Exception("Token not found");
       }
 
-      var uri = Uri.parse("$base_url/tukar-jadwal");
+      var uri = Uri.parse("$base_url/izin");
 
       var request = http.MultipartRequest('POST', uri);
       request.headers.addAll(headers);
@@ -102,7 +102,9 @@ class PengajuanIzinController extends GetxController {
       } else {
         var responseData = await response.stream.toBytes();
         var responseString = String.fromCharCodes(responseData);
+        isLoadingSubmit(false);
         debugPrint(responseString);
+        snackbarfailed(responseString);
       }
     } catch (e) {
       print(e.toString());

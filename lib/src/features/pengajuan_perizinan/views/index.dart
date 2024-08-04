@@ -60,6 +60,7 @@ class _PerizinanViewState extends State<PerizinanView>
   File? selectedFileKeluar;
 
   String? jenisIzin;
+  bool loadingSubmit = false;
   List pengajuanList = [
     {'id': "ICT", 'nama': 'IZIN CUTI TAHUNAN'},
     {'id': "IPC", 'nama': 'IZIN PULANG CEPAT'},
@@ -320,71 +321,79 @@ class _PerizinanViewState extends State<PerizinanView>
                   ),
                   onPressed: jenisIzin == null
                       ? null
-                      : pengajuanIzinC.isLoadingSubmit.value
+                      : loadingSubmit
                           ? null
-                          : () {
-                              if (jenisIzin == 'ICT') {
-                                pengajuanIzinC.postPerizinan(
-                                  jenisIzin.toString(),
-                                  "HARI",
-                                  tglIzinCutiTahunan1.simpleDate(),
-                                  tglIzinCutiTahunan2.simpleDate(),
-                                  userIzinCutiTahunan,
-                                  ketIzinCutiTahunan.text,
-                                  null,
-                                );
-                              } else if (jenisIzin == 'IPC') {
-                                pengajuanIzinC.postPerizinan(
-                                  jenisIzin.toString(),
-                                  "JAM",
-                                  jamIzinPulangCepat.getTime(),
-                                  null,
-                                  null,
-                                  ketPulangCepat.text,
-                                  null,
-                                );
-                              } else if (jenisIzin == 'IK') {
-                                pengajuanIzinC.postPerizinan(
-                                  jenisIzin.toString(),
-                                  "JAM",
-                                  jamMulaiKeluar.getTime(),
-                                  jamMulaiKeluar.getTime(),
-                                  null,
-                                  izinKeluarKet.text,
-                                  selectedFileKeluar,
-                                );
-                              } else if (jenisIzin == 'ICM') {
-                                pengajuanIzinC.postPerizinan(
-                                  jenisIzin.toString(),
-                                  "HARI",
-                                  tglMelahirkan1.simpleDate(),
-                                  tglMelahirkan2.simpleDate(),
-                                  izinMelahirkanUser,
-                                  izinMelahirkanKet.text,
-                                  null,
-                                );
-                              } else if (jenisIzin == 'IS') {
-                                pengajuanIzinC.postPerizinan(
-                                  jenisIzin.toString(),
-                                  "HARI",
-                                  tglMulaiSakit.simpleDate(),
-                                  tglSelesaiSakit.simpleDate(),
-                                  izinSakitUser,
-                                  izinSakitKet.text,
-                                  selectedFileSakit,
-                                );
-                              } else if (jenisIzin == 'ILL') {
-                                pengajuanIzinC.postPerizinan(
-                                  jenisIzin.toString(),
-                                  "HARI",
-                                  tglMulaiLainLain.simpleDate(),
-                                  tglSelesaiLainLain.simpleDate(),
-                                  izinLainLainUser,
-                                  izinLainLainKet.text,
-                                  null,
-                                );
-                              }
-                            },
+                          : pengajuanIzinC.isLoadingSubmit.value
+                              ? null
+                              : () {
+                                  // setState(() {
+                                  //   loadingSubmit = true;
+                                  // });
+                                  if (jenisIzin == 'ICT') {
+                                    pengajuanIzinC.postPerizinan(
+                                      jenisIzin.toString(),
+                                      "HARI",
+                                      tglIzinCutiTahunan1.simpleDate(),
+                                      tglIzinCutiTahunan2.simpleDate(),
+                                      userIzinCutiTahunan,
+                                      ketIzinCutiTahunan.text,
+                                      null,
+                                    );
+                                  } else if (jenisIzin == 'IPC') {
+                                    pengajuanIzinC.postPerizinan(
+                                      jenisIzin.toString(),
+                                      "JAM",
+                                      jamIzinPulangCepat.getTime(),
+                                      null,
+                                      null,
+                                      ketPulangCepat.text,
+                                      null,
+                                    );
+                                  } else if (jenisIzin == 'IK') {
+                                    pengajuanIzinC.postPerizinan(
+                                      jenisIzin.toString(),
+                                      "JAM",
+                                      jamMulaiKeluar.getTime(),
+                                      jamMulaiKeluar.getTime(),
+                                      null,
+                                      izinKeluarKet.text,
+                                      selectedFileKeluar,
+                                    );
+                                  } else if (jenisIzin == 'ICM') {
+                                    pengajuanIzinC.postPerizinan(
+                                      jenisIzin.toString(),
+                                      "HARI",
+                                      tglMelahirkan1.simpleDate(),
+                                      tglMelahirkan2.simpleDate(),
+                                      izinMelahirkanUser,
+                                      izinMelahirkanKet.text,
+                                      null,
+                                    );
+                                  } else if (jenisIzin == 'IS') {
+                                    pengajuanIzinC.postPerizinan(
+                                      jenisIzin.toString(),
+                                      "HARI",
+                                      tglMulaiSakit.simpleDate(),
+                                      tglSelesaiSakit.simpleDate(),
+                                      izinSakitUser,
+                                      izinSakitKet.text,
+                                      selectedFileSakit,
+                                    );
+                                  } else if (jenisIzin == 'ILL') {
+                                    pengajuanIzinC.postPerizinan(
+                                      jenisIzin.toString(),
+                                      "HARI",
+                                      tglMulaiLainLain.simpleDate(),
+                                      tglSelesaiLainLain.simpleDate(),
+                                      izinLainLainUser,
+                                      izinLainLainKet.text,
+                                      null,
+                                    );
+                                  }
+                                  // setState(() {
+                                  //   loadingSubmit = false;
+                                  // });
+                                },
                   child: Text(
                     pengajuanIzinC.isLoadingSubmit.value
                         ? "Loading..."
