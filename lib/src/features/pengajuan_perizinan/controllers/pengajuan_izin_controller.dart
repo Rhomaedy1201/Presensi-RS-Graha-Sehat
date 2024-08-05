@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/http/models/jenis_izin_model.dart';
 import 'package:presensi_gs/http/models/karyawan_per_unit_model.dart';
 import 'package:presensi_gs/utils/base_url.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
@@ -12,14 +13,98 @@ import 'package:http/http.dart' as http;
 
 class PengajuanIzinController extends GetxController {
   KaryawanPerUnitModel? karyawanPerUnitM;
+  JenisIzinModel? jenisIzinM;
   var isLoadingKarayawan = false.obs;
   var isLoadingSubmit = false.obs;
+  var isLoadingJenisIzin = false.obs;
+  var isLoadingJenisIzinByKode = false.obs;
   var nipUser = "".obs;
+  var dataJenisIzin = {};
 
   @override
   void onInit() {
     super.onInit();
+    getJenisIzin();
     getKaryawanPerUnit();
+  }
+
+  Future<void> getJenisIzin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingJenisIzin(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/m-izin/all/data"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        jenisIzinM = JenisIzinModel.fromJson(json);
+      } else {
+        debugPrint(response.body.toString());
+      }
+      print(json);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingJenisIzin(false);
+    }
+  }
+
+  Future<void> getJenisIzinByKode(kode) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingJenisIzinByKode(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/m-izin/by-kode/$kode"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      print(json);
+      if (response.statusCode == 200) {
+        var data = json['data'];
+        dataJenisIzin = {
+          "id": data[0]['id'],
+          "kode": data[0]['kode'],
+          "nama": data[0]['nama'],
+          "acc1": data[0]['acc1'],
+          "acc2": data[0]['acc2'],
+          "acc3": data[0]['acc3'],
+          "acc_sdm": data[0]['acc_sdm'],
+          "tahunan": data[0]['tahunan'],
+          "bukti": data[0]['bukti'],
+          "inputan": data[0]['inputan']
+        };
+      } else {
+        debugPrint(response.body.toString());
+      }
+      print(json);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      // Timer(const Duration(seconds: 1), () {
+      isLoadingJenisIzinByKode(false);
+      // });
+    }
   }
 
   Future<void> getKaryawanPerUnit() async {
@@ -107,7 +192,7 @@ class PengajuanIzinController extends GetxController {
         var responseString = String.fromCharCodes(responseData);
         isLoadingSubmit(false);
         debugPrint(responseString);
-        snackbarfailed(responseString);
+        // snackbarfailed(responseString);
       }
     } catch (e) {
       print(e.toString());
