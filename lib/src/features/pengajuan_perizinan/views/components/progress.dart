@@ -55,36 +55,36 @@ class _ProgressIzinState extends State<ProgressIzin> {
                             Get.to(DetailIzin(
                               type: "progress",
                               data: {
-                                'idIzin': data?[index]?.id,
-                                'acc1Name': data?[index]?.acc1By.nama,
-                                'acc2Name': data?[index]?.acc2By?.nama,
-                                'acc3Name': data?[index]?.acc3By?.nama,
+                                'idIzin': data?[index].id,
+                                'acc1Name': data?[index].acc1By.nama,
+                                'acc2Name': data?[index].acc2By?.nama,
+                                'acc3Name': data?[index].acc3By?.nama,
                                 'accSdmName': "",
-                                'acc1': data?[index]?.acc1,
-                                'acc2': data?[index]?.acc2,
-                                'acc3': data?[index]?.acc3,
-                                'accSdm': data?[index]?.accSdm,
-                                'acc1At': data?[index]?.acc1At,
-                                'acc2At': data?[index]?.acc2At,
-                                'acc3At': data?[index]?.acc3At,
-                                'accSdmAt': data?[index]?.accAt,
-                                'accStatus': data?[index]?.accStatus,
-                                'kodeIzin': data?[index]?.kodeIzin,
-                                'izin': data?[index]?.izin,
+                                'acc1': data?[index].acc1,
+                                'acc2': data?[index].acc2,
+                                'acc3': data?[index].acc3,
+                                'accSdm': data?[index].accSdm,
+                                'acc1At': data?[index].acc1At,
+                                'acc2At': data?[index].acc2At,
+                                'acc3At': data?[index].acc3At,
+                                'accSdmAt': data?[index].accAt,
+                                'accStatus': data?[index].accStatus,
+                                'kodeIzin': data?[index].kodeIzin,
+                                'izin': data?[index].izin,
                                 'tanggal':
-                                    data?[index]?.tanggal.simpleDateRevers(),
-                                'nip': data?[index]?.nip,
-                                'nama': data?[index]?.nama,
+                                    data?[index].tanggal.simpleDateRevers(),
+                                'nip': data?[index].nip,
+                                'nama': data?[index].nama,
                                 'periodeIzin1': data?[index]
-                                    ?.izinCuti
+                                    .izinCuti
                                     .mulai
                                     .simpleDateRevers(),
                                 'periodeIzin2': data?[index]
-                                    ?.izinCuti
+                                    .izinCuti
                                     .akhir
                                     .simpleDateRevers(),
-                                'keterangan': data?[index]?.ket,
-                                'bukti': data?[index]?.izinBukti?.idIzin,
+                                'keterangan': data?[index].ket,
+                                'bukti': data?[index].izinBukti?.idIzin,
                                 'nipLogin': pengajuanIzinC.nipUser.value,
                               },
                             ));
@@ -122,7 +122,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Tgl Pengajuan : ${data?[index]!.tanggal.simpleDateRevers()}",
+                                            "Tgl Pengajuan : ${data?[index].tanggal.simpleDateRevers()}",
                                             style: customTextStyle(
                                                 FontWeight.w500, 11, cBlack),
                                           ),
@@ -138,7 +138,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                                       horizontal: 3,
                                                       vertical: 1),
                                               child: Text(
-                                                "${data?[index]?.izin} (${data?[index]?.kodeIzin})",
+                                                "${data?[index].izin} (${data?[index].kodeIzin})",
                                                 style: customTextStyle(
                                                   FontWeight.w600,
                                                   10,
@@ -181,7 +181,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                                   SizedBox(
                                                     width: Get.width * 0.4,
                                                     child: Text(
-                                                      "${data?[index]!.nama}",
+                                                      "${data?[index].nama}",
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -193,7 +193,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                                   ),
                                                   spaceHeight(1),
                                                   Text(
-                                                    "${data?[index]?.nip}",
+                                                    "${data?[index].nip}",
                                                     style: customTextStyle(
                                                         FontWeight.w500,
                                                         10,
@@ -204,8 +204,8 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                             ],
                                           ),
                                           if (pengajuanIzinC.nipUser.value ==
-                                                  data?[index]?.nip &&
-                                              data?[index]?.acc1At == null)
+                                                  data?[index].nip &&
+                                              data?[index].acc1At == null)
                                             InkWell(
                                               onTap: () {
                                                 print("delete");
