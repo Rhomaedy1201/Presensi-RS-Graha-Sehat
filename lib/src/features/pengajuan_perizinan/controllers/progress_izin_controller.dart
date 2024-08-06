@@ -37,6 +37,7 @@ class ProgressIzinController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
+      print(json);
       if (response.statusCode == 200) {
         progressIzinM = ProgressIzinModel.fromJson(json);
         if (progressIzinM!.data.isEmpty) {

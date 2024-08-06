@@ -38,29 +38,29 @@ class ProgressIzinModel {
 class Datum {
   int id;
   DateTime tanggal;
-  int idmIzin;
-  String nip;
-  String nama;
-  String kodeIzin;
-  String izin;
-  String acc1;
+  int? idmIzin;
+  String? nip;
+  String? nama;
+  String? kodeIzin;
+  String? izin;
+  String? acc1;
   String? acc2;
   String? acc3;
   DateTime? acc1At;
-  dynamic acc2At;
-  dynamic acc3At;
+  String? acc2At;
+  String? acc3At;
   String accSdm;
-  dynamic accAt;
+  String? accAt;
   String createdBy;
   int accStatus;
   String? ket;
-  String jenisTable;
-  String tanggalCast;
+  String? jenisTable;
+  String? tanggalCast;
   By acc1By;
   By? acc2By;
   By? acc3By;
   IzinCuti izinCuti;
-  dynamic izinKrs;
+  String? izinKrs;
   IzinBukti? izinBukti;
 
   Datum({
@@ -159,7 +159,7 @@ class By {
   String nip;
   String nama;
   int idJabatan;
-  String namaJabatan;
+  String? namaJabatan;
   List<Jabatan> jabatans;
 
   By({
@@ -195,7 +195,7 @@ class Jabatan {
   dynamic idParent;
   dynamic createdAt;
   dynamic updatedAt;
-  String namaJabatan;
+  String? namaJabatan;
   MJabatan mJabatan;
 
   Jabatan({
@@ -234,7 +234,7 @@ class Jabatan {
 
 class MJabatan {
   int id;
-  String nama;
+  String? nama;
   String? cutiLevel;
   Level level;
   int idUnit;
@@ -300,10 +300,10 @@ class IzinCuti {
   int idIzin;
   DateTime mulai;
   DateTime akhir;
-  String pengganti;
-  String mulaiCast;
-  String akhirCast;
-  By penggantiBy;
+  String? pengganti;
+  String? mulaiCast;
+  String? akhirCast;
+  By? penggantiBy;
 
   IzinCuti({
     required this.idIzin,
@@ -322,7 +322,9 @@ class IzinCuti {
         pengganti: json["pengganti"],
         mulaiCast: json["mulai_cast"],
         akhirCast: json["akhir_cast"],
-        penggantiBy: By.fromJson(json["pengganti_by"]),
+        penggantiBy: json["pengganti_by"] == null
+            ? null
+            : By.fromJson(json["pengganti_by"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -334,7 +336,7 @@ class IzinCuti {
         "pengganti": pengganti,
         "mulai_cast": mulaiCast,
         "akhir_cast": akhirCast,
-        "pengganti_by": penggantiBy.toJson(),
+        "pengganti_by": penggantiBy?.toJson(),
       };
 }
 

@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 class PengajuanIzinController extends GetxController {
   KaryawanPerUnitModel? karyawanPerUnitM;
   JenisIzinModel? jenisIzinM;
+
   var isLoadingKarayawan = false.obs;
   var isLoadingSubmit = false.obs;
   var isLoadingJenisIzin = false.obs;

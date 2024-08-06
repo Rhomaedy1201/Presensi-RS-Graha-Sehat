@@ -1065,7 +1065,7 @@ class _TukarShiftViewState extends State<TukarShiftView>
                     children: [
                       Text(
                         shortenLastName(name),
-                        style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                        style: customTextStyle(FontWeight.w500, 12, cGrey_900),
                       ),
                     ],
                   ),
