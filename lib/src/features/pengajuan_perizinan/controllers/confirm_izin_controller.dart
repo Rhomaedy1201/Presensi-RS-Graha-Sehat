@@ -52,7 +52,6 @@ class ConfirmIzinControlller extends GetxController {
       } else {
         debugPrint(response.body.toString());
       }
-      print(json);
     } catch (e) {
       print(e.toString());
     } finally {
@@ -79,14 +78,14 @@ class ConfirmIzinControlller extends GetxController {
       );
 
       final json = jsonDecode(response.body);
+      print(json);
       if (response.statusCode == 200) {
         mKaryawanM = MKaryawanModel.fromJson(json);
       } else {
         debugPrint(response.body.toString());
       }
-      print(json);
     } catch (e) {
-      print(e.toString());
+      print(e);
     } finally {
       isLoadingKaryawan(false);
     }

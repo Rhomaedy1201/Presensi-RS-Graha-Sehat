@@ -56,7 +56,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                               type: "progress",
                               data: {
                                 'idIzin': data?[index].id,
-                                'acc1Name': data?[index].acc1By.nama,
+                                'acc1Name': data?[index].acc1By?.nama,
                                 'acc2Name': data?[index].acc2By?.nama,
                                 'acc3Name': data?[index].acc3By?.nama,
                                 'accSdmName': "",
@@ -75,14 +75,20 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                     data?[index].tanggal.simpleDateRevers(),
                                 'nip': data?[index].nip,
                                 'nama': data?[index].nama,
-                                'periodeIzin1': data?[index]
-                                    .izinCuti
-                                    .mulai
-                                    .simpleDateRevers(),
-                                'periodeIzin2': data?[index]
-                                    .izinCuti
-                                    .akhir
-                                    .simpleDateRevers(),
+                                if (data?[index].izinKrs == null)
+                                  'periodeIzin1': data?[index]
+                                      .izinCuti
+                                      ?.mulai
+                                      .simpleDateRevers()
+                                else
+                                  'periodeIzin1': data?[index].izinKrs?.mulai,
+                                if (data?[index].izinKrs == null)
+                                  'periodeIzin2': data?[index]
+                                      .izinCuti
+                                      ?.akhir
+                                      .simpleDateRevers()
+                                else
+                                  'periodeIzin2': data?[index].izinKrs?.akhir,
                                 'keterangan': data?[index].ket,
                                 'bukti': data?[index].izinBukti?.idIzin,
                                 'nipLogin': pengajuanIzinC.nipUser.value,

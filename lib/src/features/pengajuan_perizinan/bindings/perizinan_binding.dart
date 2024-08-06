@@ -8,11 +8,15 @@ class PerizinanBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<PengajuanIzinController>(() => PengajuanIzinController());
-    Get.lazyPut<ProgressIzinController>(() => ProgressIzinController());
+    Get.lazyPut<ProgressIzinController>(
+      () => ProgressIzinController(),
+    );
     Get.lazyPut<ConfirmIzinControlller>(
       () => ConfirmIzinControlller(),
       fenix: true,
     );
-    Get.lazyPut<SelesaiIzinController>(() => SelesaiIzinController());
+    Get.lazyPut<SelesaiIzinController>(
+      () => SelesaiIzinController(),
+    );
   }
 }

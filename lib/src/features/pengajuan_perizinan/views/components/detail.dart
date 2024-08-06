@@ -20,7 +20,9 @@ class _DetailIzinState extends State<DetailIzin> {
   ConfirmIzinControlller confirmIzinC = Get.find<ConfirmIzinControlller>();
   @override
   void initState() {
-    confirmIzinC.getKaryawanByNip(widget.data['accSdm']);
+    if (widget.data['accSdm'] != null) {
+      confirmIzinC.getKaryawanByNip(widget.data['accSdm']);
+    }
     super.initState();
   }
 
@@ -176,19 +178,129 @@ class _DetailIzinState extends State<DetailIzin> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (widget.data['accStatus'] == 2 ||
+                              widget.data['accStatus'] == 3)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  widget.data['accStatus'] == 3
+                                      ? Expanded(
+                                          flex: 1,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Keterangan Tolak:",
+                                                style: customTextStyle(
+                                                    FontWeight.w500,
+                                                    10,
+                                                    cBlack),
+                                              ),
+                                              spaceHeight(2),
+                                              SizedBox(
+                                                width: Get.width * 0.4,
+                                                child: Text(
+                                                  "${widget.data['tolak']}",
+                                                  style: customTextStyle(
+                                                      FontWeight.w800,
+                                                      11,
+                                                      cBlack),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Status:",
+                                          style: customTextStyle(
+                                              FontWeight.w500, 10, cBlack),
+                                        ),
+                                        spaceHeight(2),
+                                        Container(
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            color: widget.data['accStatus'] == 2
+                                                ? cPrimary_800
+                                                : cRed_100,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 4, vertical: 1),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  widget.data['accStatus'] == 2
+                                                      ? "Diterima"
+                                                      : "Ditolak",
+                                                  style: customTextStyle(
+                                                      FontWeight.w600,
+                                                      10,
+                                                      widget.data['accStatus'] ==
+                                                              2
+                                                          ? cWhite
+                                                          : cRed),
+                                                ),
+                                                spaceWidth(3),
+                                                Icon(
+                                                  widget.data['accStatus'] == 2
+                                                      ? Icons
+                                                          .check_circle_outline_rounded
+                                                      : Icons
+                                                          .highlight_remove_rounded,
+                                                  size: 15,
+                                                  color: widget.data[
+                                                              'accStatus'] ==
+                                                          2
+                                                      ? cWhite
+                                                      : cRed,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (widget.data['accStatus'] == 2 ||
+                              widget.data['accStatus'] == 3)
+                            Container(
+                              width: Get.width,
+                              height: 1,
+                              color: cGrey_400,
+                            ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Tanggal:",
+                                  "Periode Izin:",
                                   style: customTextStyle(
                                       FontWeight.w500, 10, cBlack),
                                 ),
                                 spaceHeight(2),
                                 Text(
-                                  "${widget.data['periodeIzin1']} -> ${widget.data['periodeIzin2']}",
+                                  widget.data['periodeIzin2'] == null ||
+                                          widget.data['periodeIzin2'] == "null"
+                                      ? "${widget.data['periodeIzin1']}"
+                                      : "${widget.data['periodeIzin1']} -> ${widget.data['periodeIzin2']}",
                                   style: customTextStyle(
                                       FontWeight.w500, 10, cBlack),
                                 ),
@@ -347,17 +459,17 @@ class _DetailIzinState extends State<DetailIzin> {
                                         )
                                       : Container(),
                                 ),
-                                Container(
-                                  width: 1.7,
-                                  height: 30,
-                                  color: cGrey_500,
-                                ),
                               ],
                             ),
                             if (widget.data['acc2'] != null)
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Container(
+                                    width: 1.7,
+                                    height: 30,
+                                    color: cGrey_500,
+                                  ),
                                   Container(
                                     width: 17,
                                     height: 17,
@@ -377,17 +489,17 @@ class _DetailIzinState extends State<DetailIzin> {
                                           )
                                         : Container(),
                                   ),
-                                  Container(
-                                    width: 1.7,
-                                    height: 30,
-                                    color: cGrey_500,
-                                  ),
                                 ],
                               ),
                             if (widget.data['acc3'] != null)
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Container(
+                                    width: 1.7,
+                                    height: 30,
+                                    color: cGrey_500,
+                                  ),
                                   Container(
                                     width: 17,
                                     height: 17,
@@ -407,37 +519,38 @@ class _DetailIzinState extends State<DetailIzin> {
                                           )
                                         : Container(),
                                   ),
+                                ],
+                              ),
+                            if (widget.data['accSdm'] != null)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
                                   Container(
                                     width: 1.7,
                                     height: 30,
                                     color: cGrey_500,
                                   ),
+                                  Container(
+                                    width: 17,
+                                    height: 17,
+                                    decoration: BoxDecoration(
+                                      color: widget.data['accSdmAt'] != null
+                                          ? cPrimary_800
+                                          : cGrey_500,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: widget.data['accSdmAt'] != null
+                                        ? const Center(
+                                            child: Icon(
+                                              Icons.check,
+                                              size: 13,
+                                              color: cWhite,
+                                            ),
+                                          )
+                                        : Container(),
+                                  ),
                                 ],
                               ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 17,
-                                  height: 17,
-                                  decoration: BoxDecoration(
-                                    color: widget.data['accSdmAt'] != null
-                                        ? cPrimary_800
-                                        : cGrey_500,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: widget.data['accSdmAt'] != null
-                                      ? const Center(
-                                          child: Icon(
-                                            Icons.check,
-                                            size: 13,
-                                            color: cWhite,
-                                          ),
-                                        )
-                                      : Container(),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                         spaceWidth(7),
@@ -476,18 +589,22 @@ class _DetailIzinState extends State<DetailIzin> {
                                   spaceHeight(30),
                                 ],
                               ),
-                            Column(
-                              children: [
-                                Text(
-                                  confirmIzinC.isLoadingKaryawan.value
-                                      ? "ACC SDM : ..."
-                                      : "ACC SDM : ${confirmIzinC.mKaryawanM?.data.nama}",
-                                  style: customTextStyle(
-                                      FontWeight.w500, 11, cBlack),
-                                ),
-                                spaceHeight(30),
-                              ],
-                            ),
+                            if (widget.data['accSdm'] != null)
+                              Column(
+                                children: [
+                                  Text(
+                                    confirmIzinC.isLoadingKaryawan.value
+                                        ? "ACC SDM : ..."
+                                        : "ACC SDM : ${confirmIzinC.mKaryawanM?.data.nama}",
+                                    style: customTextStyle(
+                                        FontWeight.w500, 11, cBlack),
+                                  ),
+                                  spaceHeight(30),
+                                ],
+                              ),
+                            confirmIzinC.isLoadingKaryawan.value
+                                ? Container()
+                                : Container()
                           ],
                         ),
                       ],

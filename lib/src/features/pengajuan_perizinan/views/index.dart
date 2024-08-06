@@ -356,137 +356,143 @@ class _PerizinanViewState extends State<PerizinanView>
         controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
-          Scaffold(
-            backgroundColor: cGrey_200,
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: SizedBox(
-                width: Get.width,
-                height: 40,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: cPrimary,
-                    shadowColor: cPrimary_400,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        10,
-                      ), // Mengatur border radius menjadi 0
+          Obx(
+            () => Scaffold(
+              backgroundColor: cGrey_200,
+              bottomNavigationBar: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: SizedBox(
+                  width: Get.width,
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cPrimary,
+                      shadowColor: cPrimary_400,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ), // Mengatur border radius menjadi 0
+                      ),
                     ),
-                  ),
-                  onPressed: jenisIzin == null
-                      ? null
-                      : loadingSubmit
-                          ? null
-                          : pengajuanIzinC.isLoadingSubmit.value
-                              ? null
-                              : () {
-                                  // setState(() {
-                                  //   pengajuanIzinUser == null;
-                                  //   selectedFileIzin == null;
-                                  // });
+                    onPressed: jenisIzin == null
+                        ? null
+                        :
+                        // loadingSubmit
+                        //     ? null
+                        //     :
+                        pengajuanIzinC.isLoadingSubmit.value
+                            ? null
+                            : () {
+                                // setState(() {
+                                //   loadingSubmit = true;
+                                // });
 
-                                  if (pengajuanIzinC.dataJenisIzin['inputan'] ==
-                                      "hari") {
-                                    pengajuanIzinC.postPerizinan(
-                                      jenisIzin.toString(),
-                                      "HARI",
-                                      periodeIzin1.simpleDate(),
-                                      periodeIzin2.simpleDate(),
-                                      pengajuanIzinUser,
-                                      pengajuanIzinKet.text,
-                                      selectedFileIzin,
-                                    );
-                                  } else if (pengajuanIzinC
-                                          .dataJenisIzin['inputan'] ==
-                                      "jam") {
-                                    pengajuanIzinC.postPerizinan(
-                                      jenisIzin.toString(),
-                                      "JAM",
-                                      periodeIzin1.getTime(),
-                                      periodeIzin2.getTime(),
-                                      pengajuanIzinUser,
-                                      pengajuanIzinKet.text,
-                                      selectedFileIzin,
-                                    );
-                                  }
+                                if (pengajuanIzinC.dataJenisIzin['inputan'] ==
+                                    "hari") {
+                                  pengajuanIzinC.postPerizinan(
+                                    jenisIzin.toString(),
+                                    "HARI",
+                                    periodeIzin1.simpleDate(),
+                                    periodeIzin2.simpleDate(),
+                                    pengajuanIzinUser,
+                                    pengajuanIzinKet.text,
+                                    selectedFileIzin,
+                                  );
+                                } else if (pengajuanIzinC
+                                        .dataJenisIzin['inputan'] ==
+                                    "jam") {
+                                  pengajuanIzinC.postPerizinan(
+                                    jenisIzin.toString(),
+                                    "JAM",
+                                    periodeIzin1.getTime(),
+                                    periodeIzin2.getTime(),
+                                    pengajuanIzinUser,
+                                    pengajuanIzinKet.text,
+                                    selectedFileIzin,
+                                  );
+                                }
 
-                                  // if (jenisIzin == 'ICT') {
-                                  //   pengajuanIzinC.postPerizinan(
-                                  //     jenisIzin.toString(),
-                                  //     "HARI",
-                                  //     tglIzinCutiTahunan1.simpleDate(),
-                                  //     tglIzinCutiTahunan2.simpleDate(),
-                                  //     userIzinCutiTahunan,
-                                  //     ketIzinCutiTahunan.text,
-                                  //     null,
-                                  //   );
-                                  // } else if (jenisIzin == 'IPC') {
-                                  //   pengajuanIzinC.postPerizinan(
-                                  //     jenisIzin.toString(),
-                                  //     "JAM",
-                                  //     jamIzinPulangCepat.getTime(),
-                                  //     null,
-                                  //     null,
-                                  //     ketPulangCepat.text,
-                                  //     null,
-                                  //   );
-                                  // } else if (jenisIzin == 'IK') {
-                                  //   pengajuanIzinC.postPerizinan(
-                                  //     jenisIzin.toString(),
-                                  //     "JAM",
-                                  //     jamMulaiKeluar.getTime(),
-                                  //     jamMulaiKeluar.getTime(),
-                                  //     null,
-                                  //     izinKeluarKet.text,
-                                  //     selectedFileKeluar,
-                                  //   );
-                                  // } else if (jenisIzin == 'ICM') {
-                                  //   pengajuanIzinC.postPerizinan(
-                                  //     jenisIzin.toString(),
-                                  //     "HARI",
-                                  //     tglMelahirkan1.simpleDate(),
-                                  //     tglMelahirkan2.simpleDate(),
-                                  //     izinMelahirkanUser,
-                                  //     izinMelahirkanKet.text,
-                                  //     null,
-                                  //   );
-                                  // } else if (jenisIzin == 'IS') {
-                                  //   pengajuanIzinC.postPerizinan(
-                                  //     jenisIzin.toString(),
-                                  //     "HARI",
-                                  //     tglMulaiSakit.simpleDate(),
-                                  //     tglSelesaiSakit.simpleDate(),
-                                  //     izinSakitUser,
-                                  //     izinSakitKet.text,
-                                  //     selectedFileSakit,
-                                  //   );
-                                  // } else if (jenisIzin == 'ILL') {
-                                  //   pengajuanIzinC.postPerizinan(
-                                  //     jenisIzin.toString(),
-                                  //     "HARI",
-                                  //     tglMulaiLainLain.simpleDate(),
-                                  //     tglSelesaiLainLain.simpleDate(),
-                                  //     izinLainLainUser,
-                                  //     izinLainLainKet.text,
-                                  //     null,
-                                  //   );
-                                  // }
-                                },
-                  child: Text(
-                    pengajuanIzinC.isLoadingSubmit.value
-                        ? "Loading..."
-                        : "Submit Pengajuan",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: cWhite,
+                                // setState(() {
+                                //   loadingSubmit = false;
+                                // });
+
+                                // if (jenisIzin == 'ICT') {
+                                //   pengajuanIzinC.postPerizinan(
+                                //     jenisIzin.toString(),
+                                //     "HARI",
+                                //     tglIzinCutiTahunan1.simpleDate(),
+                                //     tglIzinCutiTahunan2.simpleDate(),
+                                //     userIzinCutiTahunan,
+                                //     ketIzinCutiTahunan.text,
+                                //     null,
+                                //   );
+                                // } else if (jenisIzin == 'IPC') {
+                                //   pengajuanIzinC.postPerizinan(
+                                //     jenisIzin.toString(),
+                                //     "JAM",
+                                //     jamIzinPulangCepat.getTime(),
+                                //     null,
+                                //     null,
+                                //     ketPulangCepat.text,
+                                //     null,
+                                //   );
+                                // } else if (jenisIzin == 'IK') {
+                                //   pengajuanIzinC.postPerizinan(
+                                //     jenisIzin.toString(),
+                                //     "JAM",
+                                //     jamMulaiKeluar.getTime(),
+                                //     jamMulaiKeluar.getTime(),
+                                //     null,
+                                //     izinKeluarKet.text,
+                                //     selectedFileKeluar,
+                                //   );
+                                // } else if (jenisIzin == 'ICM') {
+                                //   pengajuanIzinC.postPerizinan(
+                                //     jenisIzin.toString(),
+                                //     "HARI",
+                                //     tglMelahirkan1.simpleDate(),
+                                //     tglMelahirkan2.simpleDate(),
+                                //     izinMelahirkanUser,
+                                //     izinMelahirkanKet.text,
+                                //     null,
+                                //   );
+                                // } else if (jenisIzin == 'IS') {
+                                //   pengajuanIzinC.postPerizinan(
+                                //     jenisIzin.toString(),
+                                //     "HARI",
+                                //     tglMulaiSakit.simpleDate(),
+                                //     tglSelesaiSakit.simpleDate(),
+                                //     izinSakitUser,
+                                //     izinSakitKet.text,
+                                //     selectedFileSakit,
+                                //   );
+                                // } else if (jenisIzin == 'ILL') {
+                                //   pengajuanIzinC.postPerizinan(
+                                //     jenisIzin.toString(),
+                                //     "HARI",
+                                //     tglMulaiLainLain.simpleDate(),
+                                //     tglSelesaiLainLain.simpleDate(),
+                                //     izinLainLainUser,
+                                //     izinLainLainKet.text,
+                                //     null,
+                                //   );
+                                // }
+                              },
+                    child: Text(
+                      pengajuanIzinC.isLoadingSubmit.value
+                          ? "Loading..."
+                          : "Submit Pengajuan",
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: cWhite,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            body: Obx(
-              () => Padding(
+              body: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: Column(

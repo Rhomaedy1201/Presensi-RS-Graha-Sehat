@@ -89,7 +89,7 @@ class _KonfirmasiIzinState extends State<KonfirmasiIzin> {
             type: "konfirmasi",
             data: {
               'idIzin': data?[index].id,
-              'acc1Name': data?[index].acc1By.nama,
+              'acc1Name': data?[index].acc1By?.nama,
               'acc2Name': data?[index].acc2By?.nama,
               'acc3Name': data?[index].acc3By?.nama,
               'accSdmName': "",
@@ -107,8 +107,8 @@ class _KonfirmasiIzinState extends State<KonfirmasiIzin> {
               'tanggal': data?[index].tanggal.simpleDateRevers(),
               'nip': data?[index].nip,
               'nama': data?[index].nama,
-              'periodeIzin1': data?[index].izinCuti.mulai.simpleDateRevers(),
-              'periodeIzin2': data?[index].izinCuti.akhir.simpleDateRevers(),
+              'periodeIzin1': data?[index].izinCuti?.mulai.simpleDateRevers(),
+              'periodeIzin2': data?[index].izinCuti?.akhir.simpleDateRevers(),
               'keterangan': data?[index].ket,
               'bukti': data?[index].izinBukti?.idIzin,
               'nipLogin': pengajuanIzinC.nipUser.value,
@@ -144,7 +144,7 @@ class _KonfirmasiIzinState extends State<KonfirmasiIzin> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Tgl Pengajuan : ${data?[index].tanggal.simpleDateRevers()}",
+                          "Tgl Pengajuan : ${data?[index].tanggal.simpleDateRevers()} ${data?[index].accSdm}",
                           style: customTextStyle(FontWeight.w500, 11, cBlack),
                         ),
                         Container(

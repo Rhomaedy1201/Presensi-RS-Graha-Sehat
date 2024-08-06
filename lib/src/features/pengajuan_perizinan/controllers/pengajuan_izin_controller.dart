@@ -193,7 +193,7 @@ class PengajuanIzinController extends GetxController {
         var responseString = String.fromCharCodes(responseData);
         isLoadingSubmit(false);
         debugPrint(responseString);
-        // snackbarfailed(responseString);
+        snackbarfailed("Terjadi Kesalahan.");
       }
     } catch (e) {
       print(e.toString());

@@ -218,6 +218,7 @@ class _SelesaiIzinState extends State<SelesaiIzin> {
               'keterangan': data?[index].ket,
               'bukti': data?[index].izinBukti?.idIzin,
               'nipLogin': pengajuanIzinC.nipUser.value,
+              'tolak': data?[index].tolak?.ket,
             },
           ));
         });
