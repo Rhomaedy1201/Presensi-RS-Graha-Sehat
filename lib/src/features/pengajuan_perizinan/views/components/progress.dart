@@ -208,7 +208,111 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                               data?[index].acc1At == null)
                                             InkWell(
                                               onTap: () {
-                                                print("delete");
+                                                Get.defaultDialog(
+                                                  title: "Warning!",
+                                                  backgroundColor: cWhite,
+                                                  radius: 10,
+                                                  barrierDismissible: true,
+                                                  titleStyle: customTextStyle(
+                                                      FontWeight.w500,
+                                                      18,
+                                                      cBlack),
+                                                  titlePadding:
+                                                      const EdgeInsets.only(
+                                                          top: 15),
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 10, 10, 0),
+                                                  content: Column(
+                                                    children: [
+                                                      const Text(
+                                                        "Apakah anda ingin delete pengajuan ini?",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                10, 20, 10, 0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shadowColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  primary:
+                                                                      cGrey_500,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20.0),
+                                                                  ),
+                                                                ),
+                                                                child: Text(
+                                                                  "Batal",
+                                                                  style: customTextStyle(
+                                                                      FontWeight
+                                                                          .w500,
+                                                                      12,
+                                                                      cBlack),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Expanded(
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  progressIzinC
+                                                                      .deleteData(
+                                                                          data?[index]
+                                                                              .id);
+                                                                  Get.back();
+                                                                },
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shadowColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  primary:
+                                                                      cPrimary,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20.0),
+                                                                  ),
+                                                                ),
+                                                                child: Text(
+                                                                  "OK",
+                                                                  style: customTextStyle(
+                                                                      FontWeight
+                                                                          .w500,
+                                                                      12,
+                                                                      cBlack),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
                                               },
                                               child: Container(
                                                 padding:
