@@ -122,6 +122,44 @@ class _DetailIzinState extends State<DetailIzin> {
                             )
                           ],
                         ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     color: widget.data['accStatus'] == 2
+                        //         ? cPrimary_800
+                        //         : cRed_100,
+                        //     borderRadius: BorderRadius.circular(5),
+                        //   ),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.symmetric(
+                        //         horizontal: 4, vertical: 1),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: [
+                        //         Text(
+                        //           widget.data['accStatus'] == 2
+                        //               ? "Diterima"
+                        //               : "Ditolak",
+                        //           style: customTextStyle(
+                        //               FontWeight.w600,
+                        //               10,
+                        //               widget.data['accStatus'] == 2
+                        //                   ? cWhite
+                        //                   : cRed),
+                        //         ),
+                        //         spaceWidth(3),
+                        //         Icon(
+                        //           widget.data['accStatus'] == 2
+                        //               ? Icons.check_circle_outline_rounded
+                        //               : Icons.highlight_remove_rounded,
+                        //           size: 15,
+                        //           color: widget.data['accStatus'] == 2
+                        //               ? cWhite
+                        //               : cRed,
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                     spaceHeight(10),
@@ -383,12 +421,12 @@ class _DetailIzinState extends State<DetailIzin> {
                                   width: 17,
                                   height: 17,
                                   decoration: BoxDecoration(
-                                    color: widget.data['accAt'] != null
+                                    color: widget.data['accSdmAt'] != null
                                         ? cPrimary_800
                                         : cGrey_500,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: widget.data['accAt'] != null
+                                  child: widget.data['accSdmAt'] != null
                                       ? const Center(
                                           child: Icon(
                                             Icons.check,
