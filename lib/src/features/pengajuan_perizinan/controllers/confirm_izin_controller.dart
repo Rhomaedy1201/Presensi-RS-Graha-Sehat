@@ -126,4 +126,39 @@ class ConfirmIzinControlller extends GetxController {
       isLoadingAcc(false);
     }
   }
+
+  Future<void> tolakConfirm(id, ket, jenis) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingAcc(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      Map body = {'ket': ket, 'jenis': jenis};
+
+      http.Response response = await http.put(
+        Uri.parse("$base_url/tolak/form/$id"),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        Get.back();
+        snackbarSuccess("Berhasil Menolak Pengajuan.");
+        getData();
+      } else {
+        debugPrint(response.body.toString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingAcc(false);
+    }
+  }
 }
