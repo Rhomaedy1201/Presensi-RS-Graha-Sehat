@@ -213,10 +213,16 @@ class _SelesaiIzinState extends State<SelesaiIzin> {
               'tanggal': data?[index].tanggal.simpleDateRevers(),
               'nip': data?[index].nip,
               'nama': data?[index].nama,
-              'periodeIzin1': data?[index].izinCuti.mulai.simpleDateRevers(),
-              'periodeIzin2': data?[index].izinCuti.akhir.simpleDateRevers(),
+              if (data?[index].izinKrs == null)
+                'periodeIzin1': data?[index].izinCuti?.mulai.simpleDateRevers()
+              else
+                'periodeIzin1': data?[index].izinKrs?.mulai,
+              if (data?[index].izinKrs == null)
+                'periodeIzin2': data?[index].izinCuti?.akhir.simpleDateRevers()
+              else
+                'periodeIzin2': data?[index].izinKrs?.akhir,
               'keterangan': data?[index].ket,
-              'bukti': data?[index].izinBukti?.idIzin,
+              'bukti': data?[index].izinBukti?.buktiUrl,
               'nipLogin': pengajuanIzinC.nipUser.value,
               'tolak': data?[index].tolak?.ket,
             },

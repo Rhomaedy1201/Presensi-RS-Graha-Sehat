@@ -90,7 +90,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                 else
                                   'periodeIzin2': data?[index].izinKrs?.akhir,
                                 'keterangan': data?[index].ket,
-                                'bukti': data?[index].izinBukti?.idIzin,
+                                'bukti': data?[index].izinBukti?.buktiUrl,
                                 'nipLogin': pengajuanIzinC.nipUser.value,
                               },
                             ));

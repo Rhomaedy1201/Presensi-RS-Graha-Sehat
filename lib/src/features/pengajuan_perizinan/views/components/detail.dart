@@ -355,73 +355,76 @@ class _DetailIzinState extends State<DetailIzin> {
                               ],
                             ),
                           ),
-                          Container(
-                            width: Get.width,
-                            height: 1,
-                            color: cGrey_400,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Bukti:",
-                                  style: customTextStyle(
-                                      FontWeight.w500, 10, cBlack),
-                                ),
-                                spaceHeight(2),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          child: Container(
-                                            width: 300,
-                                            height: 300,
-                                            decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/profile.jpg"),
-                                                fit: BoxFit.cover,
+                          if (widget.data['bukti'] != null)
+                            Container(
+                              width: Get.width,
+                              height: 1,
+                              color: cGrey_400,
+                            ),
+                          if (widget.data['bukti'] != null)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Bukti:",
+                                    style: customTextStyle(
+                                        FontWeight.w500, 10, cBlack),
+                                  ),
+                                  spaceHeight(2),
+                                  InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            child: Container(
+                                              width: 300,
+                                              height: 300,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: NetworkImage(widget
+                                                      .data['bukti']
+                                                      .toString()),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: 60,
-                                    height: 60,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/profile.jpg"),
-                                      ),
-                                    ),
+                                          );
+                                        },
+                                      );
+                                    },
                                     child: Container(
                                       width: 60,
-                                      height: 10,
-                                      color: const Color(0x6F000000),
-                                      child: Center(
-                                        child: Text(
-                                          "Lihat\nGambar",
-                                          style: customTextStyle(
-                                            FontWeight.w600,
-                                            11,
-                                            cWhite,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              widget.data['bukti'].toString()),
+                                        ),
+                                      ),
+                                      child: Container(
+                                        width: 60,
+                                        height: 10,
+                                        color: const Color(0x6F000000),
+                                        child: Center(
+                                          child: Text(
+                                            "Lihat\nGambar",
+                                            style: customTextStyle(
+                                              FontWeight.w600,
+                                              11,
+                                              cWhite,
+                                            ),
+                                            textAlign: TextAlign.center,
                                           ),
-                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),

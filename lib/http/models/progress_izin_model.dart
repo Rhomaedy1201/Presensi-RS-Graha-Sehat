@@ -285,17 +285,21 @@ class MJabatan {
 
 class IzinBukti {
   int? idIzin;
+  String? buktiUrl;
 
   IzinBukti({
     required this.idIzin,
+    required this.buktiUrl,
   });
 
   factory IzinBukti.fromJson(Map<String, dynamic> json) => IzinBukti(
         idIzin: json["id_izin"],
+        buktiUrl: json["bukti_url"],
       );
 
   Map<String, dynamic> toJson() => {
         "id_izin": idIzin,
+        "bukti_url": buktiUrl,
       };
 }
 

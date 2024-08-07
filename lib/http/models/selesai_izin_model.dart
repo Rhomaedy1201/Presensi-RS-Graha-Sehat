@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:presensi_gs/http/models/progress_izin_model.dart';
+
 SelesaiIzinModel selesaiIzinModelFromJson(String str) =>
     SelesaiIzinModel.fromJson(json.decode(str));
 
@@ -55,10 +57,10 @@ class Datum {
   By acc1By;
   By? acc2By;
   By? acc3By;
-  IzinCuti izinCuti;
-  dynamic izinKrs;
+  IzinCuti? izinCuti;
+  IzinKrs? izinKrs;
   Tolak? tolak;
-  dynamic izinBukti;
+  IzinBukti? izinBukti;
 
   Datum({
     required this.id,
@@ -115,10 +117,16 @@ class Datum {
         acc1By: By.fromJson(json["acc1_by"]),
         acc2By: json["acc2_by"] == null ? null : By.fromJson(json["acc2_by"]),
         acc3By: json["acc3_by"] == null ? null : By.fromJson(json["acc3_by"]),
-        izinCuti: IzinCuti.fromJson(json["izin_cuti"]),
-        izinKrs: json["izin_krs"],
+        izinCuti: json["izin_cuti"] == null
+            ? null
+            : IzinCuti.fromJson(json["izin_cuti"]),
+        izinKrs: json["izin_krs"] == null
+            ? null
+            : IzinKrs.fromJson(json["izin_krs"]),
         tolak: json["tolak"] == null ? null : Tolak.fromJson(json["tolak"]),
-        izinBukti: json["izin_bukti"],
+        izinBukti: json["izin_bukti"] == null
+            ? null
+            : IzinBukti.fromJson(json["izin_bukti"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -146,10 +154,10 @@ class Datum {
         "acc1_by": acc1By.toJson(),
         "acc2_by": acc2By?.toJson(),
         "acc3_by": acc3By?.toJson(),
-        "izin_cuti": izinCuti.toJson(),
-        "izin_krs": izinKrs,
+        "izin_cuti": izinCuti?.toJson(),
+        "izin_krs": izinKrs?.toJson(),
         "tolak": tolak?.toJson(),
-        "izin_bukti": izinBukti,
+        "izin_bukti": izinBukti?.toJson(),
       };
 }
 
@@ -275,6 +283,26 @@ class MJabatan {
         "id_parent": idParent,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+      };
+}
+
+class IzinBukti {
+  int? idIzin;
+  String? buktiUrl;
+
+  IzinBukti({
+    required this.idIzin,
+    required this.buktiUrl,
+  });
+
+  factory IzinBukti.fromJson(Map<String, dynamic> json) => IzinBukti(
+        idIzin: json["id_izin"],
+        buktiUrl: json["bukti_url"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id_izin": idIzin,
+        "bukti_url": buktiUrl,
       };
 }
 
