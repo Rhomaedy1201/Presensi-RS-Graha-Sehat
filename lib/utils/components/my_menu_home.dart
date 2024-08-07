@@ -59,8 +59,8 @@ class MenuHome {
       'icon': Icons.edit_document,
       'bg_color': const Color(0xFFF7DAEB),
       'icon_color': const Color(0xFFFB3BAB),
-      // 'route': null,
-      'route': RouteNames.approvalView,
+      'route': null,
+      // 'route': RouteNames.approvalView,
     },
   ];
 }
