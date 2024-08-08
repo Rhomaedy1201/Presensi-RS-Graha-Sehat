@@ -19,7 +19,6 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
   HistoriPresensiController historiPresensiC =
       Get.find<HistoriPresensiController>();
   DateTime valueDate = DateTime.now();
-  int no = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,11 +76,10 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                               var data =
                                   historiPresensiC.historiPresensiM!.data;
                               if (data[index].presensi != null) {
-                                no += 1;
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: cardHistoris(
-                                    no,
+                                    index + 1,
                                     data[index].tanggal.fullDateAll(),
                                     data[index].presensi?.masuk,
                                     data[index].presensi?.pulang,
@@ -229,15 +227,15 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                     ),
                   ],
                 ),
-                spaceHeight(5),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                spaceHeight(7),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Status',
+                      'Status : ',
                       style: customTextStyle(FontWeight.w400, 12, cBlack),
                     ),
-                    spaceHeight(2),
+                    spaceWidth(2),
                     Container(
                       decoration: BoxDecoration(
                         color: status == "TEPAT" ? cPrimary_800 : cRed,
@@ -248,7 +246,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                             horizontal: 5, vertical: 2),
                         child: Text(
                           '$status',
-                          style: customTextStyle(FontWeight.w600, 12, cWhite),
+                          style: customTextStyle(FontWeight.w700, 10, cWhite),
                         ),
                       ),
                     ),
@@ -319,7 +317,6 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                     CupertinoButton(
                         child: const Text('OK'),
                         onPressed: () {
-                          no = 0;
                           Navigator.of(context).pop();
                           historiPresensiC.isEmptyData.value = true;
                           historiPresensiC.historiPresensiM!.data.clear();
