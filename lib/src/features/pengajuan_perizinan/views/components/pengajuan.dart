@@ -120,6 +120,19 @@ class PengajuanIzin extends StatelessWidget {
                               formJamIzin(context, data['inputan'])
                             ],
                           )
+                        else if (data['kode'] == "ICM")
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Mulai",
+                                style: customTextStyle(
+                                    FontWeight.w600, 11, cBlack),
+                              ),
+                              spaceHeight(5),
+                              formJamIzin(context, data['inputan'])
+                            ],
+                          )
                         else
                           Row(
                             children: [
