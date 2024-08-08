@@ -77,14 +77,15 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                               var data =
                                   historiPresensiC.historiPresensiM!.data;
                               if (data[index].presensi != null) {
-                                no++;
+                                no += 1;
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: cardHistoris(
                                     no,
                                     data[index].tanggal.fullDateAll(),
-                                    data[index].presensi!.masuk,
-                                    data[index].presensi!.pulang,
+                                    data[index].presensi?.masuk,
+                                    data[index].presensi?.pulang,
+                                    data[index].presensi?.status,
                                   ),
                                 );
                               } else {
@@ -118,7 +119,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
     );
   }
 
-  Container cardHistoris(no, tgl, jamMasuk, jamKeluar) {
+  Container cardHistoris(no, tgl, jamMasuk, jamKeluar, status) {
     return Container(
       width: Get.width,
       decoration: BoxDecoration(
@@ -183,43 +184,73 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
               horizontal: 15,
               vertical: 10,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Aktual Masuk',
+                          style: customTextStyle(FontWeight.w400, 12, cBlack),
+                        ),
+                        spaceHeight(2),
+                        Text(
+                          '$jamMasuk WIB',
+                          style: customTextStyle(FontWeight.w600, 15, cBlack),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        dotItem(),
+                        spaceWidth(7),
+                        dotItem(),
+                        spaceWidth(7),
+                        dotItem(),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Aktual Keluar',
+                          style: customTextStyle(FontWeight.w400, 12, cBlack),
+                        ),
+                        spaceHeight(2),
+                        Text(
+                          '$jamKeluar WIB',
+                          style: customTextStyle(FontWeight.w600, 15, cBlack),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                spaceHeight(5),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Aktual Masuk',
+                      'Status',
                       style: customTextStyle(FontWeight.w400, 12, cBlack),
                     ),
                     spaceHeight(2),
-                    Text(
-                      '$jamMasuk WIB',
-                      style: customTextStyle(FontWeight.w600, 15, cBlack),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    dotItem(),
-                    spaceWidth(7),
-                    dotItem(),
-                    spaceWidth(7),
-                    dotItem(),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Aktual Keluar',
-                      style: customTextStyle(FontWeight.w400, 12, cBlack),
-                    ),
-                    spaceHeight(2),
-                    Text(
-                      '$jamKeluar WIB',
-                      style: customTextStyle(FontWeight.w600, 15, cBlack),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: status == "TEPAT" ? cPrimary_800 : cRed,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
+                        child: Text(
+                          '$status',
+                          style: customTextStyle(FontWeight.w600, 12, cWhite),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -288,6 +319,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                     CupertinoButton(
                         child: const Text('OK'),
                         onPressed: () {
+                          no = 0;
                           Navigator.of(context).pop();
                           historiPresensiC.isEmptyData.value = true;
                           historiPresensiC.historiPresensiM!.data.clear();

@@ -39,6 +39,7 @@ class HomeController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
+      print(json);
       if (response.statusCode == 200) {
         isJadwal(false);
         shift.value = json['data']['shift'];

@@ -37,11 +37,14 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: cGrey_100,
       body: Obx(
-        () => SingleChildScrollView(
+        () => RefreshIndicator(
+          onRefresh: () async {
+            homeC.checkJadwal();
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 spaceHeight(heightStatusBar + 20),
                 Row(
@@ -90,26 +93,31 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ],
                     ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: cWhite,
-                        boxShadow: [
-                          BoxShadow(
-                            color: cGrey_400,
-                            blurRadius: 15,
-                            offset: Offset(1, 1), // Shadow position
+                    InkWell(
+                      onTap: () {
+                        homeC.checkJadwal();
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: cWhite,
+                          boxShadow: [
+                            BoxShadow(
+                              color: cGrey_400,
+                              blurRadius: 15,
+                              offset: Offset(1, 1), // Shadow position
+                            ),
+                          ],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
                           ),
-                        ],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
                         ),
-                      ),
-                      child: const Icon(
-                        Icons.notifications,
-                        size: 22,
-                        color: cPrimary,
+                        child: const Icon(
+                          Icons.notifications,
+                          size: 22,
+                          color: cPrimary,
+                        ),
                       ),
                     ),
                   ],

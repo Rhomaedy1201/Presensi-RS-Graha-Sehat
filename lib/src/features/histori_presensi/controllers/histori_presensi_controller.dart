@@ -35,7 +35,7 @@ class HistoriPresensiController extends GetxController {
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/history-presensi?month=$month&tahun=$year"),
+        Uri.parse("$base_url/history-presensi?month=$month&year=$year"),
         headers: headers,
       );
 
