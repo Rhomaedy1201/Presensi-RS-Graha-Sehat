@@ -172,16 +172,22 @@ class _HomeViewState extends State<HomeView> {
                   style: customTextStyle(FontWeight.w600, 15, cBlack),
                 ),
                 spaceHeight(15),
-                // statistikBulanIni(),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      "Coming Soon",
-                      style: customTextStyle(FontWeight.w500, 14, cGrey_600),
-                    ),
-                  ),
-                ),
+                homeC.isLoadingStatistik.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : statistikBulanIni(
+                        homeC.statistikModel?.data.list.tepat.val.toString(),
+                        homeC.statistikModel?.data.list.telat.val.toString(),
+                        homeC.statistikModel?.data.list.alpa.val.toString(),
+                      ),
+                // Center(
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(top: 10),
+                //     child: Text(
+                //       "Coming Soon",
+                //       style: customTextStyle(FontWeight.w500, 14, cGrey_600),
+                //     ),
+                //   ),
+                // ),
                 spaceHeight(15),
                 Text(
                   "Top Absensi",
@@ -339,103 +345,93 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Container statistikBulanIni() {
-    return Container(
-      width: Get.width,
-      decoration: BoxDecoration(
-        color: cWhite,
-        // border: Border.all(width: 1.5, color: cGrey_500),
-        boxShadow: const [
-          BoxShadow(
-            color: cGrey_400,
-            blurRadius: 8,
-            offset: Offset(1, 1), // Shadow position
-          ),
-        ],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: Get.width / 4.8,
-              decoration: const BoxDecoration(
-                border: Border(
-                  right: BorderSide(color: cGrey_500, width: 1.5),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "20",
-                    style: customTextStyle(FontWeight.w700, 16, cBlack),
-                  ),
-                  Text(
-                    "Hadir",
-                    style: customTextStyle(FontWeight.w400, 11, cGrey_900),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: Get.width / 4.8,
-              decoration: const BoxDecoration(
-                border: Border(
-                  right: BorderSide(color: cGrey_500, width: 1.5),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "2",
-                    style: customTextStyle(FontWeight.w700, 16, cBlack),
-                  ),
-                  Text(
-                    "Telat",
-                    style: customTextStyle(FontWeight.w400, 11, cGrey_900),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: Get.width / 4.8,
-              decoration: const BoxDecoration(
-                border: Border(
-                  right: BorderSide(color: cGrey_500, width: 1.5),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "3",
-                    style: customTextStyle(FontWeight.w700, 16, cBlack),
-                  ),
-                  Text(
-                    "Alpha",
-                    style: customTextStyle(FontWeight.w400, 11, cGrey_900),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: Get.width / 4.8,
-              decoration: const BoxDecoration(),
-              child: Column(
-                children: [
-                  Text(
-                    "0",
-                    style: customTextStyle(FontWeight.w700, 16, cBlack),
-                  ),
-                  Text(
-                    "Izin",
-                    style: customTextStyle(FontWeight.w400, 11, cGrey_900),
-                  ),
-                ],
-              ),
+  Widget statistikBulanIni(hadir, telat, alpha) {
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.linear,
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          color: cWhite,
+          // border: Border.all(width: 1.5, color: cGrey_500),
+          boxShadow: const [
+            BoxShadow(
+              color: cGrey_400,
+              blurRadius: 8,
+              offset: Offset(1, 1), // Shadow position
             ),
           ],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      right: BorderSide(color: cGrey_500, width: 1),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        hadir,
+                        style: customTextStyle(FontWeight.w700, 16, cBlack),
+                      ),
+                      Text(
+                        "KEHADIRAN",
+                        style: customTextStyle(FontWeight.w500, 11, cGrey_700),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      right: BorderSide(color: cGrey_500, width: 1.5),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        telat,
+                        style: customTextStyle(FontWeight.w700, 16, cBlack),
+                      ),
+                      Text(
+                        "TERLAMBAT",
+                        style: customTextStyle(FontWeight.w500, 11, cGrey_700),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: const BoxDecoration(),
+                  child: Column(
+                    children: [
+                      Text(
+                        alpha,
+                        style: customTextStyle(FontWeight.w700, 16, cBlack),
+                      ),
+                      Text(
+                        "ALPHA",
+                        style: customTextStyle(FontWeight.w500, 11, cGrey_700),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
