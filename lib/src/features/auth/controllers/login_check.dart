@@ -8,7 +8,8 @@ class LoginCheck extends GetxController {
     prefs = await SharedPreferences.getInstance();
     var token = prefs?.getString("token");
     if (token != null) {
-      Get.offAllNamed(RouteNames.home);
+      // Get.offAllNamed(RouteNames.home);
+      Get.offAllNamed(RouteNames.navigationBar);
     } else {
       Get.offAllNamed(RouteNames.login);
     }

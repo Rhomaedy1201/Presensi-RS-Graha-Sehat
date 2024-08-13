@@ -17,7 +17,7 @@ class HistoriPresensiView extends StatefulWidget {
 
 class _HistoriPresensiViewState extends State<HistoriPresensiView> {
   HistoriPresensiController historiPresensiC =
-      Get.find<HistoriPresensiController>();
+      Get.put(HistoriPresensiController());
   DateTime valueDate = DateTime.now();
   @override
   Widget build(BuildContext context) {

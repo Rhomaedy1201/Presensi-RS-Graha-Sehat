@@ -17,8 +17,8 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  ProfileController profileC = Get.find<ProfileController>();
-  PrefsController prefsC = Get.find<PrefsController>();
+  ProfileController profileC = Get.put(ProfileController());
+  PrefsController prefsC = Get.put(PrefsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

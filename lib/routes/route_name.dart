@@ -1,4 +1,5 @@
 abstract class RouteNames {
+  static const navigationBar = '/navigation-bar';
   static const splashScreen = '/splash_screen';
   static const login = '/login';
   static const home = '/home';

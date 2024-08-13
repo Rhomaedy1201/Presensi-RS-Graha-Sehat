@@ -17,7 +17,7 @@ class JadwalView extends StatefulWidget {
 
 class _JadwalViewState extends State<JadwalView> {
   DateTime valueDate = DateTime.now();
-  JadwalController jadwalC = Get.find<JadwalController>();
+  JadwalController jadwalC = Get.put(JadwalController());
 
   @override
   Widget build(BuildContext context) {

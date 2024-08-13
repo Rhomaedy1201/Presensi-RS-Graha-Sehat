@@ -29,6 +29,11 @@ class RoutePages {
       // binding: SplashBinding(),
     ),
     GetPage(
+      name: RouteNames.navigationBar,
+      page: () => const NavigationBarView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
       name: RouteNames.login,
       page: () => const LoginView(),
       binding: LoginBinding(),
