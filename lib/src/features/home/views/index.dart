@@ -1,6 +1,8 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
@@ -40,6 +42,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         backgroundColor: cPrimary,
         toolbarHeight: 80,
+        elevation: 0,
         title: Padding(
           padding: const EdgeInsets.only(left: 5),
           child: SizedBox(
@@ -56,397 +59,896 @@ class _HomeViewState extends State<HomeView> {
           spaceWidth(20),
         ],
       ),
-      body: Stack(
-        children: [
-          ClipPath(
-            child: Container(
-              width: Get.width,
-              height: Get.height * 0.15,
-              decoration: const BoxDecoration(
-                color: cPrimary,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+      body: Obx(
+        () => Stack(
+          children: [
+            ClipPath(
+              child: Container(
+                width: Get.width,
+                height: Get.height * 0.15,
+                decoration: const BoxDecoration(
+                  color: cPrimary,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        // color: cPrimary,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: cWhite, width: 2),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/images/profile.jpg"),
-                          fit: BoxFit.contain,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          // color: cPrimary,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: cWhite, width: 2),
+                          image: const DecorationImage(
+                            image: AssetImage("assets/images/profile.jpg"),
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
-                    ),
-                    spaceWidth(10),
-                    Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: Get.width * 0.6,
-                              child: Text(
-                                // prefsC.isLoading.value
-                                //     ? "..."
-                                //     :
-                                shortenLastName("Muhammad Rhomaedi"),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: customTextStyle(
-                                    FontWeight.w700, 17, cWhite),
+                      spaceWidth(10),
+                      Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: Get.width * 0.6,
+                                child: Text(
+                                  prefsC.isLoading.value
+                                      ? "..."
+                                      : shortenLastName(prefsC.nama.value),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: customTextStyle(
+                                      FontWeight.w700, 17, cWhite),
+                                ),
                               ),
-                            ),
-                            Text(
-                              // prefsC.isLoading.value
-                              //     ? "..."
-                              //     : prefsC.jabatan.value,
-                              "Staf Unit Sdm",
-                              style: customTextStyle(
-                                  FontWeight.w400, 14, cGrey_300),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
+                              Text(
+                                prefsC.isLoading.value
+                                    ? "..."
+                                    : prefsC.jabatan.value,
+                                style: customTextStyle(
+                                    FontWeight.w400, 14, cGrey_300),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: Get.height * 0.1),
-            // color: Colors.amber,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      color: cWhite,
-                      borderRadius: BorderRadius.circular(7),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: cGrey_400,
-                          blurRadius: 3,
-                          offset: Offset(0, -1), // Shadow position
+            Container(
+              margin: EdgeInsets.only(top: Get.height * 0.095),
+              // color: Colors.amber,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Container(
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: cWhite,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: cGrey_400,
+                            blurRadius: 2,
+                            offset: Offset(-1, -1), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Column(
+                          children: [
+                            spaceHeight(5),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () =>
+                                        Get.toNamed(RouteNames.perizinanView),
+                                    child: SizedBox(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0x880088FF),
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.airplanemode_on_sharp,
+                                                size: 25,
+                                                color: Color(0xFF0133FA),
+                                              ),
+                                            ),
+                                          ),
+                                          spaceHeight(7),
+                                          Text(
+                                            "Perizinan",
+                                            style: customTextStyle(
+                                              FontWeight.w400,
+                                              12,
+                                              cGrey_600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () =>
+                                        Get.toNamed(RouteNames.tukarShift),
+                                    child: SizedBox(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0x5D01D0A7),
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.change_circle_outlined,
+                                                size: 30,
+                                                color: Color(0xFF028066),
+                                              ),
+                                            ),
+                                          ),
+                                          spaceHeight(7),
+                                          Text(
+                                            "Tukar Shift",
+                                            style: customTextStyle(
+                                              FontWeight.w400,
+                                              12,
+                                              cGrey_600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () => dialogComingSoon("Lembur"),
+                                    child: SizedBox(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0x94FFBD07),
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.timer_outlined,
+                                                size: 30,
+                                                color: Color(0xFF886401),
+                                              ),
+                                            ),
+                                          ),
+                                          spaceHeight(7),
+                                          Text(
+                                            "Lembur",
+                                            style: customTextStyle(
+                                              FontWeight.w400,
+                                              12,
+                                              cGrey_600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: InkWell(
+                                    onTap: () => dialogComingSoon("Approval"),
+                                    child: SizedBox(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0x5BFF1C07),
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.edit_document,
+                                                size: 25,
+                                                color: Color(0xFF9C0D00),
+                                              ),
+                                            ),
+                                          ),
+                                          spaceHeight(7),
+                                          Text(
+                                            "Approval",
+                                            style: customTextStyle(
+                                              FontWeight.w400,
+                                              12,
+                                              cGrey_600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            spaceHeight(13),
+                            Container(
+                              width: 50,
+                              height: 5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: cGrey_300,
+                              ),
+                            ),
+                            spaceHeight(5),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
+                    // Container(
+                    //   width: Get.width,
+                    //   decoration: BoxDecoration(
+                    //     color: cWhite,
+                    //     borderRadius: BorderRadius.circular(7),
+                    //     boxShadow: const [
+                    //       BoxShadow(
+                    //         color: cGrey_400,
+                    //         blurRadius: 3,
+                    //         offset: Offset(0, -1), // Shadow position
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         horizontal: 20, vertical: 15),
+                    //     child: Row(
+                    //       children: [
+                    //         Expanded(
+                    //           flex: 1,
+                    //           child: Column(
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             children: [
+                    //               Text(
+                    //                 "Jadwal Hari Ini",
+                    //                 style: customTextStyle(
+                    //                     FontWeight.w900, 17, cBlack),
+                    //               ),
+                    //               spaceHeight(3),
+                    //               Text(
+                    //                 homeC.isLoadingCheckJadwal.value
+                    //                     ? "..."
+                    //                     : homeC.isJadwal.value
+                    //                         ? "Kosong"
+                    //                         : "${homeC.shift.value} | ${homeC.jamMasuk.value} -- ${homeC.jamPulang.value}",
+                    //                 style: customTextStyle(
+                    //                     FontWeight.w700, 12, cGrey_600),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         Expanded(
+                    //           flex: 1,
+                    //           child: SizedBox(
+                    //             height: 40,
+                    //             child: ElevatedButton(
+                    //               style: ElevatedButton.styleFrom(
+                    //                 backgroundColor: cPrimary,
+                    //                 shadowColor: cPrimary_400,
+                    //                 shape: RoundedRectangleBorder(
+                    //                   borderRadius: BorderRadius.circular(
+                    //                     5,
+                    //                   ), // Mengatur border radius menjadi 0
+                    //                 ),
+                    //               ),
+                    //               onPressed: () =>
+                    //                   Get.toNamed(RouteNames.presensi),
+                    //               child: Row(
+                    //                 mainAxisAlignment: MainAxisAlignment.center,
+                    //                 children: [
+                    //                   const Icon(
+                    //                     Icons.location_on_outlined,
+                    //                     color: cWhite,
+                    //                     size: 20,
+                    //                   ),
+                    //                   spaceWidth(5),
+                    //                   Text(
+                    //                     "Presensi",
+                    //                     style: customTextStyle(
+                    //                         FontWeight.w500, 14, cWhite),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
+                  Container(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            homeC.checkJadwal();
+                            homeC.getStatistik();
+                            homeC.getStr();
+                          },
+                          child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Jadwal Hari Ini",
-                                  style: customTextStyle(
-                                      FontWeight.w900, 17, cBlack),
-                                ),
-                                spaceHeight(3),
-                                Text(
-                                  "09:00 -- 20:00",
-                                  style: customTextStyle(
-                                      FontWeight.w700, 13, cGrey_600),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: cPrimary,
-                                  shadowColor: cPrimary_400,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      5,
-                                    ), // Mengatur border radius menjadi 0
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.location_on_outlined,
-                                      color: cWhite,
-                                      size: 20,
-                                    ),
-                                    spaceWidth(5),
-                                    Text(
-                                      "Presensi",
-                                      style: customTextStyle(
-                                          FontWeight.w500, 14, cWhite),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 20,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: const Color(0x2CFC1100)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 10),
-                              child: Text(
-                                "STR anda akan segera berakhir pada 12-12-2024. Segera perbarui ke SDM.",
-                                style:
-                                    customTextStyle(FontWeight.w400, 13, cRed),
-                              ),
-                            ),
-                          ),
-                          spaceHeight(20),
-                          Container(
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: cWhite,
-                              borderRadius: BorderRadius.circular(7),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: cGrey_400,
-                                  blurRadius: 2,
-                                  offset: Offset(-1, -1), // Shadow position
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: Column(
-                                children: [
-                                  spaceHeight(5),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: InkWell(
-                                          onTap: () {},
-                                          child: SizedBox(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: 45,
-                                                  height: 45,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0x880088FF),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13),
-                                                  ),
-                                                  child: const Center(
-                                                    child: Icon(
-                                                      Icons
-                                                          .airplanemode_on_sharp,
-                                                      size: 25,
-                                                      color: Color(0xFF0133FA),
-                                                    ),
-                                                  ),
-                                                ),
-                                                spaceHeight(7),
-                                                Text(
-                                                  "Perizinan",
-                                                  style: customTextStyle(
-                                                    FontWeight.w400,
-                                                    12,
-                                                    cGrey_600,
-                                                  ),
-                                                ),
-                                              ],
+                                homeC.isLoadingStr.value
+                                    ? Container()
+                                    : homeC.isEmptyStr.value
+                                        ? Container()
+                                        : Container(
+                                            width: Get.width,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: const Color(0x2CFC1100)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 10),
+                                              child: Text(
+                                                "STR anda akan segera berakhir pada ${homeC.tglStr}. Segera perbarui ke SDM.",
+                                                style: customTextStyle(
+                                                    FontWeight.w400, 13, cRed),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: InkWell(
-                                          onTap: () {},
-                                          child: SizedBox(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: 45,
-                                                  height: 45,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0x5D01D0A7),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13),
-                                                  ),
-                                                  child: const Center(
-                                                    child: Icon(
-                                                      Icons
-                                                          .change_circle_outlined,
-                                                      size: 30,
-                                                      color: Color(0xFF028066),
-                                                    ),
-                                                  ),
-                                                ),
-                                                spaceHeight(7),
-                                                Text(
-                                                  "Tukar Shift",
-                                                  style: customTextStyle(
-                                                    FontWeight.w400,
-                                                    12,
-                                                    cGrey_600,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: InkWell(
-                                          onTap: () {},
-                                          child: SizedBox(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: 45,
-                                                  height: 45,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0x94FFBD07),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13),
-                                                  ),
-                                                  child: const Center(
-                                                    child: Icon(
-                                                      Icons.timer_outlined,
-                                                      size: 30,
-                                                      color: Color(0xFF886401),
-                                                    ),
-                                                  ),
-                                                ),
-                                                spaceHeight(7),
-                                                Text(
-                                                  "Lembur",
-                                                  style: customTextStyle(
-                                                    FontWeight.w400,
-                                                    12,
-                                                    cGrey_600,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: InkWell(
-                                          onTap: () {},
-                                          child: SizedBox(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: 45,
-                                                  height: 45,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0x5BFF1C07),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            13),
-                                                  ),
-                                                  child: const Center(
-                                                    child: Icon(
-                                                      Icons.edit_document,
-                                                      size: 25,
-                                                      color: Color(0xFF9C0D00),
-                                                    ),
-                                                  ),
-                                                ),
-                                                spaceHeight(7),
-                                                Text(
-                                                  "Approval",
-                                                  style: customTextStyle(
-                                                    FontWeight.w400,
-                                                    12,
-                                                    cGrey_600,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
+                                homeC.isEmptyStr.value
+                                    ? Container()
+                                    : spaceHeight(20),
+                                // Container(
+                                //   width: Get.width,
+                                //   decoration: BoxDecoration(
+                                //     color: cWhite,
+                                //     borderRadius: BorderRadius.circular(7),
+                                //     boxShadow: const [
+                                //       BoxShadow(
+                                //         color: cGrey_400,
+                                //         blurRadius: 2,
+                                //         offset: Offset(-1, -1), // Shadow position
+                                //       ),
+                                //     ],
+                                //   ),
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.symmetric(
+                                //         horizontal: 10, vertical: 10),
+                                //     child: Column(
+                                //       children: [
+                                //         spaceHeight(5),
+                                //         Row(
+                                //           children: [
+                                //             Expanded(
+                                //               flex: 1,
+                                //               child: InkWell(
+                                //                 onTap: () => Get.toNamed(
+                                //                     RouteNames.perizinanView),
+                                //                 child: SizedBox(
+                                //                   child: Column(
+                                //                     children: [
+                                //                       Container(
+                                //                         width: 45,
+                                //                         height: 45,
+                                //                         decoration: BoxDecoration(
+                                //                           color: const Color(
+                                //                               0x880088FF),
+                                //                           borderRadius:
+                                //                               BorderRadius
+                                //                                   .circular(13),
+                                //                         ),
+                                //                         child: const Center(
+                                //                           child: Icon(
+                                //                             Icons
+                                //                                 .airplanemode_on_sharp,
+                                //                             size: 25,
+                                //                             color:
+                                //                                 Color(0xFF0133FA),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       spaceHeight(7),
+                                //                       Text(
+                                //                         "Perizinan",
+                                //                         style: customTextStyle(
+                                //                           FontWeight.w400,
+                                //                           12,
+                                //                           cGrey_600,
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             Expanded(
+                                //               flex: 1,
+                                //               child: InkWell(
+                                //                 onTap: () => Get.toNamed(
+                                //                     RouteNames.tukarShift),
+                                //                 child: SizedBox(
+                                //                   child: Column(
+                                //                     children: [
+                                //                       Container(
+                                //                         width: 45,
+                                //                         height: 45,
+                                //                         decoration: BoxDecoration(
+                                //                           color: const Color(
+                                //                               0x5D01D0A7),
+                                //                           borderRadius:
+                                //                               BorderRadius
+                                //                                   .circular(13),
+                                //                         ),
+                                //                         child: const Center(
+                                //                           child: Icon(
+                                //                             Icons
+                                //                                 .change_circle_outlined,
+                                //                             size: 30,
+                                //                             color:
+                                //                                 Color(0xFF028066),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       spaceHeight(7),
+                                //                       Text(
+                                //                         "Tukar Shift",
+                                //                         style: customTextStyle(
+                                //                           FontWeight.w400,
+                                //                           12,
+                                //                           cGrey_600,
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             Expanded(
+                                //               flex: 1,
+                                //               child: InkWell(
+                                //                 onTap: () =>
+                                //                     dialogComingSoon("Lembur"),
+                                //                 child: SizedBox(
+                                //                   child: Column(
+                                //                     children: [
+                                //                       Container(
+                                //                         width: 45,
+                                //                         height: 45,
+                                //                         decoration: BoxDecoration(
+                                //                           color: const Color(
+                                //                               0x94FFBD07),
+                                //                           borderRadius:
+                                //                               BorderRadius
+                                //                                   .circular(13),
+                                //                         ),
+                                //                         child: const Center(
+                                //                           child: Icon(
+                                //                             Icons.timer_outlined,
+                                //                             size: 30,
+                                //                             color:
+                                //                                 Color(0xFF886401),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       spaceHeight(7),
+                                //                       Text(
+                                //                         "Lembur",
+                                //                         style: customTextStyle(
+                                //                           FontWeight.w400,
+                                //                           12,
+                                //                           cGrey_600,
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             Expanded(
+                                //               flex: 1,
+                                //               child: InkWell(
+                                //                 onTap: () =>
+                                //                     dialogComingSoon("Approval"),
+                                //                 child: SizedBox(
+                                //                   child: Column(
+                                //                     children: [
+                                //                       Container(
+                                //                         width: 45,
+                                //                         height: 45,
+                                //                         decoration: BoxDecoration(
+                                //                           color: const Color(
+                                //                               0x5BFF1C07),
+                                //                           borderRadius:
+                                //                               BorderRadius
+                                //                                   .circular(13),
+                                //                         ),
+                                //                         child: const Center(
+                                //                           child: Icon(
+                                //                             Icons.edit_document,
+                                //                             size: 25,
+                                //                             color:
+                                //                                 Color(0xFF9C0D00),
+                                //                           ),
+                                //                         ),
+                                //                       ),
+                                //                       spaceHeight(7),
+                                //                       Text(
+                                //                         "Approval",
+                                //                         style: customTextStyle(
+                                //                           FontWeight.w400,
+                                //                           12,
+                                //                           cGrey_600,
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //         spaceHeight(13),
+                                //         Container(
+                                //           width: 50,
+                                //           height: 5,
+                                //           decoration: BoxDecoration(
+                                //             borderRadius:
+                                //                 BorderRadius.circular(3),
+                                //             color: cGrey_300,
+                                //           ),
+                                //         ),
+                                //         spaceHeight(5),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.symmetric(vertical: 15),
+                                //   child: Text(
+                                //     "Statistik Bulan ini",
+                                //     style: customTextStyle(
+                                //         FontWeight.w500, 15, cBlack),
+                                //   ),
+                                // ),
+                                Container(
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    color: cWhite,
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: cGrey_400,
+                                        blurRadius: 3,
+                                        offset:
+                                            Offset(0, -1), // Shadow position
                                       ),
                                     ],
                                   ),
-                                  spaceHeight(13),
-                                  Container(
-                                    width: 50,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(3),
-                                      color: cGrey_300,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 25),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          homeC.isLoadingCheckJadwal.value
+                                              ? "..."
+                                              : homeC.isJadwal.value
+                                                  ? "LIBUR"
+                                                  : homeC.shift.value,
+                                          style: customTextStyle(
+                                              FontWeight.w700, 22, cBlack),
+                                        ),
+                                        spaceHeight(5),
+                                        homeC.isLoadingCheckJadwal.value
+                                            ? Text(
+                                                "...",
+                                                style: customTextStyle(
+                                                  FontWeight.w600,
+                                                  13,
+                                                  const Color(0xFF9F9F9F),
+                                                ),
+                                              )
+                                            : homeC.isJadwal.value
+                                                ? Text(
+                                                    "Tidak ada jadwal",
+                                                    style: customTextStyle(
+                                                      FontWeight.w600,
+                                                      13,
+                                                      const Color(0xFF9F9F9F),
+                                                    ),
+                                                  )
+                                                : Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "${homeC.jamMasuk.value} WIB",
+                                                        style: customTextStyle(
+                                                          FontWeight.w600,
+                                                          13,
+                                                          const Color(
+                                                              0xFF9F9F9F),
+                                                        ),
+                                                      ),
+                                                      const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 7),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_forward_rounded,
+                                                          size: 14,
+                                                          color:
+                                                              Color(0xFF9F9F9F),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${homeC.jamPulang.value} WIB",
+                                                        style: customTextStyle(
+                                                          FontWeight.w600,
+                                                          13,
+                                                          const Color(
+                                                              0xFF9F9F9F),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                        spaceHeight(30),
+                                        InkWell(
+                                          onTap: () {
+                                            Get.toNamed(RouteNames.presensi);
+                                          },
+                                          child: Container(
+                                            width: 180,
+                                            height: 180,
+                                            decoration: BoxDecoration(
+                                              color: cPrimary,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color(0xD633CAD5),
+                                                  blurRadius: 35,
+                                                  offset: Offset(0, 10),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                  CommunityMaterialIcons
+                                                      .fingerprint,
+                                                  size: 75,
+                                                  color: cWhite,
+                                                ),
+                                                spaceHeight(5),
+                                                Text(
+                                                  "Absen Masuk",
+                                                  style: customTextStyle(
+                                                    FontWeight.w600,
+                                                    13,
+                                                    cWhite,
+                                                  ),
+                                                ),
+                                                spaceHeight(10),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        spaceHeight(35),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 60,
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: cGrey_400),
+                                                      // color:
+                                                      //     Colors.lightBlueAccent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        homeC.isLoadingStatistik
+                                                                .value
+                                                            ? "0"
+                                                            : "${homeC.statistikModel?.data.list.tepat.val}",
+                                                        style: customTextStyle(
+                                                          FontWeight.w900,
+                                                          18,
+                                                          cPrimary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  spaceHeight(5),
+                                                  Text(
+                                                    "KEHADIRAN",
+                                                    style: customTextStyle(
+                                                      FontWeight.w600,
+                                                      12,
+                                                      cGrey_900,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 60,
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: cGrey_400),
+                                                      // color:
+                                                      //     Colors.lightBlueAccent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        homeC.isLoadingStatistik
+                                                                .value
+                                                            ? "0"
+                                                            : "${homeC.statistikModel?.data.list.telat.val}",
+                                                        style: customTextStyle(
+                                                          FontWeight.w900,
+                                                          18,
+                                                          cPrimary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  spaceHeight(5),
+                                                  Text(
+                                                    "TERLAMBAT",
+                                                    style: customTextStyle(
+                                                      FontWeight.w600,
+                                                      12,
+                                                      cGrey_900,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 60,
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: cGrey_400),
+                                                      // color:
+                                                      //     Colors.lightBlueAccent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        homeC.isLoadingStatistik
+                                                                .value
+                                                            ? "0"
+                                                            : "${homeC.statistikModel?.data.list.alpa.val}",
+                                                        style: customTextStyle(
+                                                          FontWeight.w900,
+                                                          18,
+                                                          cPrimary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  spaceHeight(5),
+                                                  Text(
+                                                    "ALPHA",
+                                                    style: customTextStyle(
+                                                      FontWeight.w600,
+                                                      12,
+                                                      cGrey_900,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        spaceHeight(10)
+                                      ],
                                     ),
                                   ),
-                                  spaceHeight(5),
-                                ],
-                              ),
+                                ),
+                                Container(
+                                  height: 20,
+                                )
+                              ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              "Statistik Bulan ini",
-                              style:
-                                  customTextStyle(FontWeight.w500, 15, cBlack),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+
     // return Scaffold(
     //   backgroundColor: cGrey_100,
     //   body: Obx(

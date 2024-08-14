@@ -11,16 +11,28 @@ class HomeController extends GetxController {
   DashboardStatistikModel? statistikModel;
   var isLoadingCheckJadwal = false.obs;
   var isLoadingStatistik = false.obs;
+  var isLoadingStr = false.obs;
   var shift = "".obs;
   var jamMasuk = "".obs;
   var jamPulang = "".obs;
   var isJadwal = false.obs;
+  var isEmptyStr = true.obs;
+  var tglStr = "".obs;
 
   @override
   void onInit() {
     super.onInit();
     checkJadwal();
     getStatistik();
+    getStr();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    checkJadwal();
+    getStatistik();
+    getStr();
   }
 
   Future<void> checkJadwal() async {
@@ -43,7 +55,6 @@ class HomeController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
-      print(json);
       if (response.statusCode == 200) {
         isJadwal(false);
         shift.value = json['data']['shift'];
@@ -83,12 +94,50 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         statistikModel = DashboardStatistikModel.fromJson(json);
       } else {
-        debugPrint("Terjadi kesalahan get data jadwal");
+        debugPrint("Terjadi kesalahan get data Str");
       }
+      print(json);
     } catch (e) {
       print(e.toString());
     } finally {
       isLoadingStatistik(false);
+    }
+  }
+
+  Future<void> getStr() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      isLoadingStr(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/dashboard/str"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        if (json['data']['show'] == false) {
+          isEmptyStr(true);
+        } else {
+          isEmptyStr(false);
+          tglStr.value = json['data']['tgl_akhir'];
+        }
+      } else {
+        debugPrint("Terjadi kesalahan get data Str");
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingStr(false);
     }
   }
 }
