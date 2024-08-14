@@ -45,9 +45,15 @@ class _HomeViewState extends State<HomeView> {
         elevation: 0,
         title: Padding(
           padding: const EdgeInsets.only(left: 5),
-          child: SizedBox(
+          child: Container(
             width: 135,
-            child: Image.asset("assets/icons/logo3.png"),
+            height: 30,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/icons/logo3.png"),
+                fit: BoxFit.contain,
+              ),
+            ),
           ),
         ),
         actions: [
@@ -62,70 +68,7 @@ class _HomeViewState extends State<HomeView> {
       body: Obx(
         () => Stack(
           children: [
-            ClipPath(
-              child: Container(
-                width: Get.width,
-                height: Get.height * 0.15,
-                decoration: const BoxDecoration(
-                  color: cPrimary,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          // color: cPrimary,
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: cWhite, width: 2),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/images/profile.jpg"),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                      spaceWidth(10),
-                      Column(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: Get.width * 0.6,
-                                child: Text(
-                                  prefsC.isLoading.value
-                                      ? "..."
-                                      : shortenLastName(prefsC.nama.value),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: customTextStyle(
-                                      FontWeight.w700, 17, cWhite),
-                                ),
-                              ),
-                              Text(
-                                prefsC.isLoading.value
-                                    ? "..."
-                                    : prefsC.jabatan.value,
-                                style: customTextStyle(
-                                    FontWeight.w400, 14, cGrey_300),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            componentUser(),
             Container(
               margin: EdgeInsets.only(top: Get.height * 0.095),
               // color: Colors.amber,
@@ -440,9 +383,6 @@ class _HomeViewState extends State<HomeView> {
                                               ),
                                             ),
                                           ),
-                                homeC.isEmptyStr.value
-                                    ? Container()
-                                    : spaceHeight(20),
                                 // Container(
                                 //   width: Get.width,
                                 //   decoration: BoxDecoration(
@@ -656,281 +596,10 @@ class _HomeViewState extends State<HomeView> {
                                 //         FontWeight.w500, 15, cBlack),
                                 //   ),
                                 // ),
-                                Container(
-                                  width: Get.width,
-                                  decoration: BoxDecoration(
-                                    color: cWhite,
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: cGrey_400,
-                                        blurRadius: 3,
-                                        offset:
-                                            Offset(0, -1), // Shadow position
-                                      ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 25),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          homeC.isLoadingCheckJadwal.value
-                                              ? "..."
-                                              : homeC.isJadwal.value
-                                                  ? "LIBUR"
-                                                  : homeC.shift.value,
-                                          style: customTextStyle(
-                                              FontWeight.w700, 22, cBlack),
-                                        ),
-                                        spaceHeight(5),
-                                        homeC.isLoadingCheckJadwal.value
-                                            ? Text(
-                                                "...",
-                                                style: customTextStyle(
-                                                  FontWeight.w600,
-                                                  13,
-                                                  const Color(0xFF9F9F9F),
-                                                ),
-                                              )
-                                            : homeC.isJadwal.value
-                                                ? Text(
-                                                    "Tidak ada jadwal",
-                                                    style: customTextStyle(
-                                                      FontWeight.w600,
-                                                      13,
-                                                      const Color(0xFF9F9F9F),
-                                                    ),
-                                                  )
-                                                : Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "${homeC.jamMasuk.value} WIB",
-                                                        style: customTextStyle(
-                                                          FontWeight.w600,
-                                                          13,
-                                                          const Color(
-                                                              0xFF9F9F9F),
-                                                        ),
-                                                      ),
-                                                      const Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 7),
-                                                        child: Icon(
-                                                          Icons
-                                                              .arrow_forward_rounded,
-                                                          size: 14,
-                                                          color:
-                                                              Color(0xFF9F9F9F),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "${homeC.jamPulang.value} WIB",
-                                                        style: customTextStyle(
-                                                          FontWeight.w600,
-                                                          13,
-                                                          const Color(
-                                                              0xFF9F9F9F),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                        spaceHeight(30),
-                                        InkWell(
-                                          onTap: () {
-                                            Get.toNamed(RouteNames.presensi);
-                                          },
-                                          child: Container(
-                                            width: 180,
-                                            height: 180,
-                                            decoration: BoxDecoration(
-                                              color: cPrimary,
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color(0xD633CAD5),
-                                                  blurRadius: 35,
-                                                  offset: Offset(0, 10),
-                                                ),
-                                              ],
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Icon(
-                                                  CommunityMaterialIcons
-                                                      .fingerprint,
-                                                  size: 75,
-                                                  color: cWhite,
-                                                ),
-                                                spaceHeight(5),
-                                                Text(
-                                                  "Absen Masuk",
-                                                  style: customTextStyle(
-                                                    FontWeight.w600,
-                                                    13,
-                                                    cWhite,
-                                                  ),
-                                                ),
-                                                spaceHeight(10),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        spaceHeight(35),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 60,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 2,
-                                                          color: cGrey_400),
-                                                      // color:
-                                                      //     Colors.lightBlueAccent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        homeC.isLoadingStatistik
-                                                                .value
-                                                            ? "0"
-                                                            : "${homeC.statistikModel?.data.list.tepat.val}",
-                                                        style: customTextStyle(
-                                                          FontWeight.w900,
-                                                          18,
-                                                          cPrimary,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  spaceHeight(5),
-                                                  Text(
-                                                    "KEHADIRAN",
-                                                    style: customTextStyle(
-                                                      FontWeight.w600,
-                                                      12,
-                                                      cGrey_900,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 60,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 2,
-                                                          color: cGrey_400),
-                                                      // color:
-                                                      //     Colors.lightBlueAccent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        homeC.isLoadingStatistik
-                                                                .value
-                                                            ? "0"
-                                                            : "${homeC.statistikModel?.data.list.telat.val}",
-                                                        style: customTextStyle(
-                                                          FontWeight.w900,
-                                                          18,
-                                                          cPrimary,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  spaceHeight(5),
-                                                  Text(
-                                                    "TERLAMBAT",
-                                                    style: customTextStyle(
-                                                      FontWeight.w600,
-                                                      12,
-                                                      cGrey_900,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 60,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 2,
-                                                          color: cGrey_400),
-                                                      // color:
-                                                      //     Colors.lightBlueAccent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        homeC.isLoadingStatistik
-                                                                .value
-                                                            ? "0"
-                                                            : "${homeC.statistikModel?.data.list.alpa.val}",
-                                                        style: customTextStyle(
-                                                          FontWeight.w900,
-                                                          18,
-                                                          cPrimary,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  spaceHeight(5),
-                                                  Text(
-                                                    "ALPHA",
-                                                    style: customTextStyle(
-                                                      FontWeight.w600,
-                                                      12,
-                                                      cGrey_900,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        spaceHeight(10)
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                homeC.isEmptyStr.value
+                                    ? Container()
+                                    : spaceHeight(20),
+                                componentCardPresensi(),
                                 Container(
                                   height: 20,
                                 )
@@ -1129,6 +798,313 @@ class _HomeViewState extends State<HomeView> {
     //     ),
     //   ),
     // );
+  }
+
+  Container componentCardPresensi() {
+    return Container(
+      width: Get.width,
+      decoration: BoxDecoration(
+        color: cWhite,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(
+            color: cGrey_400,
+            blurRadius: 3,
+            offset: Offset(0, -1), // Shadow position
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              homeC.isLoadingCheckJadwal.value
+                  ? "..."
+                  : homeC.isJadwal.value
+                      ? "LIBUR"
+                      : homeC.shift.value,
+              style: customTextStyle(FontWeight.w700, 22, cBlack),
+            ),
+            spaceHeight(5),
+            homeC.isLoadingCheckJadwal.value
+                ? Text(
+                    "...",
+                    style: customTextStyle(
+                      FontWeight.w600,
+                      13,
+                      const Color(0xFF9F9F9F),
+                    ),
+                  )
+                : homeC.isJadwal.value
+                    ? Text(
+                        "Tidak ada jadwal",
+                        style: customTextStyle(
+                          FontWeight.w600,
+                          13,
+                          const Color(0xFF9F9F9F),
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${homeC.jamMasuk.value} WIB",
+                            style: customTextStyle(
+                              FontWeight.w600,
+                              13,
+                              const Color(0xFF9F9F9F),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 7),
+                            child: Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 14,
+                              color: Color(0xFF9F9F9F),
+                            ),
+                          ),
+                          Text(
+                            "${homeC.jamPulang.value} WIB",
+                            style: customTextStyle(
+                              FontWeight.w600,
+                              13,
+                              const Color(0xFF9F9F9F),
+                            ),
+                          ),
+                        ],
+                      ),
+            spaceHeight(30),
+            InkWell(
+              onTap: () {
+                Get.toNamed(RouteNames.presensi);
+              },
+              child: Container(
+                width: 180,
+                height: 180,
+                decoration: BoxDecoration(
+                  color: cPrimary,
+                  borderRadius: BorderRadius.circular(100),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xD633CAD5),
+                      blurRadius: 35,
+                      offset: Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      CommunityMaterialIcons.fingerprint,
+                      size: 75,
+                      color: cWhite,
+                    ),
+                    spaceHeight(5),
+                    Text(
+                      "Absen Masuk",
+                      style: customTextStyle(
+                        FontWeight.w600,
+                        13,
+                        cWhite,
+                      ),
+                    ),
+                    spaceHeight(10),
+                  ],
+                ),
+              ),
+            ),
+            spaceHeight(35),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: cGrey_400),
+                          // color:
+                          //     Colors.lightBlueAccent,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          child: Text(
+                            homeC.isLoadingStatistik.value
+                                ? "0"
+                                : "${homeC.statistikModel?.data.list.tepat.val}",
+                            style: customTextStyle(
+                              FontWeight.w900,
+                              18,
+                              cPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      spaceHeight(5),
+                      Text(
+                        "KEHADIRAN",
+                        style: customTextStyle(
+                          FontWeight.w600,
+                          12,
+                          cGrey_900,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: cGrey_400),
+                          // color:
+                          //     Colors.lightBlueAccent,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          child: Text(
+                            homeC.isLoadingStatistik.value
+                                ? "0"
+                                : "${homeC.statistikModel?.data.list.telat.val}",
+                            style: customTextStyle(
+                              FontWeight.w900,
+                              18,
+                              cPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      spaceHeight(5),
+                      Text(
+                        "TERLAMBAT",
+                        style: customTextStyle(
+                          FontWeight.w600,
+                          12,
+                          cGrey_900,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: cGrey_400),
+                          // color:
+                          //     Colors.lightBlueAccent,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          child: Text(
+                            homeC.isLoadingStatistik.value
+                                ? "0"
+                                : "${homeC.statistikModel?.data.list.alpa.val}",
+                            style: customTextStyle(
+                              FontWeight.w900,
+                              18,
+                              cPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      spaceHeight(5),
+                      Text(
+                        "ALPHA",
+                        style: customTextStyle(
+                          FontWeight.w600,
+                          12,
+                          cGrey_900,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            spaceHeight(10)
+          ],
+        ),
+      ),
+    );
+  }
+
+  ClipPath componentUser() {
+    return ClipPath(
+      child: Container(
+        width: Get.width,
+        height: Get.height * 0.15,
+        decoration: const BoxDecoration(
+          color: cPrimary,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  // color: cPrimary,
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: cWhite, width: 2),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/images/profile.jpg"),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              spaceWidth(10),
+              Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: Get.width * 0.6,
+                        child: Text(
+                          prefsC.isLoading.value
+                              ? "..."
+                              : shortenLastName(prefsC.nama.value),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: customTextStyle(FontWeight.w700, 17, cWhite),
+                        ),
+                      ),
+                      Text(
+                        prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
+                        style: customTextStyle(FontWeight.w400, 14, cGrey_300),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   GridView cardMenu() {
