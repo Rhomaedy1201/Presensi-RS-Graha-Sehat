@@ -33,13 +33,9 @@ class _NavigationBarViewState extends State<NavigationBarView> {
   static List<Widget> widgetOptions = <Widget>[
     const HomeView(),
     const JadwalView(),
-    const Text("pengajuan"),
+    // const Text("pengajuan"),
     const HistoriPresensiView(),
-    Text(
-      "Approval masih dalam proses\npengembangan.",
-      textAlign: TextAlign.center,
-      style: customTextStyle(FontWeight.w400, 17, cBlack),
-    ),
+    const ProfileView(),
   ];
 
   Future<bool> onPop() async {
@@ -67,13 +63,13 @@ class _NavigationBarViewState extends State<NavigationBarView> {
     setState(() {
       selectedIndex = index;
     });
-    if (selectedIndex == 2) {
-      showPopupMenu(context);
-      selectedIndex = previewSelectedIndex;
-    } else {
-      previewSelectedIndex = index;
-    }
-    setState(() {});
+    // if (selectedIndex == 2) {
+    //   showPopupMenu(context);
+    //   selectedIndex = previewSelectedIndex;
+    // } else {
+    //   previewSelectedIndex = index;
+    // }
+    // setState(() {});
   }
 
   @override
@@ -84,9 +80,9 @@ class _NavigationBarViewState extends State<NavigationBarView> {
           body: Center(
             child: widgetOptions.elementAt(selectedIndex),
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: floatingActionBottom(context),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerDocked,
+          // floatingActionButton: floatingActionBottom(context),
           bottomNavigationBar: buttomNavigation(),
         ),
       );
@@ -102,18 +98,18 @@ class _NavigationBarViewState extends State<NavigationBarView> {
           icon: Icon(CommunityMaterialIcons.calendar_account_outline),
           label: 'Jadwal',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.add_circle,
-              size: 40, color: Colors.transparent), // Icon Pengajuan
-          label: '',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.add_circle,
+        //       size: 40, color: Colors.transparent), // Icon Pengajuan
+        //   label: '',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),
           label: 'Histori',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.approval),
-          label: 'Approval',
+          icon: Icon(Icons.person_2_outlined),
+          label: 'Profile',
         ),
       ],
       currentIndex: selectedIndex,

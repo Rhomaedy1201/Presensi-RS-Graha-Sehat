@@ -215,6 +215,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             width: Get.width,
@@ -427,6 +428,14 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              "Statistik Bulan ini",
+                              style:
+                                  customTextStyle(FontWeight.w500, 15, cBlack),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -435,7 +444,6 @@ class _HomeViewState extends State<HomeView> {
               ],
             ),
           ),
-          spaceHeight(20)
         ],
       ),
     );
