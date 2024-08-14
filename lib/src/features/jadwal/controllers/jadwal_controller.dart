@@ -43,7 +43,7 @@ class JadwalController extends GetxController {
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         jadwalM = JadwalModel.fromJson(json);
-        if (jadwalM!.data.length == 0) {
+        if (jadwalM!.data.isEmpty) {
           isEmptyData.value = true;
         } else {
           isEmptyData.value = false;
@@ -51,7 +51,6 @@ class JadwalController extends GetxController {
       } else {
         debugPrint("Terjadi kesalahan get data");
       }
-      print(json);
       print(json);
     } catch (e) {
       print(e.toString());

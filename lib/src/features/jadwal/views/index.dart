@@ -70,18 +70,18 @@ class _JadwalViewState extends State<JadwalView> {
                         )
                       : Expanded(
                           child: ListView.builder(
-                            itemCount: jadwalC.jadwalM!.data.length,
+                            itemCount: jadwalC.jadwalM?.data.length ?? 0,
                             shrinkWrap: true,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              var data = jadwalC.jadwalM!.data;
+                              var data = jadwalC.jadwalM?.data;
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 7),
                                 child: cardJadwal(
-                                  data[index].tanggal,
-                                  data[index].jamMasuk ?? 'null',
-                                  data[index].jamPulang ?? 'null',
-                                  data[index].shift ?? 'null',
+                                  data?[index].tanggal,
+                                  data?[index].jamMasuk ?? 'null',
+                                  data?[index].jamPulang ?? 'null',
+                                  data?[index].shift ?? 'null',
                                 ),
                               );
                             },

@@ -36,8 +36,8 @@ class JadwalModel {
 class Datum {
   int id;
   String tanggal;
-  String nip;
-  String nama;
+  String? nip;
+  String? nama;
   String? kodeShift;
   String? shift;
   int? mulaiAbsen;
@@ -46,10 +46,15 @@ class Datum {
   String? jamPulang;
   int? telatPulang;
   String? updateBy;
-  String? createdAt;
-  String? updatedAt;
   String? createdBy;
   String? status;
+  int? libur;
+  String? validateBy;
+  String? validateAt;
+  String? tanggalCast;
+  Presensi? presensi;
+  List<dynamic>? tukarJadwal;
+  List<dynamic>? izin;
 
   Datum({
     required this.id,
@@ -64,10 +69,15 @@ class Datum {
     required this.jamPulang,
     required this.telatPulang,
     required this.updateBy,
-    required this.createdAt,
-    required this.updatedAt,
     required this.createdBy,
     required this.status,
+    required this.libur,
+    required this.validateBy,
+    required this.validateAt,
+    required this.tanggalCast,
+    required this.presensi,
+    required this.tukarJadwal,
+    required this.izin,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -83,10 +93,17 @@ class Datum {
         jamPulang: json["jam_pulang"],
         telatPulang: json["telat_pulang"],
         updateBy: json["update_by"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
         createdBy: json["created_by"],
         status: json["status"],
+        libur: json["libur"],
+        validateBy: json["validate_by"],
+        validateAt: json["validate_at"],
+        tanggalCast: json["tanggal_cast"],
+        presensi: json["presensi"] == null
+            ? null
+            : Presensi.fromJson(json["presensi"]),
+        tukarJadwal: List<dynamic>.from(json["tukar_jadwal"].map((x) => x)),
+        izin: List<dynamic>.from(json["izin"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,9 +119,50 @@ class Datum {
         "jam_pulang": jamPulang,
         "telat_pulang": telatPulang,
         "update_by": updateBy,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
         "created_by": createdBy,
         "status": status,
+        "libur": libur,
+        "validate_by": validateBy,
+        "validate_at": validateAt,
+        "tanggal_cast": tanggalCast,
+        "presensi": presensi?.toJson(),
+        "tukar_jadwal": List<dynamic>.from(tukarJadwal!.map((x) => x)),
+        "izin": List<dynamic>.from(izin!.map((x) => x)),
+      };
+}
+
+class Presensi {
+  int idJadwal;
+  String? status;
+  String? masuk;
+  String? pulang;
+  String? tanggalCast;
+  String? tglPulangCast;
+
+  Presensi({
+    required this.idJadwal,
+    required this.status,
+    required this.masuk,
+    required this.pulang,
+    required this.tanggalCast,
+    required this.tglPulangCast,
+  });
+
+  factory Presensi.fromJson(Map<String, dynamic> json) => Presensi(
+        idJadwal: json["id_jadwal"],
+        status: json["status"],
+        masuk: json["masuk"],
+        pulang: json["pulang"],
+        tanggalCast: json["tanggal_cast"],
+        tglPulangCast: json["tgl_pulang_cast"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id_jadwal": idJadwal,
+        "status": status,
+        "masuk": masuk,
+        "pulang": pulang,
+        "tanggal_cast": tanggalCast,
+        "tgl_pulang_cast": tglPulangCast,
       };
 }
