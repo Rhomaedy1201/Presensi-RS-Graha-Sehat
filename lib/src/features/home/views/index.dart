@@ -1,7 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
@@ -68,7 +67,11 @@ class _HomeViewState extends State<HomeView> {
       body: Obx(
         () => Stack(
           children: [
-            componentUser(),
+            componentUser(
+              homeC.profileM?.data.nama,
+              homeC.profileM?.data.namaJabatan,
+              homeC.profileM?.data.profilUrl,
+            ),
             Container(
               margin: EdgeInsets.only(top: Get.height * 0.095),
               // color: Colors.amber,
@@ -1045,7 +1048,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  ClipPath componentUser() {
+  ClipPath componentUser(name, jabatan, image) {
     return ClipPath(
       child: Container(
         width: Get.width,
@@ -1066,12 +1069,12 @@ class _HomeViewState extends State<HomeView> {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  // color: cPrimary,
+                  color: cGrey_200,
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: cWhite, width: 2),
-                  image: const DecorationImage(
-                    image: AssetImage("assets/images/profile.jpg"),
-                    fit: BoxFit.contain,
+                  image: DecorationImage(
+                    image: NetworkImage(image),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -1084,16 +1087,14 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(
                         width: Get.width * 0.6,
                         child: Text(
-                          prefsC.isLoading.value
-                              ? "..."
-                              : shortenLastName(prefsC.nama.value),
+                          homeC.isLoadingUser.value ? "..." : name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: customTextStyle(FontWeight.w700, 17, cWhite),
                         ),
                       ),
                       Text(
-                        prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
+                        homeC.isLoadingUser.value ? "..." : jabatan,
                         style: customTextStyle(FontWeight.w400, 14, cGrey_300),
                       ),
                     ],

@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/profile/controllers/profile_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
@@ -19,6 +20,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   ProfileController profileC = Get.put(ProfileController());
   PrefsController prefsC = Get.put(PrefsController());
+  HomeController homeC = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +41,10 @@ class _ProfileViewState extends State<ProfileView> {
                           color: cGrey_400,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(color: cPrimary, width: 4),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/profile.jpg'),
-                            fit: BoxFit.fill,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                homeC.profileM?.data.profilUrl ?? ""),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
