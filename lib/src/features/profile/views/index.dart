@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/profile/controllers/profile_controller.dart';
+import 'package:presensi_gs/src/features/profile/views/change_password.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_alert.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
@@ -78,7 +79,7 @@ class _ProfileViewState extends State<ProfileView> {
   GestureDetector changePasswordMenu() {
     return GestureDetector(
       onTap: () {
-        debugPrint("change password");
+        Get.to(const ChangePassword());
       },
       child: Container(
         width: Get.width,
