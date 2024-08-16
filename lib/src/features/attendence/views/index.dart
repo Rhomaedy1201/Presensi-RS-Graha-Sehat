@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -476,11 +476,11 @@ class _PresensiViewState extends State<PresensiView> {
                                                       ),
                                                     ),
                                                     onPressed: (presensiC
-                                                                    .isActiveBtnPulang
+                                                                    .isJadwal
                                                                     .value ==
-                                                                false &&
+                                                                true &&
                                                             presensiC
-                                                                    .checkJadwalMasukBtn
+                                                                    .isPresensiMasuk
                                                                     .value ==
                                                                 true)
                                                         ? () {
@@ -571,11 +571,19 @@ class _PresensiViewState extends State<PresensiView> {
                                                         ), // Mengatur border radius menjadi 0
                                                       ),
                                                     ),
-                                                    onPressed: !presensiC
-                                                            .isActiveBtnPulang
-                                                            .value
-                                                        ? null
-                                                        : () {
+                                                    onPressed: (presensiC
+                                                                    .isJadwal
+                                                                    .value ==
+                                                                true &&
+                                                            presensiC
+                                                                    .isPresensiMasuk
+                                                                    .value ==
+                                                                true &&
+                                                            presensiC
+                                                                    .isPresensiPulang
+                                                                    .value ==
+                                                                true)
+                                                        ? () {
                                                             if (const Distance()
                                                                     .distance(
                                                                         latLng,
@@ -613,7 +621,8 @@ class _PresensiViewState extends State<PresensiView> {
                                                               snackbarfailed(
                                                                   "Anda Diluar area kantor");
                                                             }
-                                                          },
+                                                          }
+                                                        : null,
                                                     label: Text(
                                                       presensiC
                                                               .isLoadingPresensiPulang

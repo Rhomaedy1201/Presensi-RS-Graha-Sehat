@@ -21,9 +21,9 @@ class PresensiController extends GetxController {
   var latitude = "".obs;
   var longitude = "".obs;
   var radius = "".obs;
-  var isActiveBtnMasuk = false.obs;
-  var isActiveBtnPulang = false.obs;
-  var checkJadwalMasukBtn = false.obs;
+  var isJadwal = false.obs;
+  var isPresensiMasuk = false.obs;
+  var isPresensiPulang = false.obs;
 
   @override
   void onInit() {
@@ -95,12 +95,9 @@ class PresensiController extends GetxController {
         headers: headers,
       );
       if (response.statusCode == 200) {
-        checkJadwalMasukBtn.value = true;
-        // isActiveBtnMasuk.value = true;
-        // isActiveBtnPulang.value = false;
+        isJadwal.value = true;
       } else {
-        checkJadwalMasukBtn.value = false;
-        // isActiveBtnMasuk.value = false;
+        isJadwal.value = false;
       }
     } catch (e) {
       print(e.toString());
@@ -127,12 +124,10 @@ class PresensiController extends GetxController {
         headers: headers,
       );
 
-      // final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        isActiveBtnPulang.value = true;
-        isActiveBtnMasuk.value = false;
+        isPresensiMasuk.value = true;
       } else {
-        isActiveBtnPulang.value = false;
+        isPresensiMasuk.value = false;
       }
     } catch (e) {
       print(e.toString());
@@ -161,8 +156,9 @@ class PresensiController extends GetxController {
 
       final json = jsonDecode(response.body);
       if (json['data'] != "null" || json['data'] != null) {
-        isActiveBtnPulang.value = false;
-        isActiveBtnMasuk.value = false;
+        isPresensiPulang.value = false;
+      } else {
+        isPresensiPulang.value = true;
       }
     } catch (e) {
     } finally {
