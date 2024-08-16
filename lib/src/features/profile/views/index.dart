@@ -35,18 +35,44 @@ class _ProfileViewState extends State<ProfileView> {
                   child: Column(
                     children: [
                       spaceHeight(50),
-                      Container(
-                        width: 90,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          color: cGrey_400,
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(color: cPrimary, width: 4),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                homeC.profileM?.data.profilUrl ?? ""),
-                            fit: BoxFit.cover,
-                          ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(25),
+                        splashColor: cPrimary,
+                        onTap: () {},
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 90,
+                              height: 90,
+                              decoration: BoxDecoration(
+                                color: cGrey_400,
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(color: cPrimary, width: 4),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      homeC.profileM?.data.profilUrl ?? ""),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 1,
+                              bottom: 1,
+                              child: Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  color: cPrimary,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: const Icon(
+                                  Icons.edit_square,
+                                  size: 16,
+                                  color: cWhite,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       spaceHeight(10),
