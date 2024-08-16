@@ -39,7 +39,7 @@ class Data {
   String nip;
   String nama;
   String? tempatLahir;
-  DateTime tglLahir;
+  String? tglLahir;
   String? statusNikah;
   String? prov;
   String? kab;
@@ -112,7 +112,7 @@ class Data {
         nip: json["nip"],
         nama: json["nama"],
         tempatLahir: json["tempat_lahir"],
-        tglLahir: DateTime.parse(json["tgl_lahir"]),
+        tglLahir: json["tgl_lahir"],
         statusNikah: json["status_nikah"],
         prov: json["prov"],
         kab: json["kab"],
@@ -151,8 +151,7 @@ class Data {
         "nip": nip,
         "nama": nama,
         "tempat_lahir": tempatLahir,
-        "tgl_lahir":
-            "${tglLahir.year.toString().padLeft(4, '0')}-${tglLahir.month.toString().padLeft(2, '0')}-${tglLahir.day.toString().padLeft(2, '0')}",
+        "tgl_lahir": tglLahir,
         "status_nikah": statusNikah,
         "prov": prov,
         "kab": kab,

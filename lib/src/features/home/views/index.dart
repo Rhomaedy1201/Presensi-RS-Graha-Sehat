@@ -7,7 +7,7 @@ import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart'
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_dialog.dart';
 import 'package:presensi_gs/utils/components/my_menu_home.dart';
-import 'package:presensi_gs/utils/components/my_shoten_last_name.dart';
+import 'package:presensi_gs/utils/components/my_shimmer.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
@@ -27,11 +27,6 @@ class _HomeViewState extends State<HomeView> {
     {'nama': 'Alpha', 'value': 2},
     {'nama': 'Izin', 'value': 0},
   ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +63,9 @@ class _HomeViewState extends State<HomeView> {
         () => Stack(
           children: [
             componentUser(
-              homeC.profileM?.data.nama,
-              homeC.profileM?.data.namaJabatan,
-              homeC.profileM?.data.profilUrl,
+              homeC.profileM?.data.nama ?? "null",
+              homeC.profileM?.data.namaJabatan ?? "null",
+              homeC.profileM?.data.profilUrl ?? "null",
             ),
             Container(
               margin: EdgeInsets.only(top: Get.height * 0.095),
@@ -822,24 +817,15 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              homeC.isLoadingCheckJadwal.value
-                  ? "..."
-                  : homeC.isJadwal.value
-                      ? "LIBUR"
-                      : homeC.shift.value,
-              style: customTextStyle(FontWeight.w700, 22, cBlack),
-            ),
+            homeC.isLoadingCheckJadwal.value
+                ? myShimmer(Get.width * 0.4, 25)
+                : Text(
+                    homeC.isJadwal.value ? "LIBUR" : homeC.shift.value,
+                    style: customTextStyle(FontWeight.w700, 22, cBlack),
+                  ),
             spaceHeight(5),
             homeC.isLoadingCheckJadwal.value
-                ? Text(
-                    "...",
-                    style: customTextStyle(
-                      FontWeight.w600,
-                      13,
-                      const Color(0xFF9F9F9F),
-                    ),
-                  )
+                ? myShimmer(Get.width * 0.6, 15)
                 : homeC.isJadwal.value
                     ? Text(
                         "Tidak ada jadwal",
@@ -1062,45 +1048,62 @@ class _HomeViewState extends State<HomeView> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: cGrey_200,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: cWhite, width: 2),
-                  image: DecorationImage(
-                    image: NetworkImage(image),
-                    fit: BoxFit.cover,
-                  ),
+              SizedBox(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: cGrey_200,
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: cWhite, width: 2),
+                        image: image == "null"
+                            ? null
+                            : DecorationImage(
+                                image: NetworkImage(image),
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                    spaceWidth(10),
+                    Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            homeC.isLoadingUser.value
+                                ? myShimmer(Get.width * 0.6, 20)
+                                : SizedBox(
+                                    width: Get.width * 0.6,
+                                    child: Text(
+                                      name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: customTextStyle(
+                                          FontWeight.w700, 17, cWhite),
+                                    ),
+                                  ),
+                            homeC.isLoadingUser.value
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: myShimmer(Get.width * 0.3, 12),
+                                  )
+                                : Text(
+                                    jabatan,
+                                    style: customTextStyle(
+                                        FontWeight.w400, 14, cGrey_300),
+                                  ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              spaceWidth(10),
-              Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: Get.width * 0.6,
-                        child: Text(
-                          homeC.isLoadingUser.value ? "..." : name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: customTextStyle(FontWeight.w700, 17, cWhite),
-                        ),
-                      ),
-                      Text(
-                        homeC.isLoadingUser.value ? "..." : jabatan,
-                        style: customTextStyle(FontWeight.w400, 14, cGrey_300),
-                      ),
-                    ],
-                  ),
-                ],
-              )
             ],
           ),
         ),

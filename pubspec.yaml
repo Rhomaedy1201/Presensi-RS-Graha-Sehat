@@ -26,6 +26,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   file_picker: ^8.0.0+1
   percent_indicator: ^4.2.3
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
