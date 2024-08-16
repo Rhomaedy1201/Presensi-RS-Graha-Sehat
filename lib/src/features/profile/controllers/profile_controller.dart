@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class ProfileController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   var isLoading = false.obs;
   var isLoadingPass = false.obs;
+  var isLoadingImage = false.obs;
 
   @override
   void onInit() {
@@ -85,6 +87,48 @@ class ProfileController extends GetxController {
       print(e.toString());
     } finally {
       isLoadingPass(false);
+    }
+  }
+
+  Future<void> changeProfile(
+    File? file,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingImage(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      var uri = Uri.parse("$base_url/profil-change");
+      var request = http.MultipartRequest('POST', uri);
+      request.headers.addAll(headers);
+
+      if (file != null) {
+        request.files.add(await http.MultipartFile.fromPath('file', file.path));
+      }
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        getUser();
+        snackbarSuccess("Berhasil Merubah profile");
+      } else {
+        var responseData = await response.stream.toBytes();
+        var responseString = String.fromCharCodes(responseData);
+        isLoadingImage(false);
+        debugPrint(responseString);
+        snackbarfailed("Terjadi Kesalahan.");
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingImage(false);
     }
   }
 

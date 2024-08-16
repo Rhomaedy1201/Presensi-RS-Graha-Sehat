@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
@@ -22,6 +25,20 @@ class _ProfileViewState extends State<ProfileView> {
   ProfileController profileC = Get.put(ProfileController());
   PrefsController prefsC = Get.put(PrefsController());
   HomeController homeC = Get.find<HomeController>();
+  File? selectedFile;
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      selectedFile = File(filePath);
+      print('File selected: ${result.files.single.name}');
+    } else {
+      print('File selection canceled.');
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +55,7 @@ class _ProfileViewState extends State<ProfileView> {
                       InkWell(
                         borderRadius: BorderRadius.circular(25),
                         splashColor: cPrimary,
-                        onTap: () {},
+                        onTap: _pickFile,
                         child: Stack(
                           children: [
                             Container(
@@ -49,17 +66,27 @@ class _ProfileViewState extends State<ProfileView> {
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(color: cPrimary, width: 4),
                                 image: homeC.profileM?.data.profilUrl == null
-                                    ? const DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/profile.jpg"),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : DecorationImage(
-                                        image: NetworkImage(
-                                            homeC.profileM?.data.profilUrl ??
+                                    ? selectedFile == null
+                                        ? const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/profile.jpg"),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : DecorationImage(
+                                            image: FileImage(selectedFile!),
+                                            fit: BoxFit.cover,
+                                          )
+                                    : selectedFile == null
+                                        ? DecorationImage(
+                                            image: NetworkImage(homeC
+                                                    .profileM?.data.profilUrl ??
                                                 ""),
-                                        fit: BoxFit.cover,
-                                      ),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : DecorationImage(
+                                            image: FileImage(selectedFile!),
+                                            fit: BoxFit.cover,
+                                          ),
                               ),
                             ),
                             Positioned(
@@ -91,64 +118,72 @@ class _ProfileViewState extends State<ProfileView> {
                         prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
                         style: customTextStyle(FontWeight.w500, 12, cBlack),
                       ),
-                      spaceHeight(15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            height: 35,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: cGrey_200,
-                                shadowColor: cPrimary_400,
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                      color: cPrimary, width: 1.5),
-                                  borderRadius: BorderRadius.circular(
-                                    6,
+                      selectedFile == null ? Container() : spaceHeight(15),
+                      selectedFile == null
+                          ? Container()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 120,
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      backgroundColor: cGrey_200,
+                                      shadowColor: cPrimary_400,
+                                      shape: RoundedRectangleBorder(
+                                        side: const BorderSide(
+                                            color: cPrimary, width: 1.5),
+                                        borderRadius: BorderRadius.circular(
+                                          6,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedFile = null;
+                                      });
+                                    },
+                                    child: const Text(
+                                      "Batal",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: cPrimary,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              onPressed: () {},
-                              child: const Text(
-                                "Batal",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: cPrimary,
+                                spaceWidth(10),
+                                SizedBox(
+                                  width: 120,
+                                  height: 35,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: cPrimary,
+                                      shadowColor: cPrimary_400,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          6,
+                                        ), // Mengatur border radius menjadi 0
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      profileC.changeProfile(selectedFile);
+                                    },
+                                    child: const Text(
+                                      "Simpan",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: cWhite,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ),
-                          spaceWidth(10),
-                          SizedBox(
-                            width: 120,
-                            height: 35,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: cPrimary,
-                                shadowColor: cPrimary_400,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    6,
-                                  ), // Mengatur border radius menjadi 0
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: const Text(
-                                "Simpan",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: cWhite,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       spaceHeight(40),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
