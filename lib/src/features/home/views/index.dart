@@ -29,6 +29,12 @@ class _HomeViewState extends State<HomeView> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    homeC.getProfile();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double heightStatusBar = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
@@ -1062,7 +1068,10 @@ class _HomeViewState extends State<HomeView> {
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(color: cWhite, width: 2),
                         image: image == "null"
-                            ? null
+                            ? const DecorationImage(
+                                image: AssetImage("assets/images/profile.jpg"),
+                                fit: BoxFit.cover,
+                              )
                             : DecorationImage(
                                 image: NetworkImage(image),
                                 fit: BoxFit.cover,

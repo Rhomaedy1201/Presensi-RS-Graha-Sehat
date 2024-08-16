@@ -11,7 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
   UserModel? userM;
+  TextEditingController passwordController = TextEditingController();
   var isLoading = false.obs;
+  var isLoadingPass = false.obs;
 
   @override
   void onInit() {
@@ -47,6 +49,42 @@ class ProfileController extends GetxController {
       print(e.toString());
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> changePassword() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    Map body = {
+      "password": passwordController.text,
+    };
+    try {
+      isLoadingPass(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.put(
+        Uri.parse("$base_url/change-password"),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+
+      // final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        Get.back();
+        snackbarSuccess("Berhasil ubah password");
+      } else {
+        debugPrint(response.body.toString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingPass(false);
     }
   }
 

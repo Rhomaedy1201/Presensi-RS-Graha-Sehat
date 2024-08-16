@@ -57,7 +57,7 @@ class LoginController extends GetxController {
           await prefs?.setString(
               'level', loginM!.data.user.jabatans[0].mJabatan.level ?? "null");
 
-          Get.toNamed(RouteNames.home);
+          Get.offAllNamed(RouteNames.navigationBar);
           snackbarSuccess("Login Berhasil 👋🏻");
 
           nipController.clear();

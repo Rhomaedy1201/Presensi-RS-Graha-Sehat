@@ -26,7 +26,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cGrey_200,
-      appBar: myAppBar("Profile"),
+      // appBar: myAppBar("Profile"),
       body: Obx(
         () => profileC.isLoading.value
             ? const Center(child: CircularProgressIndicator())
@@ -34,7 +34,7 @@ class _ProfileViewState extends State<ProfileView> {
                 child: Center(
                   child: Column(
                     children: [
-                      spaceHeight(50),
+                      spaceHeight(110),
                       InkWell(
                         borderRadius: BorderRadius.circular(25),
                         splashColor: cPrimary,
@@ -48,11 +48,18 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: cGrey_400,
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(color: cPrimary, width: 4),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      homeC.profileM?.data.profilUrl ?? ""),
-                                  fit: BoxFit.cover,
-                                ),
+                                image: homeC.profileM?.data.profilUrl == null
+                                    ? const DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/profile.jpg"),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : DecorationImage(
+                                        image: NetworkImage(
+                                            homeC.profileM?.data.profilUrl ??
+                                                ""),
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                             ),
                             Positioned(
@@ -83,6 +90,64 @@ class _ProfileViewState extends State<ProfileView> {
                       Text(
                         prefsC.isLoading.value ? "..." : prefsC.jabatan.value,
                         style: customTextStyle(FontWeight.w500, 12, cBlack),
+                      ),
+                      spaceHeight(15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            height: 35,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: cGrey_200,
+                                shadowColor: cPrimary_400,
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: cPrimary, width: 1.5),
+                                  borderRadius: BorderRadius.circular(
+                                    6,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: const Text(
+                                "Batal",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: cPrimary,
+                                ),
+                              ),
+                            ),
+                          ),
+                          spaceWidth(10),
+                          SizedBox(
+                            width: 120,
+                            height: 35,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: cPrimary,
+                                shadowColor: cPrimary_400,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    6,
+                                  ), // Mengatur border radius menjadi 0
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: const Text(
+                                "Simpan",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: cWhite,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       spaceHeight(40),
                       Padding(

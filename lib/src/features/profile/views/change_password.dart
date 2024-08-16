@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/profile/controllers/profile_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -15,6 +16,7 @@ class ChangePassword extends StatefulWidget {
 
 class _ChangePasswordState extends State<ChangePassword> {
   bool _obscureText = true;
+  ProfileController profileC = Get.find<ProfileController>();
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -62,7 +64,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       autocorrect: false,
                       maxLines: 1,
                       obscureText: _obscureText,
-                      controller: null,
+                      controller: profileC.passwordController,
                       enableSuggestions: false,
                       decoration: InputDecoration(
                         hintText: "Masukkan password",
@@ -105,11 +107,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                 ),
                 onPressed: () {
-                  // loginC.login();
+                  profileC.changePassword();
                 },
                 child: Text(
-                  // loginC.isLoading.value ? "Loading..." : "Login",
-                  "Ubah Password",
+                  profileC.isLoadingPass.value ? "Loading..." : "Ubah Password",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
