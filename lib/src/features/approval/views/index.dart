@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/approval/views/pengajuan.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -62,9 +61,7 @@ class _ApprovalViewState extends State<ApprovalView>
                     ),
                   ),
                   child: TabBar(
-                    onTap: (value) {
-                      print("object");
-                    },
+                    onTap: (value) {},
                     dividerColor: cWhite,
                     unselectedLabelColor: Colors.black,
                     labelColor: cWhite,

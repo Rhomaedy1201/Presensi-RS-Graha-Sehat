@@ -21,17 +21,17 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   HomeController homeC = Get.find<HomeController>();
   PrefsController prefsC = Get.find<PrefsController>();
-  List statistikPresensi = [
-    {'nama': 'Hadir', 'value': 10},
-    {'nama': 'Telat', 'value': 4},
-    {'nama': 'Alpha', 'value': 2},
-    {'nama': 'Izin', 'value': 0},
-  ];
 
   @override
   void initState() {
     super.initState();
     homeC.getProfile();
+  }
+
+  @override
+  void dispose() {
+    homeC.getProfile();
+    super.dispose();
   }
 
   @override
@@ -897,9 +897,9 @@ class _HomeViewState extends State<HomeView> {
                       size: 75,
                       color: cWhite,
                     ),
-                    spaceHeight(5),
+                    spaceHeight(8),
                     Text(
-                      "Absen Masuk",
+                      "PRESENSI",
                       style: customTextStyle(
                         FontWeight.w600,
                         13,

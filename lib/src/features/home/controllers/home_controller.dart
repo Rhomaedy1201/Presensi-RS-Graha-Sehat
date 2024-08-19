@@ -32,13 +32,14 @@ class HomeController extends GetxController {
     getProfile();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    checkJadwal();
-    getStatistik();
-    getStr();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   checkJadwal();
+  //   getStatistik();
+  //   getStr();
+  //   getProfile();
+  // }
 
   Future<void> checkJadwal() async {
     final prefs = await SharedPreferences.getInstance();
