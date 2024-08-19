@@ -40,6 +40,7 @@ class _PresensiViewState extends State<PresensiView> {
   PermissionStatus _permissionGranted = PermissionStatus.denied;
   LocationData? _locationData;
   var isLoading = false;
+
   PermissionStatus? _permissionStatus;
 
   @override
@@ -482,7 +483,7 @@ class _PresensiViewState extends State<PresensiView> {
                                                             presensiC
                                                                     .isPresensiMasuk
                                                                     .value ==
-                                                                true)
+                                                                false)
                                                         ? () {
                                                             if (const Distance()
                                                                     .distance(
@@ -582,7 +583,7 @@ class _PresensiViewState extends State<PresensiView> {
                                                             presensiC
                                                                     .isPresensiPulang
                                                                     .value ==
-                                                                true)
+                                                                false)
                                                         ? () {
                                                             if (const Distance()
                                                                     .distance(
@@ -649,6 +650,11 @@ class _PresensiViewState extends State<PresensiView> {
                                     ),
                                   ),
                                 ),
+                                // InkWell(
+                                //     onTap: () {
+                                //       print(_isMockLocation);
+                                //     },
+                                //     child: Text("TESSS")),
                               ],
                             ),
             ),
