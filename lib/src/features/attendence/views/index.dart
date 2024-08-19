@@ -41,15 +41,12 @@ class _PresensiViewState extends State<PresensiView> {
   LocationData? _locationData;
   var isLoading = false;
 
-  // PermissionStatus? _permissionStatus;
-
   @override
   void initState() {
     super.initState();
     fetchLocation();
     _fetchNTPTime();
     _startTimer();
-
     location.onLocationChanged.listen((LocationData currentLocation) {
       fetchChangedLocation();
     });
@@ -247,7 +244,14 @@ class _PresensiViewState extends State<PresensiView> {
               )
             : isLoading
                 ? const Center(
-                    child: CircularProgressIndicator(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Check Lokasi ...."),
+                        CircularProgressIndicator(),
+                      ],
+                    ),
                   )
                 : _permissionGranted == PermissionStatus.deniedForever
                     ? warningNotLocation()
@@ -549,8 +553,9 @@ class _PresensiViewState extends State<PresensiView> {
                                             _ntpTime == null
                                                 ? Column(
                                                     children: [
-                                                      myShimmer(140, 55),
-                                                      myShimmer(180, 30),
+                                                      myShimmer(140, 40),
+                                                      spaceHeight(3),
+                                                      myShimmer(180, 20),
                                                     ],
                                                   )
                                                 : Column(
