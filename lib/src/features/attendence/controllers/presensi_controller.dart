@@ -69,6 +69,7 @@ class PresensiController extends GetxController {
       } else {
         debugPrint(response.body.toString());
       }
+      print(json);
     } catch (e) {
       print(e.toString());
     } finally {
