@@ -180,7 +180,8 @@ class _HomeViewState extends State<HomeView> {
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
-                                    onTap: () => dialogComingSoon("Lembur"),
+                                    onTap: () =>
+                                        Get.toNamed(RouteNames.pengajuanLembur),
                                     child: SizedBox(
                                       child: Column(
                                         children: [
