@@ -15,6 +15,7 @@ import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
+import 'package:safe_device/safe_device.dart';
 
 class PresensiView extends StatefulWidget {
   const PresensiView({super.key});
@@ -33,6 +34,23 @@ class _PresensiViewState extends State<PresensiView> {
   DateTime? _initialFetchTime;
   Timer? _timer;
 
+  bool isLoadingMock = false;
+
+  Future<void> checkMockLocation() async {
+    try {
+      isLoadingMock = true;
+      bool isMock = await SafeDevice.isMockLocation;
+      setState(() {
+        presensiC.checkMockLocation.value = isMock;
+      });
+      print("ISMOCK : $isMock");
+    } catch (e) {
+      print("MOCK : ${e.toString()}");
+    } finally {
+      isLoadingMock = false;
+    }
+  }
+
   // Loacation
   LatLng latLng = LatLng(0, 0);
   Location location = Location();
@@ -49,7 +67,9 @@ class _PresensiViewState extends State<PresensiView> {
     _startTimer();
     location.onLocationChanged.listen((LocationData currentLocation) {
       fetchChangedLocation();
+      checkMockLocation();
     });
+    checkMockLocation();
   }
 
   @override
@@ -449,6 +469,45 @@ class _PresensiViewState extends State<PresensiView> {
                                     horizontal: 20, vertical: 15),
                                 child: Column(
                                   children: [
+                                    presensiC.checkMockLocation.value
+                                        ? Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
+                                              color: Colors.orangeAccent,
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: cGrey_700,
+                                                  blurRadius: 10,
+                                                  offset: Offset(
+                                                      1, 1), // Shadow position
+                                                ),
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(6),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.location_off_outlined,
+                                                    size: 20,
+                                                    color: Color(0xFF915700),
+                                                  ),
+                                                  spaceWidth(5),
+                                                  Text(
+                                                    "Anda terdeteksi lokasi palsu, silahkan \nmatikan lokasi palsu anda!.",
+                                                    style: customTextStyle(
+                                                      FontWeight.w500,
+                                                      12,
+                                                      const Color(0xFF915700),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : Container(),
+                                    spaceHeight(7),
                                     (const Distance().distance(
                                               latLng,
                                               LatLng(
@@ -625,37 +684,44 @@ class _PresensiViewState extends State<PresensiView> {
                                                                         .value ==
                                                                     false)
                                                             ? () {
-                                                                if (const Distance()
-                                                                        .distance(
-                                                                            latLng,
-                                                                            LatLng(
-                                                                              double.parse(presensiC.latitude.value),
-                                                                              double.parse(presensiC.longitude.value),
-                                                                            )) <=
-                                                                    int.parse(presensiC
-                                                                        .radius
-                                                                        .value)) {
-                                                                  if (presensiC
-                                                                      .isLoadingPresensiMasuk
-                                                                      .value) {
-                                                                  } else {
-                                                                    presensiC.presensiMasuk(
-                                                                        presensiC
-                                                                            .idLokasi
-                                                                            .value,
-                                                                        latLng
-                                                                            .latitude
-                                                                            .toString(),
-                                                                        latLng
-                                                                            .longitude
-                                                                            .toString(),
-                                                                        ipAddressC
-                                                                            .ipAdressv
-                                                                            .value);
-                                                                  }
-                                                                } else {
+                                                                if (presensiC
+                                                                    .checkMockLocation
+                                                                    .value) {
                                                                   snackbarfailed(
-                                                                      "Anda Diluar area kantor");
+                                                                      "Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
+                                                                } else {
+                                                                  if (const Distance()
+                                                                          .distance(
+                                                                              latLng,
+                                                                              LatLng(
+                                                                                double.parse(presensiC.latitude.value),
+                                                                                double.parse(presensiC.longitude.value),
+                                                                              )) <=
+                                                                      int.parse(presensiC
+                                                                          .radius
+                                                                          .value)) {
+                                                                    if (presensiC
+                                                                        .isLoadingPresensiMasuk
+                                                                        .value) {
+                                                                    } else {
+                                                                      presensiC.presensiMasuk(
+                                                                          presensiC
+                                                                              .idLokasi
+                                                                              .value,
+                                                                          latLng
+                                                                              .latitude
+                                                                              .toString(),
+                                                                          latLng
+                                                                              .longitude
+                                                                              .toString(),
+                                                                          ipAddressC
+                                                                              .ipAdressv
+                                                                              .value);
+                                                                    }
+                                                                  } else {
+                                                                    snackbarfailed(
+                                                                        "Anda Diluar area kantor");
+                                                                  }
                                                                 }
                                                               }
                                                             : null,
@@ -724,37 +790,44 @@ class _PresensiViewState extends State<PresensiView> {
                                                                         .value ==
                                                                     false)
                                                             ? () {
-                                                                if (const Distance()
-                                                                        .distance(
-                                                                            latLng,
-                                                                            LatLng(
-                                                                              double.parse(presensiC.latitude.value),
-                                                                              double.parse(presensiC.longitude.value),
-                                                                            )) <=
-                                                                    int.parse(presensiC
-                                                                        .radius
-                                                                        .value)) {
-                                                                  if (presensiC
-                                                                      .isLoadingPresensiPulang
-                                                                      .value) {
-                                                                  } else {
-                                                                    presensiC.presensiPulang(
-                                                                        presensiC
-                                                                            .idLokasi
-                                                                            .value,
-                                                                        latLng
-                                                                            .latitude
-                                                                            .toString(),
-                                                                        latLng
-                                                                            .longitude
-                                                                            .toString(),
-                                                                        ipAddressC
-                                                                            .ipAdressv
-                                                                            .value);
-                                                                  }
-                                                                } else {
+                                                                if (presensiC
+                                                                    .checkMockLocation
+                                                                    .value) {
                                                                   snackbarfailed(
-                                                                      "Anda Diluar area kantor");
+                                                                      "Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
+                                                                } else {
+                                                                  if (const Distance()
+                                                                          .distance(
+                                                                              latLng,
+                                                                              LatLng(
+                                                                                double.parse(presensiC.latitude.value),
+                                                                                double.parse(presensiC.longitude.value),
+                                                                              )) <=
+                                                                      int.parse(presensiC
+                                                                          .radius
+                                                                          .value)) {
+                                                                    if (presensiC
+                                                                        .isLoadingPresensiPulang
+                                                                        .value) {
+                                                                    } else {
+                                                                      presensiC.presensiPulang(
+                                                                          presensiC
+                                                                              .idLokasi
+                                                                              .value,
+                                                                          latLng
+                                                                              .latitude
+                                                                              .toString(),
+                                                                          latLng
+                                                                              .longitude
+                                                                              .toString(),
+                                                                          ipAddressC
+                                                                              .ipAdressv
+                                                                              .value);
+                                                                    }
+                                                                  } else {
+                                                                    snackbarfailed(
+                                                                        "Anda Diluar area kantor");
+                                                                  }
                                                                 }
                                                               }
                                                             : null,

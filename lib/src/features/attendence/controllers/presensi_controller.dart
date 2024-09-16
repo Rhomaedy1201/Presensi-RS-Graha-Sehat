@@ -24,6 +24,7 @@ class PresensiController extends GetxController {
   var isJadwal = false.obs;
   var isPresensiMasuk = false.obs;
   var isPresensiPulang = false.obs;
+  var checkMockLocation = false.obs;
 
   @override
   void onInit() {
