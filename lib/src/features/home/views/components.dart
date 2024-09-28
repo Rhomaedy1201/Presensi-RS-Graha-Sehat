@@ -26,14 +26,14 @@ class _ComponentHomeState extends State<ComponentHome> {
           spaceHeight(5),
           if (!codeBlueRed.isEmptyDataRed.value)
             codeRed(
-              codeBlueRed.bagianRed,
-              codeBlueRed.shiftRed,
-              codeBlueRed.zonaRed,
+              codeBlueRed.bagianRed.value,
+              codeBlueRed.shiftRed.value,
+              codeBlueRed.zonaRed.value,
             ),
           if (!codeBlueRed.isEmptyDataBlue.value)
             codeBlue(
-              codeBlueRed.bagianBlue,
-              codeBlueRed.shiftBlue,
+              codeBlueRed.bagianBlue.value,
+              codeBlueRed.shiftBlue.value,
             ),
           spaceHeight(5),
         ],

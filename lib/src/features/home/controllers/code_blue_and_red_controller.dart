@@ -87,7 +87,7 @@ class CodeBlueAndRedController extends GetxController {
 
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        isEmptyDataBlue.value = json['data'] == null ? true : false;
+        isEmptyDataRed.value = json['data'] == null ? true : false;
         if (json['data'] != null) {
           bagianRed.value = json['data']['role_desc'];
           shiftRed.value = json['data']['shift'];
