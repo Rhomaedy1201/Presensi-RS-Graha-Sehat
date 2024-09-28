@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/home/controllers/code_blue_and_red_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -15,20 +16,32 @@ class ComponentHome extends StatefulWidget {
 class _ComponentHomeState extends State<ComponentHome> {
   bool kodeRed = false;
   bool kodeBlue = false;
+  CodeBlueAndRedController codeBlueRed = Get.find<CodeBlueAndRedController>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        spaceHeight(5),
-        codeRed(),
-        codeBlue(),
-        spaceHeight(5),
-      ],
+    return Obx(
+      () => Column(
+        children: [
+          spaceHeight(5),
+          if (!codeBlueRed.isEmptyDataRed.value)
+            codeRed(
+              codeBlueRed.bagianRed,
+              codeBlueRed.shiftRed,
+              codeBlueRed.zonaRed,
+            ),
+          if (!codeBlueRed.isEmptyDataBlue.value)
+            codeBlue(
+              codeBlueRed.bagianBlue,
+              codeBlueRed.shiftBlue,
+            ),
+          spaceHeight(5),
+        ],
+      ),
     );
   }
 
-  Widget codeRed() {
+  Widget codeRed(bagian, shift, zone) {
     return AnimatedSize(
       duration: const Duration(milliseconds: 350),
       curve: Curves.linear,
@@ -128,7 +141,7 @@ class _ComponentHomeState extends State<ComponentHome> {
                                         ),
                                       ),
                                       Text(
-                                        "....",
+                                        bagian == "" ? "...." : bagian,
                                         style: customTextStyle(
                                           FontWeight.w400,
                                           10,
@@ -167,7 +180,7 @@ class _ComponentHomeState extends State<ComponentHome> {
                                         ),
                                       ),
                                       Text(
-                                        "....",
+                                        shift == "" ? "...." : shift,
                                         style: customTextStyle(
                                           FontWeight.w400,
                                           10,
@@ -206,7 +219,7 @@ class _ComponentHomeState extends State<ComponentHome> {
                                         ),
                                       ),
                                       Text(
-                                        "....",
+                                        zone == "" ? "...." : zone,
                                         style: customTextStyle(
                                           FontWeight.w400,
                                           10,
@@ -230,7 +243,7 @@ class _ComponentHomeState extends State<ComponentHome> {
     );
   }
 
-  Widget codeBlue() {
+  Widget codeBlue(bagian, shift) {
     return AnimatedSize(
       duration: const Duration(milliseconds: 350),
       curve: Curves.linear,
@@ -332,7 +345,7 @@ class _ComponentHomeState extends State<ComponentHome> {
                                         ),
                                       ),
                                       Text(
-                                        "....",
+                                        bagian == "" ? "...." : bagian,
                                         style: customTextStyle(
                                           FontWeight.w400,
                                           10,
@@ -371,7 +384,7 @@ class _ComponentHomeState extends State<ComponentHome> {
                                         ),
                                       ),
                                       Text(
-                                        "....",
+                                        shift == "" ? "...." : shift,
                                         style: customTextStyle(
                                           FontWeight.w400,
                                           10,

@@ -288,40 +288,45 @@ class _HomeViewState extends State<HomeView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ComponentHome(),
+                              homeC.isEmptyStr.value
+                                  ? Container()
+                                  : spaceHeight(10),
                               homeC.isLoadingStr.value
                                   ? Container()
                                   : homeC.isEmptyStr.value
                                       ? Container()
-                                      : Column(
-                                          children: [
-                                            Container(
-                                              width: Get.width,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color:
-                                                      const Color(0x2CFC1100)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 10),
-                                                child: Text(
-                                                  "STR anda akan segera berakhir pada ${homeC.tglStr}. Segera perbarui ke SDM.",
-                                                  style: customTextStyle(
-                                                      FontWeight.w500,
-                                                      11,
-                                                      cRed),
+                                      : Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 25,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                width: Get.width,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: const Color(
+                                                        0x2CFC1100)),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 10),
+                                                  child: Text(
+                                                    "STR anda akan segera berakhir pada ${homeC.tglStr}. Segera perbarui ke SDM.",
+                                                    style: customTextStyle(
+                                                        FontWeight.w500,
+                                                        11,
+                                                        cRed),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            spaceHeight(20),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                              homeC.isEmptyStr.value
-                                  ? Container()
-                                  : spaceHeight(20),
+                              ComponentHome(),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 25),
@@ -329,7 +334,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               Container(
                                 height: 20,
-                              )
+                              ),
                             ],
                           ),
                         ),
