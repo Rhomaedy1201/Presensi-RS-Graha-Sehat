@@ -50,7 +50,7 @@ class CodeBlueAndRedController extends GetxController {
       if (response.statusCode == 200) {
         isEmptyDataBlue.value = json['data'] == null ? true : false;
         if (json['data'] != null) {
-          bagianBlue.value = json['data']['tanggal'];
+          bagianBlue.value = json['data']['role_desc'];
           shiftBlue.value = json['data']['shift'];
         } else {
           bagianBlue.value = "";
@@ -89,7 +89,7 @@ class CodeBlueAndRedController extends GetxController {
       if (response.statusCode == 200) {
         isEmptyDataBlue.value = json['data'] == null ? true : false;
         if (json['data'] != null) {
-          bagianRed.value = json['data']['tanggal'];
+          bagianRed.value = json['data']['role_desc'];
           shiftRed.value = json['data']['shift'];
           zonaRed.value = json['data']['zona'];
         } else {
