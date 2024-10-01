@@ -22,6 +22,8 @@ import 'package:presensi_gs/src/features/pengajuan_tukar_shift/views/index.dart'
 import 'package:presensi_gs/src/features/profile/bindings/profile_binding.dart';
 import 'package:presensi_gs/src/features/profile/views/index.dart';
 import 'package:presensi_gs/src/features/splash_screen/views/index.dart';
+import 'package:presensi_gs/src/features/sppd/bindings/sppd_binding.dart';
+import 'package:presensi_gs/src/features/sppd/views/index.dart';
 
 class RoutePages {
   static final pages = [
@@ -91,6 +93,11 @@ class RoutePages {
       name: RouteNames.pengajuanLembur,
       page: () => const PengajuanLembur(),
       binding: LemburBinding(),
+    ),
+    GetPage(
+      name: RouteNames.sppd,
+      page: () => const SppdPage(),
+      binding: SppdBinding(),
     ),
   ];
 }

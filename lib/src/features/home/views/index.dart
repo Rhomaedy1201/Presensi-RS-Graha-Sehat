@@ -222,7 +222,7 @@ class _HomeViewState extends State<HomeView> {
                                 Expanded(
                                   flex: 1,
                                   child: InkWell(
-                                    onTap: () => dialogComingSoon("Approval"),
+                                    onTap: () => Get.toNamed(RouteNames.sppd),
                                     child: SizedBox(
                                       child: Column(
                                         children: [
@@ -244,7 +244,7 @@ class _HomeViewState extends State<HomeView> {
                                           ),
                                           spaceHeight(7),
                                           Text(
-                                            "Approval",
+                                            "Sppd",
                                             style: customTextStyle(
                                               FontWeight.w400,
                                               12,
