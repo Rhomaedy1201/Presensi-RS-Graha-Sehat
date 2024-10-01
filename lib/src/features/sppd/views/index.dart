@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -31,7 +32,9 @@ class _SppdPageState extends State<SppdPage> {
             filter(context),
             spaceHeight(10),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(RouteNames.sppdDetail);
+              },
               child: Container(
                 width: Get.width,
                 decoration: BoxDecoration(

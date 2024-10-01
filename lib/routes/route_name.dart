@@ -14,4 +14,5 @@ abstract class RouteNames {
   static const detailPengajuanView = '/detail-pengajuan-view';
   static const pengajuanLembur = '/pengajuan-lembur';
   static const sppd = '/sppd';
+  static const sppdDetail = '/sppd-detail';
 }
