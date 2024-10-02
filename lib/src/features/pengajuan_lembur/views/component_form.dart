@@ -16,21 +16,25 @@ class componentsFormLembur extends StatelessWidget {
   final Function(DateTime) callbackSetState2;
   final Function(TextEditingController) callbackSetStateKet;
   final Function(String) callbackSetStateFile;
+  final Function(String) callbackSetStateJenis;
   final Function(File) callbackSetStateFilePath;
   DateTime tanggal;
   DateTime tglMulai;
   DateTime tglSelesai;
   TextEditingController pengajuanLemburKet = TextEditingController();
   String? fileName;
+  String? jenis;
   File? selectedFile;
   componentsFormLembur({
     super.key,
+    required this.callbackSetStateJenis,
     required this.callbackSetStateTgl,
     required this.callbackSetState,
     required this.callbackSetState2,
     required this.callbackSetStateKet,
     required this.callbackSetStateFile,
     required this.callbackSetStateFilePath,
+    required this.jenis,
     required this.tanggal,
     required this.tglMulai,
     required this.tglSelesai,
@@ -89,6 +93,7 @@ class componentsFormLembur extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                dropdownJenis(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -132,11 +137,85 @@ class componentsFormLembur extends StatelessWidget {
                 formKeterangan(),
                 spaceHeight(10),
                 formFile(),
+                spaceHeight(10),
+                Text(
+                  "Jenis lembur di atas membutuhkan absen masuk dan selesai",
+                  style: customTextStyle(FontWeight.w400, 11, cBlack),
+                )
               ],
             ),
           )
         ],
       ),
+    );
+  }
+
+  Column dropdownJenis() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Jenis Lembur ",
+          style: customTextStyle(FontWeight.w600, 11, cBlack),
+        ),
+        Container(
+          width: Get.width,
+          height: 50,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(7),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 7),
+            child: DropdownButtonFormField<String>(
+              hint: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  "Pilih pengganti",
+                  style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                ),
+              ),
+              isDense: true,
+              isExpanded: true,
+              value: jenis,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(8),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: cGrey_400, width: 1.5),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                filled: true,
+                fillColor: cWhite,
+              ),
+              onChanged: (String? newValue) {
+                jenis = newValue!;
+                callbackSetStateJenis(newValue);
+              },
+              items: ['Dinas', 'Tindakan Infus', 'Rujuk Kabupaten']
+                  .map<DropdownMenuItem<String>>((value) {
+                return DropdownMenuItem<String>(
+                  value: value.toString(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      value,
+                      style: customTextStyle(FontWeight.w500, 13, cGrey_900),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -33,6 +33,7 @@ class _PengajuanLemburState extends State<PengajuanLembur>
   DateTime periodeLembur2 = DateTime.now();
   TextEditingController pengajuanLemburKet = TextEditingController();
   String? fileNameLembur;
+  String? jenisLembur;
   File? selectedFileLembur;
 
   // Lembur
@@ -58,6 +59,11 @@ class _PengajuanLemburState extends State<PengajuanLembur>
 
   void callbackLemburFile(String file) {
     fileNameLembur = file;
+    setState(() {});
+  }
+
+  void callbackLemburJenis(String jenis) {
+    jenisLembur = jenis;
     setState(() {});
   }
 
@@ -186,12 +192,14 @@ class _PengajuanLemburState extends State<PengajuanLembur>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: componentsFormLembur(
+              callbackSetStateJenis: callbackLemburJenis,
               callbackSetStateTgl: callbackLemburTgl,
               callbackSetState: callbackLembur1,
               callbackSetState2: callbackLembur2,
               callbackSetStateKet: callbackLemburKet,
               callbackSetStateFile: callbackLemburFile,
               callbackSetStateFilePath: callbackLemburFilePath,
+              jenis: jenisLembur,
               tanggal: tanggal,
               tglMulai: periodeLembur1,
               tglSelesai: periodeLembur2,
