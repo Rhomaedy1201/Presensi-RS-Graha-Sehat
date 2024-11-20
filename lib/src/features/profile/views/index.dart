@@ -40,19 +40,19 @@ class _ProfileViewState extends State<ProfileView> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-    test();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   test();
+  // }
 
-  test() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final prefDeviceId = prefs.getString('device_id');
-    print(token);
-    print(prefDeviceId);
-  }
+  // test() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final token = prefs.getString('token');
+  //   final prefDeviceId = prefs.getString('device_id');
+  //   print(token);
+  //   print(prefDeviceId);
+  // }
 
   @override
   Widget build(BuildContext context) {
