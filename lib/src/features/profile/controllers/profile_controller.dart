@@ -135,9 +135,12 @@ class ProfileController extends GetxController {
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    final prefDeviceId = prefs.getString('device_id');
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
+      'X-DEVICE-ID': prefDeviceId.toString(),
+      'X-DEVICE-TYPE': "apk",
     };
     try {
       if (token == null) {
@@ -145,7 +148,7 @@ class ProfileController extends GetxController {
       }
 
       http.Response response = await http.delete(
-        Uri.parse("$base_url/logout"),
+        Uri.parse("$base_url/logout-one"),
         headers: headers,
       );
 
@@ -161,7 +164,7 @@ class ProfileController extends GetxController {
         await prefs.remove('id_parent');
         await prefs.remove('cuti_level');
         await prefs.remove('level');
-        await prefs.clear();
+        // await prefs.clear();
         snackbarSuccess("Berhasil Logout");
       } else {
         debugPrint(response.body.toString());

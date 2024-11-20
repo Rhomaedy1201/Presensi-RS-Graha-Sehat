@@ -13,6 +13,7 @@ import 'package:presensi_gs/utils/components/my_alert.dart';
 import 'package:presensi_gs/utils/components/my_appbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -37,6 +38,20 @@ class _ProfileViewState extends State<ProfileView> {
       print('File selection canceled.');
     }
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    test();
+  }
+
+  test() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final prefDeviceId = prefs.getString('device_id');
+    print(token);
+    print(prefDeviceId);
   }
 
   @override

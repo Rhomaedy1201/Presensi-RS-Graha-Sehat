@@ -1,10 +1,12 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/auth/controllers/login_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -17,9 +19,27 @@ class _LoginViewState extends State<LoginView> {
   LoginController loginC = Get.put(LoginController());
   bool _supportState = false;
   bool _obscureText = true;
+  String deviceId = "Nan";
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDeviceId();
+  }
+
+  void getDeviceId() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    final deviceInfo = await deviceInfoPlugin.androidInfo;
+    final allInfo = deviceInfo.id;
+    final prefs1 = await SharedPreferences.getInstance();
+    final prefDeviceId = prefs1.getString('device_id');
+    setState(() {
+      deviceId = prefDeviceId == null ? allInfo : prefDeviceId.toString();
     });
   }
 
@@ -146,8 +166,26 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   spaceHeight(5),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Row(
+                        children: [
+                          Text(
+                            "DEVICE-ID : ",
+                            style: customTextStyle(FontWeight.w400, 12, cBlack),
+                            textAlign: TextAlign.end,
+                          ),
+                          Text(
+                            deviceId.toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                color: cBlack,
+                                decoration: TextDecoration.underline),
+                            textAlign: TextAlign.end,
+                          ),
+                        ],
+                      ),
                       InkWell(
                         onTap: () {
                           print("Lupa Password");
@@ -177,7 +215,7 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: loginC.isLoading.value
                           ? null
                           : () {
-                              loginC.login();
+                              loginC.login(deviceId);
                             },
                       child: Text(
                         loginC.isLoading.value ? "Loading..." : "Login",

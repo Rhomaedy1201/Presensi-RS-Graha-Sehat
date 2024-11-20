@@ -16,10 +16,14 @@ class LoginController extends GetxController {
   SharedPreferences? prefs;
   var isLoading = false.obs;
 
-  Future<void> login() async {
+  Future<void> login(String deviceId) async {
+    final prefs1 = await SharedPreferences.getInstance();
+    final prefDeviceId = prefs1.getString('device_id');
     var headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'X-DEVICE-ID': prefDeviceId == null ? deviceId : prefDeviceId.toString(),
+      'X-DEVICE-TYPE': "apk",
     };
     try {
       isLoading(true);
@@ -28,7 +32,7 @@ class LoginController extends GetxController {
         "password": passwordController.text,
       };
       http.Response response = await http.post(
-        Uri.parse("$base_url/login"),
+        Uri.parse("$base_url/login-one"),
         body: jsonEncode(body),
         headers: headers,
       );
@@ -44,6 +48,7 @@ class LoginController extends GetxController {
           await prefs?.setString('nip', loginM!.data.user.nip);
           await prefs?.setString('role', loginM!.data.user.role ?? 'null');
           await prefs?.setString('token', loginM!.data.token);
+          await prefs?.setString('device_id', deviceId);
           await prefs?.setString(
               'id', loginM!.data.user.jabatans[0].mJabatan.id.toString());
           await prefs?.setString(
