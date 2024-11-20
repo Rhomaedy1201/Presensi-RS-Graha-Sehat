@@ -14,6 +14,7 @@ class JadwalController extends GetxController {
   var month = DateTime.now().getMonthNumber();
   var year = DateTime.now().getYear();
   var isEmptyData = false.obs;
+  var jadwalData = <dynamic>[].obs;
 
   @override
   void onInit() {
@@ -42,10 +43,10 @@ class JadwalController extends GetxController {
 
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        jadwalM = JadwalModel.fromJson(json);
-        if (jadwalM!.data.isEmpty) {
+        if (json['data'] == null || json['data'].isEmpty) {
           isEmptyData.value = true;
         } else {
+          jadwalData.value = json['data'];
           isEmptyData.value = false;
         }
       } else {

@@ -70,18 +70,18 @@ class _JadwalViewState extends State<JadwalView> {
                         )
                       : Expanded(
                           child: ListView.builder(
-                            itemCount: jadwalC.jadwalM?.data.length ?? 0,
+                            itemCount: jadwalC.jadwalData.length,
                             shrinkWrap: true,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              var data = jadwalC.jadwalM?.data;
+                              var data = jadwalC.jadwalData;
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 7),
                                 child: cardJadwal(
-                                  data?[index].tanggal,
-                                  data?[index].jamMasuk ?? 'null',
-                                  data?[index].jamPulang ?? 'null',
-                                  data?[index].shift ?? 'null',
+                                  data[index]["tanggal"],
+                                  data[index]["jam_masuk"] ?? 'null',
+                                  data[index]["jam_pulang"] ?? 'null',
+                                  data[index]["kode_shift"] ?? 'null',
                                 ),
                               );
                             },
@@ -231,7 +231,7 @@ class _JadwalViewState extends State<JadwalView> {
                       child: const Text('OK'),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        jadwalC.jadwalM!.data.clear();
+                        jadwalC.jadwalData.clear();
                         print(valueDate.getMonthNumber());
                         jadwalC.getJadwal(
                             valueDate.getMonthNumber(), valueDate.getYear());
