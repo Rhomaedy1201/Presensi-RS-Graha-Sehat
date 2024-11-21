@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/lembur_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_form.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
+import 'package:presensi_gs/utils/constant.dart';
 
 class PengajuanLembur extends StatefulWidget {
   const PengajuanLembur({super.key});
@@ -15,6 +18,7 @@ class PengajuanLembur extends StatefulWidget {
 class _PengajuanLemburState extends State<PengajuanLembur>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  // LemburController lemburC = Get.find<LemburController>();
 
   @override
   void initState() {
@@ -35,20 +39,24 @@ class _PengajuanLemburState extends State<PengajuanLembur>
   String? fileNameLembur;
   String? jenisLembur;
   File? selectedFileLembur;
-
+  String? tglCheck, mulai, akhir;
+  Map? dataSelected;
   // Lembur
   void callbackLemburTgl(DateTime tgl) {
     tanggal = tgl;
+    tglCheck = tgl.toString();
     setState(() {});
   }
 
   void callbackLembur1(DateTime tglMulai) {
     periodeLembur1 = tglMulai;
+    mulai = tglMulai.toString();
     setState(() {});
   }
 
   void callbackLembur2(DateTime tglSelesai) {
     periodeLembur2 = tglSelesai;
+    akhir = tglSelesai.toString();
     setState(() {});
   }
 
@@ -69,6 +77,11 @@ class _PengajuanLemburState extends State<PengajuanLembur>
 
   void callbackLemburFilePath(File file) {
     selectedFileLembur = file;
+    setState(() {});
+  }
+
+  void callbackLemburDataSelected(Map data) {
+    dataSelected = data;
     setState(() {});
   }
 
@@ -199,6 +212,10 @@ class _PengajuanLemburState extends State<PengajuanLembur>
               callbackSetStateKet: callbackLemburKet,
               callbackSetStateFile: callbackLemburFile,
               callbackSetStateFilePath: callbackLemburFilePath,
+              callBackSetStateTglCheck: callbackLemburTgl,
+              callBackSetStateMulai: callbackLembur1,
+              callBackSetStateAkhir: callbackLembur2,
+              callBackSetStateDataSelected: callbackLemburDataSelected,
               jenis: jenisLembur,
               tanggal: tanggal,
               tglMulai: periodeLembur1,
@@ -206,6 +223,10 @@ class _PengajuanLemburState extends State<PengajuanLembur>
               pengajuanLemburKet: pengajuanLemburKet,
               fileName: fileNameLembur,
               selectedFile: selectedFileLembur,
+              tglCheck: tglCheck,
+              jamMulaiCheck: mulai,
+              jamAkhirCheck: akhir,
+              dataSelected: dataSelected,
             ),
           ),
           Text("Progress"),
