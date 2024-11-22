@@ -393,7 +393,7 @@ class componentsFormLembur extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                tglCheck == null ? "Null" : tglMulai.simpleDateRevers(),
+                tglCheck == null ? "" : tglMulai.simpleDateRevers(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
@@ -467,7 +467,7 @@ class componentsFormLembur extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                jamMulaiCheck == null ? "Null" : tglMulai.getFullTime(),
+                jamMulaiCheck == null ? "" : tglMulai.getFullTime(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
@@ -539,8 +539,7 @@ class componentsFormLembur extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                // jamAkhirCheck == null ? "Null" :
-                tglSelesai.getFullTime(),
+                jamAkhirCheck == null ? "" : tglSelesai.getFullTime(),
                 style: customTextStyle(FontWeight.w500, 13, cGrey_900),
               ),
               const Icon(
