@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/lembur_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_form.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/constant.dart';
 
@@ -192,15 +193,22 @@ class _PengajuanLemburState extends State<PengajuanLembur>
             ),
           ),
           onPressed: () {
-            lemburC.postLembur({
-              "id": dataSelected!['id'],
-              "nama": dataSelected!['nama'],
-              "tanggal": tanggal.simpleDate(),
-              "mulai": DateTime.parse(mulai.toString()).getTime(),
-              "akhir": DateTime.parse(akhir.toString()).getTime(),
-              "ket": pengajuanLemburKet.text,
-              "file": selectedFileLembur,
-            });
+            if (jenisLembur.isNull ||
+                tglCheck.isNull ||
+                mulai.isNull ||
+                akhir.isNull) {
+              snackbarfailed("Harap lengkapi form");
+            } else {
+              lemburC.postLembur({
+                "id": dataSelected!['id'],
+                "nama": dataSelected!['nama'],
+                "tanggal": tanggal.simpleDate(),
+                "mulai": DateTime.parse(mulai.toString()).getTime(),
+                "akhir": DateTime.parse(akhir.toString()).getTime(),
+                "ket": pengajuanLemburKet.text,
+                "file": selectedFileLembur,
+              });
+            }
           },
           child: Text(
             "Submit Lembur",
