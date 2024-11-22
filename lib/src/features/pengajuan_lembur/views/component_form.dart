@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/lembur_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_required_text.dart';
+import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
@@ -73,139 +74,184 @@ class componentsFormLembur extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => lemburC.isLoadingJenis.value
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                color: cWhite,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: cGrey_400,
-                    blurRadius: 15,
-                    offset: Offset(1, 1), // Shadow position
+    return Scaffold(
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: cPrimary,
+            shadowColor: cPrimary_400,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                10,
+              ), // Mengatur border radius menjadi 0
+            ),
+          ),
+          onPressed: () {
+            if (jenis.isNull ||
+                tglCheck.isNull ||
+                jamMulaiCheck.isNull ||
+                jamAkhirCheck.isNull) {
+              snackbarfailed("Harap lengkapi form");
+            } else {
+              lemburC.postLembur({
+                "id": dataSelected!['id'],
+                "nama": dataSelected!['nama'],
+                "tanggal": tanggal.simpleDate(),
+                "mulai": DateTime.parse(jamMulaiCheck.toString()).getTime(),
+                "akhir": DateTime.parse(jamAkhirCheck.toString()).getTime(),
+                "ket": pengajuanLemburKet.text,
+                "file": selectedFile,
+              });
+            }
+          },
+          child: Text(
+            "Submit Lembur",
+            style: customTextStyle(FontWeight.w500, 14, cWhite),
+          ),
+        ),
+      ),
+      body: Obx(
+        () => lemburC.isLoadingJenis.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: cWhite,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: cGrey_400,
+                        blurRadius: 15,
+                        offset: Offset(1, 1), // Shadow position
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    child: Text(
-                      "FORM Pengajuan Lembur",
-                      style: customTextStyle(FontWeight.w500, 13, cBlack),
-                    ),
-                  ),
-                  Container(
-                    width: Get.width,
-                    height: 3,
-                    color: cGrey_300,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 12,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (dataSelected != null)
-                          if (dataSelected?['ttl_jam'] > 0)
-                            Column(
-                              children: [
-                                Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          "FORM Pengajuan Lembur",
+                          style: customTextStyle(FontWeight.w500, 13, cBlack),
+                        ),
+                      ),
+                      Container(
+                        width: Get.width,
+                        height: 3,
+                        color: cGrey_300,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 12,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (dataSelected != null)
+                              if (dataSelected?['ttl_jam'] > 0)
+                                Column(
                                   children: [
-                                    const Icon(
-                                      Icons.star,
-                                      color: cRed,
-                                      size: 10,
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          color: cRed,
+                                          size: 10,
+                                        ),
+                                        Text(
+                                          "Jenis ",
+                                          style: customTextStyle(
+                                              FontWeight.w500, 10.3, cRed_700),
+                                        ),
+                                        Text(
+                                          "Dinas ",
+                                          style: customTextStyle(
+                                              FontWeight.w700, 11, cRed),
+                                        ),
+                                        Text(
+                                          "jam akhir ditambahkan otomatis oleh sistem, ${dataSelected?['ttl_jam']} jam",
+                                          style: customTextStyle(
+                                              FontWeight.w500, 10.3, cRed_700),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      "Jenis ",
-                                      style: customTextStyle(
-                                          FontWeight.w500, 10.3, cRed_700),
-                                    ),
-                                    Text(
-                                      "Dinas ",
-                                      style: customTextStyle(
-                                          FontWeight.w700, 11, cRed),
-                                    ),
-                                    Text(
-                                      "jam akhir ditambahkan otomatis oleh sistem, ${dataSelected?['ttl_jam']} jam",
-                                      style: customTextStyle(
-                                          FontWeight.w500, 10.3, cRed_700),
-                                    ),
+                                    spaceHeight(10),
                                   ],
                                 ),
+                            dropdownJenis(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Tanggal",
+                                  style: customTextStyle(
+                                      FontWeight.w600, 11, cBlack),
+                                ),
+                                spaceHeight(5),
+                                formtTanggal(context),
                                 spaceHeight(10),
                               ],
                             ),
-                        dropdownJenis(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Tanggal",
-                              style:
-                                  customTextStyle(FontWeight.w600, 11, cBlack),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      requiredText(
+                                          "Mulai", FontWeight.w600, 11, cBlack),
+                                      spaceHeight(5),
+                                      formJamIzin(context)
+                                    ],
+                                  ),
+                                ),
+                                spaceWidth(7),
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      requiredText(
+                                          "Akhir", FontWeight.w600, 11, cBlack),
+                                      spaceHeight(5),
+                                      formJamIzin2(context)
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            spaceHeight(5),
-                            formtTanggal(context),
                             spaceHeight(10),
+                            formKeterangan(),
+                            spaceHeight(10),
+                            formFile(),
+                            spaceHeight(10),
+                            Text(
+                              "Jenis lembur di atas membutuhkan absen masuk dan selesai",
+                              style:
+                                  customTextStyle(FontWeight.w400, 11, cBlack),
+                            )
                           ],
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  requiredText(
-                                      "Mulai", FontWeight.w600, 11, cBlack),
-                                  spaceHeight(5),
-                                  formJamIzin(context)
-                                ],
-                              ),
-                            ),
-                            spaceWidth(7),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  requiredText(
-                                      "Akhir", FontWeight.w600, 11, cBlack),
-                                  spaceHeight(5),
-                                  formJamIzin2(context)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        spaceHeight(10),
-                        formKeterangan(),
-                        spaceHeight(10),
-                        formFile(),
-                        spaceHeight(10),
-                        Text(
-                          "Jenis lembur di atas membutuhkan absen masuk dan selesai",
-                          style: customTextStyle(FontWeight.w400, 11, cBlack),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
+      ),
     );
   }
 

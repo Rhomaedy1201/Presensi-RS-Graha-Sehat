@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/lembur_controller.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_form.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_progress.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -180,76 +181,35 @@ class _PengajuanLemburState extends State<PengajuanLembur>
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: cPrimary,
-            shadowColor: cPrimary_400,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                10,
-              ), // Mengatur border radius menjadi 0
-            ),
-          ),
-          onPressed: () {
-            if (jenisLembur.isNull ||
-                tglCheck.isNull ||
-                mulai.isNull ||
-                akhir.isNull) {
-              snackbarfailed("Harap lengkapi form");
-            } else {
-              lemburC.postLembur({
-                "id": dataSelected!['id'],
-                "nama": dataSelected!['nama'],
-                "tanggal": tanggal.simpleDate(),
-                "mulai": DateTime.parse(mulai.toString()).getTime(),
-                "akhir": DateTime.parse(akhir.toString()).getTime(),
-                "ket": pengajuanLemburKet.text,
-                "file": selectedFileLembur,
-              });
-            }
-          },
-          child: Text(
-            "Submit Lembur",
-            style: customTextStyle(FontWeight.w500, 14, cWhite),
-          ),
-        ),
-      ),
       body: TabBarView(
         controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: componentsFormLembur(
-                callbackSetStateJenis: callbackLemburJenis,
-                callbackSetStateTgl: callbackLemburTgl,
-                callbackSetState: callbackLembur1,
-                callbackSetState2: callbackLembur2,
-                callbackSetStateKet: callbackLemburKet,
-                callbackSetStateFile: callbackLemburFile,
-                callbackSetStateFilePath: callbackLemburFilePath,
-                callBackSetStateTglCheck: callbackLemburTgl,
-                callBackSetStateMulai: callbackLembur1,
-                callBackSetStateAkhir: callbackLembur2,
-                callBackSetStateDataSelected: callbackLemburDataSelected,
-                jenis: jenisLembur,
-                tanggal: tanggal,
-                tglMulai: periodeLembur1,
-                tglSelesai: periodeLembur2,
-                pengajuanLemburKet: pengajuanLemburKet,
-                fileName: fileNameLembur,
-                selectedFile: selectedFileLembur,
-                tglCheck: tglCheck,
-                jamMulaiCheck: mulai,
-                jamAkhirCheck: akhir,
-                dataSelected: dataSelected,
-              ),
-            ),
+          componentsFormLembur(
+            callbackSetStateJenis: callbackLemburJenis,
+            callbackSetStateTgl: callbackLemburTgl,
+            callbackSetState: callbackLembur1,
+            callbackSetState2: callbackLembur2,
+            callbackSetStateKet: callbackLemburKet,
+            callbackSetStateFile: callbackLemburFile,
+            callbackSetStateFilePath: callbackLemburFilePath,
+            callBackSetStateTglCheck: callbackLemburTgl,
+            callBackSetStateMulai: callbackLembur1,
+            callBackSetStateAkhir: callbackLembur2,
+            callBackSetStateDataSelected: callbackLemburDataSelected,
+            jenis: jenisLembur,
+            tanggal: tanggal,
+            tglMulai: periodeLembur1,
+            tglSelesai: periodeLembur2,
+            pengajuanLemburKet: pengajuanLemburKet,
+            fileName: fileNameLembur,
+            selectedFile: selectedFileLembur,
+            tglCheck: tglCheck,
+            jamMulaiCheck: mulai,
+            jamAkhirCheck: akhir,
+            dataSelected: dataSelected,
           ),
-          Text("Progress"),
+          ComponentProgressLembur(),
           Text("Konform"),
           Text("Selesai"),
         ],

@@ -61,7 +61,6 @@ class LemburController extends GetxController {
       'Authorization': 'Bearer $token',
     };
     try {
-      // print(data);
       isLoadingStore(true);
       if (token == null) {
         throw Exception("Token not found");
