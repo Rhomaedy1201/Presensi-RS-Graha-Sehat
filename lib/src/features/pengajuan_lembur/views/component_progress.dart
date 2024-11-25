@@ -125,7 +125,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                           width: 30,
                                           height: 30,
                                           decoration: BoxDecoration(
-                                            color: cGrey_400,
+                                            color: cGrey_300,
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                           ),
@@ -139,14 +139,14 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                           width: 1.5,
                                           height: 40,
                                           decoration: BoxDecoration(
-                                            color: cGrey_400,
+                                            color: cGrey_300,
                                           ),
                                         ),
                                         Container(
                                           width: 30,
                                           height: 30,
                                           decoration: BoxDecoration(
-                                            color: cGrey_400,
+                                            color: cGrey_300,
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                           ),
