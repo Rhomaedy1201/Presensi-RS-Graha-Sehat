@@ -6,6 +6,7 @@ import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/lembur_con
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_confirm.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_form.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_progress.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_selesai.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -212,7 +213,7 @@ class _PengajuanLemburState extends State<PengajuanLembur>
           ),
           ComponentProgressLembur(),
           ComponentConfirmLembur(),
-          Text("Selesai"),
+          ComponentSelesaiLembur(),
         ],
       ),
     );
