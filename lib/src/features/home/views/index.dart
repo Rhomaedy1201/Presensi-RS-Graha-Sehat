@@ -478,7 +478,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Text(
                             homeC.isLoadingStatistik.value
                                 ? "0"
-                                : "${homeC.statistikModel?.data.list.tepat.val}",
+                                : "${homeC.statistikModel?.data.list.tepat.val ?? 0}",
                             style: customTextStyle(
                               FontWeight.w900,
                               18,
@@ -517,7 +517,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Text(
                             homeC.isLoadingStatistik.value
                                 ? "0"
-                                : "${homeC.statistikModel?.data.list.telat.val}",
+                                : "${homeC.statistikModel?.data.list.telat.val ?? 0}",
                             style: customTextStyle(
                               FontWeight.w900,
                               18,
@@ -556,7 +556,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Text(
                             homeC.isLoadingStatistik.value
                                 ? "0"
-                                : "${homeC.statistikModel?.data.list.alpa.val}",
+                                : "${homeC.statistikModel?.data.list.alpa.val ?? 0}",
                             style: customTextStyle(
                               FontWeight.w900,
                               18,

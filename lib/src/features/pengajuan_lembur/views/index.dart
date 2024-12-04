@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/lembur_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_confirm.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_form.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/component_progress.dart';
 import 'package:presensi_gs/utils/colors.dart';
@@ -210,7 +211,7 @@ class _PengajuanLemburState extends State<PengajuanLembur>
             dataSelected: dataSelected,
           ),
           ComponentProgressLembur(),
-          Text("Konform"),
+          ComponentConfirmLembur(),
           Text("Selesai"),
         ],
       ),

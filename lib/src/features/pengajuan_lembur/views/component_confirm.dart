@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/utils/colors.dart';
+import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
-class ComponentProgressLembur extends StatefulWidget {
-  const ComponentProgressLembur({super.key});
+class ComponentConfirmLembur extends StatefulWidget {
+  const ComponentConfirmLembur({super.key});
 
   @override
-  State<ComponentProgressLembur> createState() =>
-      _ComponentProgressLemburState();
+  State<ComponentConfirmLembur> createState() => _ComponentConfirmLemburState();
 }
 
-class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
+class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
   bool showDetail = false;
   @override
   Widget build(BuildContext context) {
@@ -225,6 +225,86 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                           ),
                                         ),
                                       ],
+                                    ),
+                                  ],
+                                ),
+                                spaceHeight(5),
+                                CustomText(
+                                    text: "Sebagai Acc 1",
+                                    color: cBlack,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400),
+                                spaceHeight(10),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                      width: Get.width * 0.28,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                          shadowColor: cPrimary,
+                                          shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: cPrimary, width: 2),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(Icons.check_circle,
+                                                color: cPrimary, size: 13),
+                                            spaceWidth(5),
+                                            Text(
+                                              "Terima",
+                                              style: customTextStyle(
+                                                  FontWeight.w500,
+                                                  12,
+                                                  cPrimary),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    spaceWidth(5),
+                                    SizedBox(
+                                      height: 30,
+                                      width: Get.width * 0.28,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                          shadowColor: cRed,
+                                          shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                color: cRed, width: 2),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(Icons.cancel,
+                                                color: cRed, size: 13),
+                                            spaceWidth(5),
+                                            Text(
+                                              "Tolak",
+                                              style: customTextStyle(
+                                                  FontWeight.w500, 12, cRed),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
