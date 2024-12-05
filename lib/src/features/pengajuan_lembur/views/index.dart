@@ -211,9 +211,9 @@ class _PengajuanLemburState extends State<PengajuanLembur>
             jamAkhirCheck: akhir,
             dataSelected: dataSelected,
           ),
-          ComponentProgressLembur(),
-          ComponentConfirmLembur(),
-          ComponentSelesaiLembur(),
+          const ComponentProgressLembur(),
+          const ComponentConfirmLembur(),
+          const ComponentSelesaiLembur(),
         ],
       ),
     );

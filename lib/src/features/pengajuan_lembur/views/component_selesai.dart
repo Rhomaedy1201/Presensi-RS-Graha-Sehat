@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
+import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
 
@@ -135,6 +136,175 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
               ),
             ),
             spaceHeight(10),
+            Container(
+              width: Get.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: cWhite,
+                boxShadow: const [
+                  BoxShadow(
+                    color: cGrey_400,
+                    blurRadius: 15,
+                    offset: Offset(1, 1), // Shadow position
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 25,
+                              height: 25,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: cPrimary),
+                              child: Center(
+                                child: CustomText(
+                                    text: "1",
+                                    color: cWhite,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            spaceWidth(10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    text: "Muhammad RHomaedi",
+                                    color: cBlack,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500),
+                                CustomText(
+                                    text: "Unit SDM | 05-12-2024",
+                                    color: cBlack,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400),
+                              ],
+                            )
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print("Absen");
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: cPrimary),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 7, vertical: 3),
+                              child: CustomText(
+                                  text: "Absen",
+                                  color: cPrimary,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    spaceHeight(10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 35),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    text: "Tanggal :",
+                                    color: cBlack,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w400),
+                                CustomText(
+                                    text: "12-12-2024",
+                                    color: cBlack,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    text: "Mulai :",
+                                    color: cBlack,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w400),
+                                CustomText(
+                                    text: "15:30",
+                                    color: cBlack,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    text: "Akhir :",
+                                    color: cBlack,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w400),
+                                CustomText(
+                                    text: "15:30",
+                                    color: cBlack,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    spaceHeight(10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 35),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    text: "Keterangan :",
+                                    color: cBlack,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w400),
+                                CustomText(
+                                    text: "Lembur Gaji.",
+                                    color: cBlack,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
