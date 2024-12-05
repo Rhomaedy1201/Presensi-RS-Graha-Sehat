@@ -195,7 +195,8 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.toNamed(RouteNames.cameraLembur);
+                            // Get.toNamed(RouteNames.cameraLembur);
+                            Get.toNamed(RouteNames.presensiLocationLembur);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -205,7 +206,7 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 7, vertical: 3),
                               child: CustomText(
-                                  text: "Absen",
+                                  text: "Presensi",
                                   color: cPrimary,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500),
@@ -283,6 +284,24 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                         children: [
                           Expanded(
                             flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                    text: "Status :",
+                                    color: cBlack,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w400),
+                                CustomText(
+                                    text: "Presensi Lokasi",
+                                    color: cBlack,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

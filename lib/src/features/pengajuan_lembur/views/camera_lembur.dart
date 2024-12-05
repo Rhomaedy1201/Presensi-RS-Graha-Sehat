@@ -101,7 +101,7 @@ class _CameraLemburState extends State<CameraLembur> {
                                   children: [
                                     spaceWidth(35),
                                     SizedBox(
-                                      width: 100,
+                                      width: 120,
                                       height: 40,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -116,7 +116,7 @@ class _CameraLemburState extends State<CameraLembur> {
                                         ),
                                         onPressed: () {},
                                         child: const Text(
-                                          "Absen",
+                                          "Presensi",
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,

@@ -16,6 +16,7 @@ import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/bindings/lembur_binding.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/camera_lembur.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/index.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/presensi_location_lembur.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/bindings/perizinan_binding.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_tukar_shift/bindings/tukar_shift_binding.dart';
@@ -109,6 +110,11 @@ class RoutePages {
     GetPage(
       name: RouteNames.cameraLembur,
       page: () => const CameraLembur(),
+      // binding: SppdBinding(),
+    ),
+    GetPage(
+      name: RouteNames.presensiLocationLembur,
+      page: () => const PresensiLocationLember(),
       // binding: SppdBinding(),
     ),
   ];
