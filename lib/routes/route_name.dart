@@ -15,4 +15,5 @@ abstract class RouteNames {
   static const pengajuanLembur = '/pengajuan-lembur';
   static const sppd = '/sppd';
   static const sppdDetail = '/sppd-detail';
+  static const cameraLembur = '/camera-lembur';
 }

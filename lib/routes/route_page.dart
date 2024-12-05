@@ -14,6 +14,7 @@ import 'package:presensi_gs/src/features/jadwal/bindings/jadwal_binding.dart';
 import 'package:presensi_gs/src/features/jadwal/views/index.dart';
 import 'package:presensi_gs/src/features/navigation_bar/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/bindings/lembur_binding.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/camera_lembur.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/index.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/bindings/perizinan_binding.dart';
 import 'package:presensi_gs/src/features/pengajuan_perizinan/views/index.dart';
@@ -103,6 +104,11 @@ class RoutePages {
     GetPage(
       name: RouteNames.sppdDetail,
       page: () => const DetailSppd(),
+      // binding: SppdBinding(),
+    ),
+    GetPage(
+      name: RouteNames.cameraLembur,
+      page: () => const CameraLembur(),
       // binding: SppdBinding(),
     ),
   ];

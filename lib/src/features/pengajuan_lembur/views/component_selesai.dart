@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
@@ -194,7 +195,7 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                         ),
                         InkWell(
                           onTap: () {
-                            print("Absen");
+                            Get.toNamed(RouteNames.cameraLembur);
                           },
                           child: Container(
                             decoration: BoxDecoration(
