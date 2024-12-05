@@ -415,7 +415,7 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                           ),
                                         ),
                                         Text(
-                                          "Presensi",
+                                          "Presensi Lembur",
                                           style: customTextStyle(
                                             FontWeight.w900,
                                             20,
