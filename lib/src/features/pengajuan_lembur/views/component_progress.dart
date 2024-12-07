@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/dialog_jadwal_karyawan.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -14,6 +15,18 @@ class ComponentProgressLembur extends StatefulWidget {
 
 class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
   bool showDetail = false;
+
+  final data = List.generate(2, (index) {
+    return {
+      "No": index + 1,
+      "Unit": "Unit ${index + 1}",
+      "Nama": "Nama ${index + 1}",
+      "Tanggal": "2024-12-${(index % 30) + 1}",
+      "Shift": "Shift ${(index % 3) + 1}",
+      "Absen": index % 2 == 0 ? "✓" : "✗",
+    };
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -231,6 +244,187 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                               ],
                             )
                           : Container(),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: Get.width * 0.5,
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                Container(
+                                  color: cPrimary,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: CustomText(
+                                              text: "No",
+                                              color: cBlack,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: CustomText(
+                                              text: "Unit",
+                                              color: cBlack,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
+                                          child: CustomText(
+                                              text: "Nama",
+                                              color: cBlack,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  color: cGrey_300,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: CustomText(
+                                              text: "1",
+                                              color: cBlack,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: CustomText(
+                                              text: "UNIT IT",
+                                              color: cBlack,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
+                                          child: CustomText(
+                                              text:
+                                                  "Muhammad RHomaedi Spd. Str.KOm",
+                                              color: cBlack,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Expanded(
+                          //   flex: 1,
+                          //   child: Column(
+                          //     children: [
+                          //       Container(
+                          //         color: cPrimary,
+                          //         child: Padding(
+                          //             padding: const EdgeInsets.all(8.0),
+                          //             child: ListView(
+                          //               shrinkWrap: true,
+                          //               scrollDirection: Axis.horizontal,
+                          //               children: [
+                          //                 Expanded(
+                          //                   flex: 1,
+                          //                   child: CustomText(
+                          //                       text: "No",
+                          //                       color: cBlack,
+                          //                       fontSize: 10,
+                          //                       fontWeight: FontWeight.w400),
+                          //                 ),
+                          //                 Expanded(
+                          //                   flex: 2,
+                          //                   child: CustomText(
+                          //                       text: "Unit",
+                          //                       color: cBlack,
+                          //                       fontSize: 10,
+                          //                       fontWeight: FontWeight.w400),
+                          //                 ),
+                          //                 Expanded(
+                          //                   flex: 4,
+                          //                   child: CustomText(
+                          //                       text: "Nama",
+                          //                       color: cBlack,
+                          //                       fontSize: 10,
+                          //                       fontWeight: FontWeight.w400),
+                          //                 ),
+                          //               ],
+                          //             )
+                          //             // Row(
+                          //             //       crossAxisAlignment:
+                          //             //           CrossAxisAlignment.start,
+                          //             //       mainAxisAlignment:
+                          //             //           MainAxisAlignment.spaceAround,
+                          //             //       children: [
+
+                          //             //       ],
+                          //             //     ),
+                          //             ),
+                          //       ),
+                          //       // Container(
+                          //       //   color: cGrey_300,
+                          //       //   child: Padding(
+                          //       //     padding: const EdgeInsets.all(8.0),
+                          //       //     child: Row(
+                          //       //       crossAxisAlignment:
+                          //       //           CrossAxisAlignment.start,
+                          //       //       mainAxisAlignment:
+                          //       //           MainAxisAlignment.spaceAround,
+                          //       //       children: [
+                          //       //         Expanded(
+                          //       //           flex: 1,
+                          //       //           child: CustomText(
+                          //       //               text: "1",
+                          //       //               color: cBlack,
+                          //       //               fontSize: 10,
+                          //       //               fontWeight: FontWeight.w400),
+                          //       //         ),
+                          //       //         Expanded(
+                          //       //           flex: 2,
+                          //       //           child: CustomText(
+                          //       //               text: "UNIT IT",
+                          //       //               color: cBlack,
+                          //       //               fontSize: 10,
+                          //       //               fontWeight: FontWeight.w400),
+                          //       //         ),
+                          //       //         Expanded(
+                          //       //           flex: 4,
+                          //       //           child: CustomText(
+                          //       //               text:
+                          //       //                   "Muhammad RHomaedi Spd. Str.KOm",
+                          //       //               color: cBlack,
+                          //       //               fontSize: 10,
+                          //       //               fontWeight: FontWeight.w400),
+                          //       //         ),
+                          //       //       ],
+                          //       //     ),
+                          //       //   ),
+                          //       // ),
+                          //     ],
+                          //   ),
+                          // )
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -258,7 +452,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
               spaceHeight(2),
               InkWell(
                 onTap: () {
-                  debugPrint("Klik Disini");
+                  dialogJadwalKaryawan();
                 },
                 child: Row(
                   children: [
