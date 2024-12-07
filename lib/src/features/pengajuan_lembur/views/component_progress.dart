@@ -6,6 +6,7 @@ import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
+import 'package:presensi_gs/utils/constant.dart';
 
 class ComponentProgressLembur extends StatefulWidget {
   const ComponentProgressLembur({super.key});
@@ -38,9 +39,14 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        AnimatedSize(
+                    child: ListView.builder(
+                      itemCount: progressLemburC.dataProgress.length ?? 0,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      padding: const EdgeInsets.only(top: 12),
+                      itemBuilder: (context, index) {
+                        var data = progressLemburC.dataProgress;
+                        return AnimatedSize(
                           duration: const Duration(milliseconds: 350),
                           curve: Curves.linear,
                           child: Container(
@@ -55,7 +61,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                 ),
                               ],
                             ),
-                            margin: const EdgeInsets.only(top: 15),
+                            margin: const EdgeInsets.only(top: 10),
                             child: Padding(
                               padding: const EdgeInsets.all(15),
                               child: Column(
@@ -64,7 +70,9 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        showDetail = !showDetail;
+                                        progressLemburC.isActiveList![index] =
+                                            !progressLemburC
+                                                .isActiveList![index];
                                       });
                                     },
                                     child: Row(
@@ -84,13 +92,15 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 CustomText(
-                                                    text: "Muhammad Rhomaedi",
+                                                    text: data[index]['nama'],
                                                     color: cBlack,
                                                     fontSize: 14,
                                                     fontWeight:
                                                         FontWeight.w600),
                                                 CustomText(
-                                                    text: "05-11-2024",
+                                                    text: DateTime.parse(
+                                                            "${data[index]['tanggal']}")
+                                                        .simpleDateRevers(),
                                                     color: cPrimary,
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w500)
@@ -99,7 +109,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                           ],
                                         ),
                                         Icon(
-                                          showDetail
+                                          progressLemburC.isActiveList![index]
                                               ? Icons.arrow_drop_up_outlined
                                               : Icons.arrow_drop_down_outlined,
                                           size: 30,
@@ -107,7 +117,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                       ],
                                     ),
                                   ),
-                                  showDetail
+                                  progressLemburC.isActiveList![index]
                                       ? Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -125,13 +135,34 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w500),
                                             spaceHeight(5),
-                                            row1(),
+                                            row1({
+                                              "unit": data[index]['id_unit'],
+                                              "nama": data[index]['nama'],
+                                              "tanggal": DateTime.parse(
+                                                      "${data[index]['tanggal']}")
+                                                  .simpleDateRevers(),
+                                              "shift":
+                                                  "(${data[index]['mulai']} - ${data[index]['akhir']})",
+                                              "absen":
+                                                  data[index]['masuk'] ?? "-",
+                                              "pulang":
+                                                  data[index]['keluar'] ?? "-",
+                                              "ket": data[index]['ket'] ?? "-",
+                                              "status": "BELOM",
+                                            }, data[index]['created_at']),
                                             spaceHeight(5),
-                                            row2(),
+                                            row2(
+                                                data[index]['lembur'],
+                                                DateTime.parse(
+                                                        "${data[index]['tanggal']}")
+                                                    .simpleDateRevers()),
                                             spaceHeight(5),
-                                            row3(),
+                                            row3(
+                                                "${data[index]['mulai']} - ${data[index]['akhir']}",
+                                                data[index]['ttl_jam_cast']),
                                             spaceHeight(5),
-                                            row4(),
+                                            row4(data[index]['absen'],
+                                                data[index]['ket'] ?? "-"),
                                             spaceHeight(10),
                                             CustomText(
                                                 text: "Menunggu Persetujuan :",
@@ -154,11 +185,19 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                             BorderRadius
                                                                 .circular(50),
                                                       ),
-                                                      child: const Icon(
-                                                        Icons
-                                                            .published_with_changes,
+                                                      child: Icon(
+                                                        data[index]['acc1_at'] ==
+                                                                null
+                                                            ? Icons
+                                                                .change_circle_outlined
+                                                            : Icons
+                                                                .published_with_changes,
                                                         size: 20,
-                                                        color: cPrimary,
+                                                        color: data[index][
+                                                                    'acc1_at'] ==
+                                                                null
+                                                            ? cGrey_900
+                                                            : cPrimary,
                                                       ),
                                                     ),
                                                     Container(
@@ -178,11 +217,19 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                             BorderRadius
                                                                 .circular(50),
                                                       ),
-                                                      child: const Icon(
-                                                        Icons
-                                                            .change_circle_outlined,
+                                                      child: Icon(
+                                                        data[index]['acc2_at'] ==
+                                                                null
+                                                            ? Icons
+                                                                .change_circle_outlined
+                                                            : Icons
+                                                                .published_with_changes,
                                                         size: 20,
-                                                        color: cGrey_900,
+                                                        color: data[index][
+                                                                    'acc2_at'] ==
+                                                                null
+                                                            ? cGrey_900
+                                                            : cPrimary,
                                                       ),
                                                     ),
                                                   ],
@@ -197,7 +244,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                           .symmetric(
                                                           vertical: 5),
                                                       child: CustomText(
-                                                          text: "Acc Atasan",
+                                                          text: "ACC Atasan",
                                                           color: cBlack,
                                                           fontSize: 12,
                                                           fontWeight:
@@ -214,15 +261,18 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                         children: [
                                                           CustomText(
                                                               text:
-                                                                  "264102017 - CHOKY CHANDRA",
+                                                                  "${data[index]['acc1_by']['nip']} - ${data[index]['acc1_by']['nama']}",
                                                               color: cBlack,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
                                                           CustomText(
-                                                              text:
-                                                                  "Menunggu Acc",
+                                                              text: data[index][
+                                                                          'acc1_at'] ==
+                                                                      null
+                                                                  ? "Menunggu ACC"
+                                                                  : "ACC Berhasil",
                                                               color: cBlack,
                                                               fontSize: 11,
                                                               fontWeight:
@@ -236,7 +286,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                           .symmetric(
                                                           vertical: 5),
                                                       child: CustomText(
-                                                          text: "Acc Manajemen",
+                                                          text: "ACC Manajemen",
                                                           color: cBlack,
                                                           fontSize: 12,
                                                           fontWeight:
@@ -253,7 +303,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                         children: [
                                                           CustomText(
                                                               text:
-                                                                  "151082016 - ANDREAS., S. Sos",
+                                                                  "${data[index]['acc2_by']['nip']} - ${data[index]['acc1_by']['nama']}",
                                                               color: cBlack,
                                                               fontSize: 13,
                                                               fontWeight:
@@ -261,8 +311,11 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                                                                       .w500),
                                                           spaceHeight(2),
                                                           CustomText(
-                                                              text:
-                                                                  "Menunggu ACC",
+                                                              text: data[index][
+                                                                          'acc2_at'] ==
+                                                                      null
+                                                                  ? "Menunggu ACC"
+                                                                  : "ACC Berhasil",
                                                               color: cBlack,
                                                               fontSize: 11,
                                                               fontWeight:
@@ -282,15 +335,14 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        );
+                      },
+                    )),
       ),
     );
   }
 
-  Row row1() {
+  Row row1(Map dataJadwal, String tglPengajuan) {
     return Row(
       children: [
         Expanded(
@@ -306,7 +358,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
               spaceHeight(2),
               InkWell(
                 onTap: () {
-                  dialogJadwalKaryawan();
+                  dialogJadwalKaryawan(dataJadwal);
                 },
                 child: Row(
                   children: [
@@ -339,7 +391,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   fontWeight: FontWeight.w400),
               spaceHeight(2),
               CustomText(
-                  text: "07-11-2024 07:00",
+                  text: tglPengajuan,
                   color: cBlack,
                   fontSize: 11,
                   fontWeight: FontWeight.w500),
@@ -350,7 +402,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
     );
   }
 
-  Row row2() {
+  Row row2(String tipeLembur, tanggal) {
     return Row(
       children: [
         Expanded(
@@ -365,7 +417,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   fontWeight: FontWeight.w400),
               spaceHeight(2),
               CustomText(
-                  text: "Tindakan",
+                  text: tipeLembur,
                   color: cBlack,
                   fontSize: 11,
                   fontWeight: FontWeight.w500),
@@ -385,7 +437,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   fontWeight: FontWeight.w400),
               spaceHeight(2),
               CustomText(
-                  text: "05-01-2024",
+                  text: tanggal,
                   color: cBlack,
                   fontSize: 11,
                   fontWeight: FontWeight.w500),
@@ -396,7 +448,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
     );
   }
 
-  Row row3() {
+  Row row3(String waktu, totalJam) {
     return Row(
       children: [
         Expanded(
@@ -411,7 +463,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   fontWeight: FontWeight.w400),
               spaceHeight(2),
               CustomText(
-                  text: "03:00 - 06:00",
+                  text: waktu,
                   color: cBlack,
                   fontSize: 11,
                   fontWeight: FontWeight.w500),
@@ -431,7 +483,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   fontWeight: FontWeight.w400),
               spaceHeight(2),
               CustomText(
-                  text: "2 Jam 20 menit",
+                  text: totalJam,
                   color: cBlack,
                   fontSize: 11,
                   fontWeight: FontWeight.w500),
@@ -442,7 +494,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
     );
   }
 
-  Row row4() {
+  Row row4(absen, ket) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -465,7 +517,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                 child: Padding(
                   padding: const EdgeInsets.all(5),
                   child: CustomText(
-                      text: "BLACKDATE",
+                      text: absen,
                       color: cWhite,
                       fontSize: 11,
                       fontWeight: FontWeight.w500),
@@ -488,8 +540,7 @@ class _ComponentProgressLemburState extends State<ComponentProgressLembur> {
                   fontWeight: FontWeight.w400),
               spaceHeight(2),
               CustomText(
-                  text:
-                      "Menjaga jalur listrik server karena padam bergantian, perbaiki komputer radiologi.",
+                  text: ket,
                   color: cBlack,
                   fontSize: 11,
                   fontWeight: FontWeight.w500),

@@ -51,7 +51,8 @@ class ProgressLemburController extends GetxController {
       } else {
         debugPrint("Terjadi kesalahan get data progress lembur");
       }
-      print(json);
+      // print(json);
+      print(isActiveList);
     } catch (e) {
       print(e.toString());
     } finally {

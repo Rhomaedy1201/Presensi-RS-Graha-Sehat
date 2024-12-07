@@ -4,7 +4,7 @@ import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 
-Future<void> dialogJadwalKaryawan() {
+Future<void> dialogJadwalKaryawan(Map dataJadwal) {
   return Get.dialog(
     Material(
       type: MaterialType.transparency,
@@ -32,7 +32,7 @@ Future<void> dialogJadwalKaryawan() {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CustomText(
-                          text: "Jadwal Karyawan".tr,
+                          text: "Jadwal Karyawan",
                           color: cBlack,
                           fontSize: 14,
                           fontWeight: FontWeight.w400),
@@ -80,14 +80,14 @@ Future<void> dialogJadwalKaryawan() {
                         (index) => DataRow(
                           cells: [
                             DataCell(Text('${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
-                            DataCell(Text('Muhammad RHomaedi ${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
-                            DataCell(Text('Unit ${index + 1}')),
+                            DataCell(Text('${dataJadwal['unit']}')),
+                            DataCell(Text('${dataJadwal['nama']}')),
+                            DataCell(Text('${dataJadwal['tanggal']}')),
+                            DataCell(Text('${dataJadwal['shift']}')),
+                            DataCell(Text('${dataJadwal['absen']}')),
+                            DataCell(Text('${dataJadwal['pulang']}')),
+                            DataCell(Text('${dataJadwal['ket']}')),
+                            DataCell(Text('${dataJadwal['status']}')),
                           ],
                         ),
                       ),
