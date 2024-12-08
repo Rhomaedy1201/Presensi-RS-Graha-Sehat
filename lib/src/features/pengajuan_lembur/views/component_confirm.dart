@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/confirm_lembur_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/views/dialog_delete_lembur.dart';
 import 'package:presensi_gs/src/features/pengajuan_lembur/views/dialog_jadwal_karyawan.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
@@ -413,7 +414,14 @@ class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
                                                         ),
                                                       ),
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Future<void>
+                                                          test() async {
+                                                        print("YOOOWWWW");
+                                                      }
+
+                                                      dialogDeleteLembur(test);
+                                                    },
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
