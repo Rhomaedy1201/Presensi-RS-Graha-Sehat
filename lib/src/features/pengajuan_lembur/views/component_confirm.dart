@@ -470,12 +470,19 @@ class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
                                                           ),
                                                           onPressed: () {
                                                             Future<void>
-                                                                test() async {
-                                                              print("YOOOWWWW");
+                                                                aksiTolak() async {
+                                                              confirmLemburC.tolakConfirm(
+                                                                  data[index]
+                                                                      ['id'],
+                                                                  confirmLemburC
+                                                                      .textEditingController
+                                                                      .text);
                                                             }
 
                                                             dialogDeleteLembur(
-                                                                test);
+                                                                "Warning!",
+                                                                "Apakah anda ingin menolak pengajuan ini?",
+                                                                aksiTolak);
                                                           },
                                                           child: Row(
                                                             mainAxisAlignment:

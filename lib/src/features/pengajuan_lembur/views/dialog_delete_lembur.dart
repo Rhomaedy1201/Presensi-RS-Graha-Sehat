@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/confirm_lembur_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
+import 'package:presensi_gs/utils/components/space.dart';
 
-Future<void> dialogDeleteLembur(Future<void> Function() action) async {
+Future<void> dialogDeleteLembur(
+    title, msg, Future<void> Function() action) async {
+  ConfirmLemburController confirmLemburC = Get.find<ConfirmLemburController>();
   return Get.dialog(
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -24,17 +28,34 @@ Future<void> dialogDeleteLembur(Future<void> Function() action) async {
                   children: [
                     const SizedBox(height: 10),
                     CustomText(
-                        text: "Title Text",
+                        text: title,
                         color: cBlack,
                         fontSize: 15,
                         fontWeight: FontWeight.w500),
                     const SizedBox(height: 15),
                     CustomText(
-                        text: "Message Text",
+                        text: msg,
                         color: cBlack,
                         fontSize: 12,
                         fontWeight: FontWeight.w400),
                     const SizedBox(height: 20),
+                    SizedBox(
+                      height: 80,
+                      child: TextField(
+                        controller: confirmLemburC.textEditingController,
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                          hintText: 'Masukkan Alasan',
+                          hintStyle: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w400),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          contentPadding: EdgeInsets.all(12.0),
+                        ),
+                      ),
+                    ),
+                    spaceHeight(10),
                     //Buttons
                     Row(
                       children: [

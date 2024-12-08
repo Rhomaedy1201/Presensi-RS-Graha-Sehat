@@ -14,6 +14,7 @@ class ConfirmLemburController extends GetxController {
   var isEmptyDataConfirm = true.obs;
   var nip = "".obs;
   List<bool>? isActiveList;
+  final TextEditingController textEditingController = TextEditingController();
 
   @override
   void onInit() {
@@ -87,6 +88,41 @@ class ConfirmLemburController extends GetxController {
 
       if (response.statusCode == 200) {
         snackbarSuccess("Berhasil Menerima Pengajuan.");
+        getDataConfirm();
+      } else {
+        debugPrint(response.body.toString());
+      }
+      print(response.body);
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoadingAcc(false);
+    }
+  }
+
+  Future<void> tolakConfirm(id, ket) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      isLoadingAcc(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      Map body = {'tolak': ket};
+
+      http.Response response = await http.put(
+        Uri.parse("$base_url/lembur/tolak/$id"),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        snackbarSuccess("Berhasil Menolak Pengajuan.");
         getDataConfirm();
       } else {
         debugPrint(response.body.toString());
