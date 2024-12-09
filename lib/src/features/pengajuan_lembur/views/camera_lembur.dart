@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/selesai_lembur_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
@@ -15,6 +16,7 @@ class CameraLembur extends StatefulWidget {
 }
 
 class _CameraLemburState extends State<CameraLembur> {
+  SelesaiLemburController selesaiLemburC = Get.find<SelesaiLemburController>();
   CameraController? _controller;
   List<CameraDescription>? cameras;
   XFile? _imageFile;
@@ -114,7 +116,11 @@ class _CameraLemburState extends State<CameraLembur> {
                                             ), // Mengatur border radius menjadi 0
                                           ),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          selesaiLemburC.postAbsenFOTO(
+                                              Get.arguments.toString(),
+                                              _imageFile!.path);
+                                        },
                                         child: const Text(
                                           "Presensi",
                                           style: TextStyle(

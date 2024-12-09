@@ -231,9 +231,15 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            // Get.toNamed(RouteNames.cameraLembur);
-                                            Get.toNamed(RouteNames
-                                                .presensiLocationLembur);
+                                            if (data[index]['absen'] ==
+                                                "FOTO") {
+                                              Get.toNamed(
+                                                  RouteNames.cameraLembur,
+                                                  arguments: data[index]['id']);
+                                            } else {
+                                              Get.toNamed(RouteNames
+                                                  .presensiLocationLembur);
+                                            }
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
