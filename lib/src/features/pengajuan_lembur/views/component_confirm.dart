@@ -327,189 +327,199 @@ class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
                                                 ),
                                               ],
                                             ),
-                                            if (((confirmLemburC.nip.value ==
+                                            if ((confirmLemburC.nip.value ==
+                                                    data[index]['acc2_by']
+                                                        ['nip']) &&
+                                                data[index]['acc1_at'] != null)
+                                              if (((confirmLemburC.nip.value ==
+                                                          data[index]['acc1_by']
+                                                              ['nip']) &&
+                                                      (data[index]['acc1_at'] ==
+                                                          null)) ||
+                                                  ((confirmLemburC.nip.value ==
+                                                          data[index]['acc2_by']
+                                                              ['nip']) &&
+                                                      (data[index]['acc2_at'] ==
+                                                          null)))
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    spaceHeight(5),
+                                                    if (confirmLemburC
+                                                            .nip.value ==
                                                         data[index]['acc1_by']
-                                                            ['nip']) &&
-                                                    (data[index]['acc1_at'] ==
-                                                        null)) ||
-                                                ((confirmLemburC.nip.value ==
+                                                            ['nip'])
+                                                      CustomText(
+                                                          text: "Sebagai ACC 1",
+                                                          color: cBlack,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    if (confirmLemburC
+                                                            .nip.value ==
                                                         data[index]['acc2_by']
-                                                            ['nip']) &&
-                                                    (data[index]['acc2_at'] ==
-                                                        null)))
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  spaceHeight(5),
-                                                  if (confirmLemburC
-                                                          .nip.value ==
-                                                      data[index]['acc1_by']
-                                                          ['nip'])
-                                                    CustomText(
-                                                        text: "Sebagai ACC 1",
-                                                        color: cBlack,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  if (confirmLemburC
-                                                          .nip.value ==
-                                                      data[index]['acc2_by']
-                                                          ['nip'])
-                                                    CustomText(
-                                                        text: "Sebagai ACC 2",
-                                                        color: cBlack,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  spaceHeight(10),
-                                                  Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 30,
-                                                        width: Get.width * 0.28,
-                                                        child: ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            elevation: 0,
-                                                            shadowColor:
-                                                                cPrimary,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              side: const BorderSide(
-                                                                  color:
-                                                                      cPrimary,
-                                                                  width: 2),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                5,
+                                                            ['nip'])
+                                                      CustomText(
+                                                          text: "Sebagai ACC 2",
+                                                          color: cBlack,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    spaceHeight(10),
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 30,
+                                                          width:
+                                                              Get.width * 0.28,
+                                                          child: ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              elevation: 0,
+                                                              shadowColor:
+                                                                  cPrimary,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                side: const BorderSide(
+                                                                    color:
+                                                                        cPrimary,
+                                                                    width: 2),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  5,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          onPressed: () {
-                                                            // AKSI ACC PENGAJUAN LEMBUR
-                                                            if (confirmLemburC
-                                                                    .nip
-                                                                    .value ==
-                                                                data[index][
-                                                                        'acc1_by']
-                                                                    ['nip']) {
-                                                              confirmLemburC
-                                                                  .accConfirm(
-                                                                      "acc1",
-                                                                      data[index]
-                                                                          [
-                                                                          'id']);
-                                                            } else if (confirmLemburC
-                                                                    .nip
-                                                                    .value ==
-                                                                data[index][
-                                                                        'acc2_by']
-                                                                    ['nip']) {
-                                                              confirmLemburC
-                                                                  .accConfirm(
-                                                                      "acc2",
-                                                                      data[index]
-                                                                          [
-                                                                          'id']);
-                                                            }
-                                                          },
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              const Icon(
-                                                                  Icons
-                                                                      .check_circle,
-                                                                  color:
-                                                                      cPrimary,
-                                                                  size: 13),
-                                                              spaceWidth(5),
-                                                              Text(
-                                                                "Terima",
-                                                                style: customTextStyle(
-                                                                    FontWeight
-                                                                        .w500,
-                                                                    12,
-                                                                    cPrimary),
-                                                              ),
-                                                            ],
+                                                            onPressed: () {
+                                                              // AKSI ACC PENGAJUAN LEMBUR
+                                                              if (confirmLemburC
+                                                                      .nip
+                                                                      .value ==
+                                                                  data[index][
+                                                                          'acc1_by']
+                                                                      ['nip']) {
+                                                                confirmLemburC
+                                                                    .accConfirm(
+                                                                        "acc1",
+                                                                        data[index]
+                                                                            [
+                                                                            'id']);
+                                                              } else if (confirmLemburC
+                                                                      .nip
+                                                                      .value ==
+                                                                  data[index][
+                                                                          'acc2_by']
+                                                                      ['nip']) {
+                                                                confirmLemburC
+                                                                    .accConfirm(
+                                                                        "acc2",
+                                                                        data[index]
+                                                                            [
+                                                                            'id']);
+                                                              }
+                                                            },
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                const Icon(
+                                                                    Icons
+                                                                        .check_circle,
+                                                                    color:
+                                                                        cPrimary,
+                                                                    size: 13),
+                                                                spaceWidth(5),
+                                                                Text(
+                                                                  "Terima",
+                                                                  style: customTextStyle(
+                                                                      FontWeight
+                                                                          .w500,
+                                                                      12,
+                                                                      cPrimary),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      spaceWidth(5),
-                                                      SizedBox(
-                                                        height: 30,
-                                                        width: Get.width * 0.28,
-                                                        child: ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            elevation: 0,
-                                                            shadowColor: cRed,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              side:
-                                                                  const BorderSide(
-                                                                      color:
-                                                                          cRed,
-                                                                      width: 2),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                5,
+                                                        spaceWidth(5),
+                                                        SizedBox(
+                                                          height: 30,
+                                                          width:
+                                                              Get.width * 0.28,
+                                                          child: ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              elevation: 0,
+                                                              shadowColor: cRed,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                side:
+                                                                    const BorderSide(
+                                                                        color:
+                                                                            cRed,
+                                                                        width:
+                                                                            2),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  5,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          onPressed: () {
-                                                            Future<void>
-                                                                aksiTolak() async {
-                                                              confirmLemburC.tolakConfirm(
-                                                                  data[index]
-                                                                      ['id'],
-                                                                  confirmLemburC
-                                                                      .textEditingController
-                                                                      .text);
-                                                            }
+                                                            onPressed: () {
+                                                              Future<void>
+                                                                  aksiTolak() async {
+                                                                confirmLemburC.tolakConfirm(
+                                                                    data[index]
+                                                                        ['id'],
+                                                                    confirmLemburC
+                                                                        .textEditingController
+                                                                        .text);
+                                                              }
 
-                                                            dialogDeleteLembur(
-                                                                "Warning!",
-                                                                "Apakah anda ingin menolak pengajuan ini?",
-                                                                aksiTolak);
-                                                          },
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              const Icon(
-                                                                  Icons.cancel,
-                                                                  color: cRed,
-                                                                  size: 13),
-                                                              spaceWidth(5),
-                                                              Text(
-                                                                "Tolak",
-                                                                style: customTextStyle(
-                                                                    FontWeight
-                                                                        .w500,
-                                                                    12,
-                                                                    cRed),
-                                                              ),
-                                                            ],
+                                                              dialogDeleteLembur(
+                                                                  "Warning!",
+                                                                  "Apakah anda ingin menolak pengajuan ini?",
+                                                                  aksiTolak);
+                                                            },
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                const Icon(
+                                                                    Icons
+                                                                        .cancel,
+                                                                    color: cRed,
+                                                                    size: 13),
+                                                                spaceWidth(5),
+                                                                Text(
+                                                                  "Tolak",
+                                                                  style: customTextStyle(
+                                                                      FontWeight
+                                                                          .w500,
+                                                                      12,
+                                                                      cRed),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                           ],
                                         )
                                       : Container(),
