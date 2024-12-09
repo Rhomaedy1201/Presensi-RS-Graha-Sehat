@@ -54,7 +54,7 @@ class ConfirmLemburController extends GetxController {
           isEmptyDataConfirm(true);
         }
       } else {
-        debugPrint("Terjadi kesalahan get data progress lembur");
+        debugPrint("Terjadi kesalahan get data confirm lembur");
       }
       nip.value = nipPref ?? "null";
       print(nip.value);
