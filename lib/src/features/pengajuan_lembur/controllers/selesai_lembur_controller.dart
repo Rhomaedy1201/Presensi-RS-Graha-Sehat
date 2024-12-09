@@ -89,6 +89,7 @@ class SelesaiLemburController extends GetxController {
       if (response.statusCode == 200) {
         Get.back();
         snackbarSuccess("Berhasil Absen FOTO");
+        getDataSelesai();
       } else {
         var responseData = await response.stream.toBytes();
         var responseString = String.fromCharCodes(responseData);
