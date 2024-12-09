@@ -302,7 +302,7 @@ class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
                                                         children: [
                                                           CustomText(
                                                               text:
-                                                                  "${data[index]['acc2_by']['nip']} - ${data[index]['acc1_by']['nama']}",
+                                                                  "${data[index]['acc2_by']['nip']} - ${data[index]['acc2_by']['nama']}",
                                                               color: cBlack,
                                                               fontSize: 13,
                                                               fontWeight:
