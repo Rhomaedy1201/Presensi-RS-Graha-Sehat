@@ -303,15 +303,22 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                 ),
                                               ),
                                             ),
-                                          if (data[index]['masuk'] == null)
+                                          if (data[index]['masuk'] == null ||
+                                              data[index]['pulang'] == null)
                                             InkWell(
                                               onTap: () {
                                                 if (data[index]['absen'] ==
                                                     "FOTO") {
                                                   Get.toNamed(
                                                       RouteNames.cameraLembur,
-                                                      arguments: data[index]
-                                                          ['id']);
+                                                      arguments: {
+                                                        "id": data[index]['id'],
+                                                        "absen": data[index]
+                                                                    ['masuk'] ==
+                                                                null
+                                                            ? "Masuk"
+                                                            : "Pulang"
+                                                      });
                                                 } else {
                                                   Get.toNamed(RouteNames
                                                       .presensiLocationLembur);

@@ -103,7 +103,6 @@ class _CameraLemburState extends State<CameraLembur> {
                                   children: [
                                     spaceWidth(35),
                                     SizedBox(
-                                      width: 120,
                                       height: 40,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -118,11 +117,11 @@ class _CameraLemburState extends State<CameraLembur> {
                                         ),
                                         onPressed: () {
                                           selesaiLemburC.postAbsenFOTO(
-                                              Get.arguments.toString(),
+                                              Get.arguments['id'].toString(),
                                               _imageFile!.path);
                                         },
-                                        child: const Text(
-                                          "Presensi",
+                                        child: Text(
+                                          "Presensi ${Get.arguments['absen']}",
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
