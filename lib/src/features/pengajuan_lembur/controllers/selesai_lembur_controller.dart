@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/utils/base_url.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
+import 'package:presensi_gs/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,10 +17,10 @@ class SelesaiLemburController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getDataSelesai();
+    getDataSelesai(DateTime.now());
   }
 
-  Future<void> getDataSelesai() async {
+  Future<void> getDataSelesai(DateTime tgl) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     var headers = {
@@ -34,7 +34,8 @@ class SelesaiLemburController extends GetxController {
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/lembur/selesai/by-nip"),
+        Uri.parse(
+            "$base_url/lembur/selesai/by-nip?month=${tgl.getMonthNumber()}&year=${tgl.getYear()}"),
         headers: headers,
       );
 
@@ -89,7 +90,7 @@ class SelesaiLemburController extends GetxController {
       if (response.statusCode == 200) {
         Get.back();
         snackbarSuccess("Berhasil Absen FOTO");
-        getDataSelesai();
+        getDataSelesai(DateTime.now());
       } else {
         var responseData = await response.stream.toBytes();
         var responseString = String.fromCharCodes(responseData);

@@ -28,491 +28,507 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : selesaiLemburC.isEmptyDataSelesai.value
-                ? Center(
-                    child: Text(
-                      "Pengajuan Selesai Masih\nKosong!.",
-                      textAlign: TextAlign.center,
-                      style: customTextStyle(FontWeight.w400, 17, cBlack),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    child: Column(
-                      children: [
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 350),
-                          curve: Curves.linear,
-                          child: Container(
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: cWhite,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: cGrey_400,
-                                  blurRadius: 15,
-                                  offset: Offset(1, 1), // Shadow position
-                                ),
-                              ],
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: Column(
+                  children: [
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 350),
+                      curve: Curves.linear,
+                      child: Container(
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: cWhite,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: cGrey_400,
+                              blurRadius: 15,
+                              offset: Offset(1, 1), // Shadow position
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 10,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Filter",
+                                    style: customTextStyle(
+                                        FontWeight.w500, 13, cBlack),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Filter",
-                                        style: customTextStyle(
-                                            FontWeight.w500, 13, cBlack),
+                                  InkWell(
+                                    onTap: () {
+                                      filterShow = !filterShow;
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: cWhite,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: cGrey_400,
+                                            blurRadius: 7,
+                                            offset:
+                                                Offset(1, 1), // Shadow position
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          filterShow = !filterShow;
-                                          setState(() {});
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: cWhite,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                color: cGrey_400,
-                                                blurRadius: 7,
-                                                offset: Offset(
-                                                    1, 1), // Shadow position
+                                      child: Icon(
+                                        filterShow
+                                            ? Icons.arrow_drop_up
+                                            : Icons.arrow_drop_down_sharp,
+                                        size: 25,
+                                        color: cBlack,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            !filterShow
+                                ? Container()
+                                : Container(
+                                    width: Get.width,
+                                    height: 3,
+                                    color: cGrey_300,
+                                  ),
+                            !filterShow
+                                ? Container()
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        formTglAwal(context),
+                                        spaceHeight(10),
+                                        SizedBox(
+                                          width: Get.width,
+                                          height: 35,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: cPrimary,
+                                              shadowColor: cPrimary_400,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  7,
+                                                ), // Mengatur border radius menjadi 0
                                               ),
+                                            ),
+                                            onPressed: () {
+                                              selesaiLemburC
+                                                  .getDataSelesai(tglAwal);
+                                            },
+                                            child: const Text(
+                                              "Filter",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: cWhite,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        spaceHeight(3)
+                                      ],
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    spaceHeight(10),
+                    selesaiLemburC.isEmptyDataSelesai.value
+                        ? Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 100),
+                              child: Text(
+                                "Pengajuan Selesai\nPada bulan ${tglAwal.getMonthAndYear()}\nMasih Kosong!.",
+                                textAlign: TextAlign.center,
+                                style: customTextStyle(
+                                    FontWeight.w400, 17, cBlack),
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: selesaiLemburC.dataSelesai.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              var data = selesaiLemburC.dataSelesai;
+                              return Container(
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: cWhite,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: cGrey_400,
+                                      blurRadius: 15,
+                                      offset: Offset(1, 1), // Shadow position
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 25,
+                                                height: 25,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    color: cPrimary),
+                                                child: Center(
+                                                  child: CustomText(
+                                                      text: "1",
+                                                      color: cWhite,
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                              spaceWidth(10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: data[index]['nama'],
+                                                      color: cBlack,
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                  CustomText(
+                                                      text:
+                                                          "${data[index]['m_unit']['nama']}",
+                                                      color: cBlack,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ],
+                                              )
                                             ],
-                                            borderRadius:
-                                                BorderRadius.circular(5),
                                           ),
-                                          child: Icon(
-                                            filterShow
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down_sharp,
-                                            size: 25,
-                                            color: cBlack,
-                                          ),
+                                          if (data[index]['masuk'] != null &&
+                                              data[index]['absen'] == "FOTO")
+                                            InkWell(
+                                              onTap: () {
+                                                Get.dialog(Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 50,
+                                                      vertical: 200),
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      SizedBox(
+                                                        child: Image.network(
+                                                            data[index][
+                                                                'bukti_url_cast'],
+                                                            fit: BoxFit.cover),
+                                                      ),
+                                                      Positioned(
+                                                        right: 5,
+                                                        top: 5,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: cWhite,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                border: Border.all(
+                                                                    width: 1,
+                                                                    color:
+                                                                        cBlack),
+                                                              ),
+                                                              child: const Icon(
+                                                                  Icons.close)),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ));
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        width: 1,
+                                                        color: cPrimary),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 7,
+                                                      vertical: 3),
+                                                  child: CustomText(
+                                                      text: "Lihat FOTO",
+                                                      color: cPrimary,
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ),
+                                          if (data[index]['masuk'] == null)
+                                            InkWell(
+                                              onTap: () {
+                                                if (data[index]['absen'] ==
+                                                    "FOTO") {
+                                                  Get.toNamed(
+                                                      RouteNames.cameraLembur,
+                                                      arguments: data[index]
+                                                          ['id']);
+                                                } else {
+                                                  Get.toNamed(RouteNames
+                                                      .presensiLocationLembur);
+                                                }
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        width: 1,
+                                                        color: cPrimary),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 7,
+                                                      vertical: 3),
+                                                  child: CustomText(
+                                                      text: "Presensi",
+                                                      color: cPrimary,
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            )
+                                        ],
+                                      ),
+                                      spaceHeight(10),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 35),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: "Tanggal :",
+                                                      color: cBlack,
+                                                      fontSize: 9,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  CustomText(
+                                                      text: DateTime.parse(
+                                                              data[index]
+                                                                  ['tanggal'])
+                                                          .simpleDateRevers(),
+                                                      color: cBlack,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: "Mulai :",
+                                                      color: cBlack,
+                                                      fontSize: 9,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  CustomText(
+                                                      text: data[index]
+                                                          ['mulai'],
+                                                      color: cBlack,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: "Akhir :",
+                                                      color: cBlack,
+                                                      fontSize: 9,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  CustomText(
+                                                      text: data[index]
+                                                          ['akhir'],
+                                                      color: cBlack,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      spaceHeight(10),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 35),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: "Tipe Absen :",
+                                                      color: cBlack,
+                                                      fontSize: 9,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              3),
+                                                      color: const Color(
+                                                          0xFF8AE5F7),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      child: CustomText(
+                                                          text:
+                                                              "PRESENSI ${data[index]['absen']}",
+                                                          color: cBlack,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: "Status Presensi :",
+                                                      color: cBlack,
+                                                      fontSize: 9,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  CustomText(
+                                                      text: data[index]
+                                                                  ['masuk'] !=
+                                                              null
+                                                          ? "Selesai"
+                                                          : "-",
+                                                      color: cBlack,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      spaceHeight(10),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 35),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  CustomText(
+                                                      text: "Keterangan :",
+                                                      color: cBlack,
+                                                      fontSize: 9,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  CustomText(
+                                                      text: data[index]
+                                                              ['ket'] ??
+                                                          "-",
+                                                      color: cBlack,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                !filterShow
-                                    ? Container()
-                                    : Container(
-                                        width: Get.width,
-                                        height: 3,
-                                        color: cGrey_300,
-                                      ),
-                                !filterShow
-                                    ? Container()
-                                    : Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 12),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            formTglAwal(context),
-                                            spaceHeight(10),
-                                            SizedBox(
-                                              width: Get.width,
-                                              height: 35,
-                                              child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: cPrimary,
-                                                  shadowColor: cPrimary_400,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      7,
-                                                    ), // Mengatur border radius menjadi 0
-                                                  ),
-                                                ),
-                                                onPressed: () {
-                                                  // selesaiTukarShiftC.getSelesai(tglAwal);
-                                                },
-                                                child: const Text(
-                                                  "Filter",
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: cWhite,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            spaceHeight(3)
-                                          ],
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        spaceHeight(10),
-                        ListView.builder(
-                          itemCount: selesaiLemburC.dataSelesai.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            var data = selesaiLemburC.dataSelesai;
-                            return Container(
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: cWhite,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: cGrey_400,
-                                    blurRadius: 15,
-                                    offset: Offset(1, 1), // Shadow position
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 25,
-                                              height: 25,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  color: cPrimary),
-                                              child: Center(
-                                                child: CustomText(
-                                                    text: "1",
-                                                    color: cWhite,
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                            spaceWidth(10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: data[index]['nama'],
-                                                    color: cBlack,
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                                CustomText(
-                                                    text:
-                                                        "${data[index]['m_unit']['nama']}",
-                                                    color: cBlack,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        if (data[index]['masuk'] != null &&
-                                            data[index]['absen'] == "FOTO")
-                                          InkWell(
-                                            onTap: () {
-                                              Get.dialog(Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 50,
-                                                        vertical: 200),
-                                                child: Stack(
-                                                  clipBehavior: Clip.none,
-                                                  children: [
-                                                    SizedBox(
-                                                      child: Image.asset(
-                                                          "assets/images/profile.jpg",
-                                                          fit: BoxFit.cover),
-                                                    ),
-                                                    Positioned(
-                                                      right: 5,
-                                                      top: 5,
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                                          Get.back();
-                                                        },
-                                                        child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: cWhite,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                              border: Border.all(
-                                                                  width: 1,
-                                                                  color:
-                                                                      cBlack),
-                                                            ),
-                                                            child: const Icon(
-                                                                Icons.close)),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ));
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: cPrimary),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 7,
-                                                        vertical: 3),
-                                                child: CustomText(
-                                                    text: "Lihat FOTO",
-                                                    color: cPrimary,
-                                                    fontSize: 11,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          ),
-                                        if (data[index]['masuk'] == null)
-                                          InkWell(
-                                            onTap: () {
-                                              if (data[index]['absen'] ==
-                                                  "FOTO") {
-                                                Get.toNamed(
-                                                    RouteNames.cameraLembur,
-                                                    arguments: data[index]
-                                                        ['id']);
-                                              } else {
-                                                Get.toNamed(RouteNames
-                                                    .presensiLocationLembur);
-                                              }
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: cPrimary),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 7,
-                                                        vertical: 3),
-                                                child: CustomText(
-                                                    text: "Presensi",
-                                                    color: cPrimary,
-                                                    fontSize: 11,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                          )
-                                      ],
-                                    ),
-                                    spaceHeight(10),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 35),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: "Tanggal :",
-                                                    color: cBlack,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                CustomText(
-                                                    text: DateTime.parse(
-                                                            data[index]
-                                                                ['tanggal'])
-                                                        .simpleDateRevers(),
-                                                    color: cBlack,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: "Mulai :",
-                                                    color: cBlack,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                CustomText(
-                                                    text: data[index]['mulai'],
-                                                    color: cBlack,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: "Akhir :",
-                                                    color: cBlack,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                CustomText(
-                                                    text: data[index]['akhir'],
-                                                    color: cBlack,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    spaceHeight(10),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 35),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: "Tipe Absen :",
-                                                    color: cBlack,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            3),
-                                                    color:
-                                                        const Color(0xFF8AE5F7),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(2),
-                                                    child: CustomText(
-                                                        text:
-                                                            "PRESENSI ${data[index]['absen']}",
-                                                        color: cBlack,
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: "Status Presensi :",
-                                                    color: cBlack,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                CustomText(
-                                                    text: data[index]
-                                                                ['masuk'] !=
-                                                            null
-                                                        ? "Selesai"
-                                                        : "-",
-                                                    color: cBlack,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    spaceHeight(10),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 35),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                CustomText(
-                                                    text: "Keterangan :",
-                                                    color: cBlack,
-                                                    fontSize: 9,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                CustomText(
-                                                    text: data[index]['ket'] ??
-                                                        "-",
-                                                    color: cBlack,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                  ),
+                              );
+                            },
+                          )
+                  ],
+                ),
+              ),
       ),
     );
   }
