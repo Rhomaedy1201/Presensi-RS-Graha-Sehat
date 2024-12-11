@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 // const cPrimary = Color(0xFF0C7E46);
 // const cPrimary = Color(0xFF33CBD5);
 const cPrimary = Color(0xFF0ab39c);
+const cPrimary_dark = Color(0xFF078877);
 const cPrimary_800 = Color(0xFF10A55C);
 const cPrimary_600 = Color(0xFF13BD6A);
 const cPrimary_400 = Color(0xFF17D779);
