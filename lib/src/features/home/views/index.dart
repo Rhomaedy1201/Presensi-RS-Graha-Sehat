@@ -5,6 +5,7 @@ import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
 import 'package:presensi_gs/src/features/home/views/components.dart';
+import 'package:presensi_gs/src/features/home/views/upadate_version.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_dialog.dart';
 import 'package:presensi_gs/utils/components/my_menu_home.dart';
@@ -61,10 +62,15 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         actions: [
-          const Icon(
-            Icons.notifications,
-            size: 25,
-            color: cWhite,
+          InkWell(
+            onTap: () {
+              updatedVersion();
+            },
+            child: const Icon(
+              Icons.notifications,
+              size: 25,
+              color: cWhite,
+            ),
           ),
           spaceWidth(20),
         ],
