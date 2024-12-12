@@ -2,9 +2,10 @@ import "imported_package.dart";
 
 Widget activityMenu(HomeController homeC) {
   return Container(
-    margin: EdgeInsets.only(top: Get.height * 0.385),
+    margin: EdgeInsets.only(top: Get.height * 0.495),
     // color: Colors.amber,
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -148,6 +149,15 @@ Widget activityMenu(HomeController homeC) {
             ),
           ),
         ),
+        spaceHeight(5),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+          child: CustomText(
+              text: "Aktivitas",
+              color: cBlack,
+              fontSize: 16,
+              fontWeight: FontWeight.w600),
+        ),
         Expanded(
           child: SizedBox(
             child: RefreshIndicator(
@@ -196,9 +206,7 @@ Widget activityMenu(HomeController homeC) {
                     //       vertical: 10, horizontal: 30),
                     //   child: componentCardPresensi(homeC),
                     // ),
-                    Container(
-                      height: 20,
-                    ),
+                    spaceHeight(30),
                   ],
                 ),
               ),

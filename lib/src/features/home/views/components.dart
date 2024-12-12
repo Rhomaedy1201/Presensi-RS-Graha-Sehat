@@ -1,4 +1,5 @@
 import 'package:presensi_gs/src/features/home/components/presensi_lembur.dart';
+import 'package:presensi_gs/src/features/home/components/submission_card.dart';
 import 'package:presensi_gs/src/features/home/controllers/code_blue_and_red_controller.dart';
 import '../components/imported_package.dart';
 
@@ -20,15 +21,6 @@ class _ComponentHomeState extends State<ComponentHome> {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          spaceHeight(10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-            child: CustomText(
-                text: "Aktivitas",
-                color: cBlack,
-                fontSize: 16,
-                fontWeight: FontWeight.w600),
-          ),
           if (!codeBlueRed.isEmptyDataRed.value)
             Padding(
               padding: const EdgeInsets.only(top: 5),
@@ -52,41 +44,8 @@ class _ComponentHomeState extends State<ComponentHome> {
           spaceHeight(5),
           overTimeCard(),
           spaceHeight(12),
-          submissionCard()
+          submissionCard(context)
         ],
-      ),
-    );
-  }
-
-  Padding submissionCard() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: cWhite,
-          boxShadow: const [
-            BoxShadow(
-              color: cGrey_500,
-              blurRadius: 10,
-              offset: Offset(0, 3), // Shadow position
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomText(
-                  text: "Pengajuan",
-                  color: cBlack,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
-            ],
-          ),
-        ),
       ),
     );
   }

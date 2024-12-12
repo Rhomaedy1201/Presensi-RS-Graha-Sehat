@@ -7,7 +7,7 @@ ClipPath componentUser(
       children: [
         Container(
           width: Get.width,
-          height: Get.height * 0.45,
+          height: Get.height * 0.55,
           decoration: const BoxDecoration(
             color: cPrimary_dark,
             borderRadius: BorderRadius.only(
@@ -20,7 +20,7 @@ ClipPath componentUser(
           top: 0,
           child: Container(
             width: Get.width,
-            height: Get.height * 0.425,
+            height: Get.height * 0.53,
             decoration: const BoxDecoration(
               color: cPrimary,
               borderRadius: BorderRadius.only(
@@ -93,8 +93,111 @@ ClipPath componentUser(
                       ],
                     ),
                   ),
-                  spaceHeight(20),
+                  spaceHeight(15),
                   presenceCard(homeC),
+                  spaceHeight(12),
+                  Container(
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: cWhite,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: cGrey_400,
+                          blurRadius: 3,
+                          offset: Offset(0, -1), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                              text: "Jam Kerja Hari ini",
+                              color: cGrey_600,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                          spaceHeight(8),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: cGrey_200,
+                              borderRadius: BorderRadius.circular(7),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.login_sharp,
+                                        size: 25,
+                                        color: cPrimary_dark,
+                                      ),
+                                      spaceWidth(10),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          CustomText(
+                                              text: "Masuk",
+                                              color: cGrey_700,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                          CustomText(
+                                              text: DateTime.now().getTime(),
+                                              color: cBlack,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                      width: 1.5, height: 35, color: cGrey_500),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.logout_outlined,
+                                        size: 25,
+                                        color: cRed_700,
+                                      ),
+                                      spaceWidth(10),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          CustomText(
+                                              text: "Pulang",
+                                              color: cGrey_700,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400),
+                                          CustomText(
+                                              text: DateTime.now().getTime(),
+                                              color: cBlack,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

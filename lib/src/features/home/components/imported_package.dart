@@ -21,3 +21,5 @@ export 'package:ntp/ntp.dart';
 export 'package:presensi_gs/http/models/dashboard_statistik_model.dart';
 export 'package:presensi_gs/utils/base_url.dart';
 export 'package:shared_preferences/shared_preferences.dart';
+
+export 'package:pie_chart/pie_chart.dart';
