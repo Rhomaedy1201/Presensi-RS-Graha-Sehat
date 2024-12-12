@@ -127,7 +127,7 @@ Container presenceCard(HomeController homeC) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                  text: "Hari ini, ${DateTime.now().getSimpleDayAndDate()}",
+                  text: "Hari ini, ${DateTime.now().fullDateAll()}",
                   color: cGrey_600,
                   fontSize: 12,
                   fontWeight: FontWeight.w500),
@@ -172,7 +172,7 @@ Container presenceCard(HomeController homeC) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                          text: "Hadir",
+                          text: "Masuk",
                           color: cGrey_900,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
@@ -193,7 +193,7 @@ Container presenceCard(HomeController homeC) {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0x4506AB95),
+                      color: cGrey_300,
                       borderRadius: BorderRadius.circular(7),
                     ),
                     child: const Padding(
@@ -201,7 +201,7 @@ Container presenceCard(HomeController homeC) {
                       child: Icon(
                         Icons.check_circle,
                         size: 28,
-                        color: cPrimary_dark,
+                        color: cGrey_500,
                       ),
                     ),
                   ),
@@ -211,14 +211,17 @@ Container presenceCard(HomeController homeC) {
                     children: [
                       CustomText(
                           text: "Pulang",
-                          color: cGrey_900,
+                          color: cGrey_500,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
-                      CustomText(
-                          text: "08:57",
-                          color: cBlack,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 3),
+                        child: CustomText(
+                            text: "--:--",
+                            color: cGrey_500,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ],
                   )
                 ],
@@ -227,7 +230,7 @@ Container presenceCard(HomeController homeC) {
           ),
           spaceHeight(17),
           SizedBox(
-            width: Get.width,
+            width: Get.width / 1.4,
             height: 35,
             child: ElevatedButton(
               onPressed: () async {},

@@ -44,6 +44,7 @@ class _HomeViewState extends State<HomeView> {
               homeC,
             ),
             activityMenu(homeC),
+            Container()
           ],
         ),
       ),

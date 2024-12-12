@@ -1,10 +1,6 @@
-import 'package:community_material_icon/community_material_icon.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:presensi_gs/src/features/home/components/presensi_lembur.dart';
 import 'package:presensi_gs/src/features/home/controllers/code_blue_and_red_controller.dart';
-import 'package:presensi_gs/utils/colors.dart';
-import 'package:presensi_gs/utils/components/my_style_text.dart';
-import 'package:presensi_gs/utils/components/space.dart';
+import '../components/imported_package.dart';
 
 class ComponentHome extends StatefulWidget {
   const ComponentHome({super.key});
@@ -22,21 +18,75 @@ class _ComponentHomeState extends State<ComponentHome> {
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          spaceHeight(5),
+          spaceHeight(10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+            child: CustomText(
+                text: "Aktivitas",
+                color: cBlack,
+                fontSize: 16,
+                fontWeight: FontWeight.w600),
+          ),
           if (!codeBlueRed.isEmptyDataRed.value)
-            codeRed(
-              codeBlueRed.bagianRed.value,
-              codeBlueRed.shiftRed.value,
-              codeBlueRed.zonaRed.value,
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: codeRed(
+                codeBlueRed.bagianRed.value,
+                codeBlueRed.shiftRed.value,
+                codeBlueRed.zonaRed.value,
+              ),
             ),
           if (!codeBlueRed.isEmptyDataBlue.value)
-            codeBlue(
-              codeBlueRed.bagianBlue.value,
-              codeBlueRed.shiftBlue.value,
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: codeBlue(
+                codeBlueRed.bagianBlue.value,
+                codeBlueRed.shiftBlue.value,
+              ),
             ),
+          if (!codeBlueRed.isEmptyDataRed.value ||
+              !codeBlueRed.isEmptyDataBlue.value)
+            spaceHeight(10),
           spaceHeight(5),
+          overTimeCard(),
+          spaceHeight(12),
+          submissionCard()
         ],
+      ),
+    );
+  }
+
+  Padding submissionCard() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: cWhite,
+          boxShadow: const [
+            BoxShadow(
+              color: cGrey_500,
+              blurRadius: 10,
+              offset: Offset(0, 3), // Shadow position
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(
+                  text: "Pengajuan",
+                  color: cBlack,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -46,23 +96,23 @@ class _ComponentHomeState extends State<ComponentHome> {
       duration: const Duration(milliseconds: 350),
       curve: Curves.linear,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Container(
           width: Get.width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
             color: cWhite,
             boxShadow: const [
               BoxShadow(
                 color: cGrey_400,
                 blurRadius: 10,
-                offset: Offset(0, 0), // Shadow position
+                offset: Offset(0, 3), // Shadow position
               ),
             ],
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 8,
+              horizontal: 12,
               vertical: 10,
             ),
             child: Column(
@@ -248,23 +298,23 @@ class _ComponentHomeState extends State<ComponentHome> {
       duration: const Duration(milliseconds: 350),
       curve: Curves.linear,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Container(
           width: Get.width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
             color: cWhite,
             boxShadow: const [
               BoxShadow(
-                color: cGrey_400,
+                color: cGrey_500,
                 blurRadius: 10,
-                offset: Offset(0, 0), // Shadow position
+                offset: Offset(0, 3), // Shadow position
               ),
             ],
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 8,
+              horizontal: 12,
               vertical: 10,
             ),
             child: Column(
