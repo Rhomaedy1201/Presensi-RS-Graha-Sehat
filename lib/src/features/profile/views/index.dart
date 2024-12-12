@@ -80,28 +80,30 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: cGrey_400,
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(color: cPrimary, width: 4),
-                                image: homeC.profileM?.data.profilUrl == null
-                                    ? selectedFile == null
-                                        ? const DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/profile.jpg"),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : DecorationImage(
-                                            image: FileImage(selectedFile!),
-                                            fit: BoxFit.cover,
-                                          )
-                                    : selectedFile == null
-                                        ? DecorationImage(
-                                            image: NetworkImage(homeC
-                                                    .profileM?.data.profilUrl ??
-                                                ""),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : DecorationImage(
-                                            image: FileImage(selectedFile!),
-                                            fit: BoxFit.cover,
-                                          ),
+                                image:
+                                    homeC.profileData['photo_url_cast'] == null
+                                        ? selectedFile == null
+                                            ? const DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/profile.jpg"),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : DecorationImage(
+                                                image: FileImage(selectedFile!),
+                                                fit: BoxFit.cover,
+                                              )
+                                        : selectedFile == null
+                                            ? DecorationImage(
+                                                image: NetworkImage(
+                                                    homeC.profileData[
+                                                            'photo_url_cast'] ??
+                                                        ""),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : DecorationImage(
+                                                image: FileImage(selectedFile!),
+                                                fit: BoxFit.cover,
+                                              ),
                               ),
                             ),
                             Positioned(

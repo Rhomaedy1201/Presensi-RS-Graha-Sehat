@@ -37,9 +37,9 @@ class _HomeViewState extends State<HomeView> {
         () => Stack(
           children: [
             componentUser(
-              homeC.profileM?.data.nama ?? "null",
-              homeC.profileM?.data.namaJabatan ?? "null",
-              homeC.profileM?.data.profilUrl ?? "null",
+              homeC.profileData['nama'] ?? "null",
+              homeC.profileData['nama_jabatan'] ?? "null",
+              homeC.profileData['photo_url_cast'] ?? "null",
               heighStatusBar,
               homeC,
             ),

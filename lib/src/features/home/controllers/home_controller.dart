@@ -4,7 +4,8 @@ import '../components/imported_package.dart';
 
 class HomeController extends GetxController {
   DashboardStatistikModel? statistikModel;
-  ProfileModel? profileM;
+  // ProfileModel? profileM;
+  RxMap profileData = {}.obs;
   var isLoadingCheckJadwal = false.obs;
   var isLoadingStatistik = false.obs;
   var isLoadingStr = false.obs;
@@ -161,13 +162,13 @@ class HomeController extends GetxController {
       }
 
       http.Response response = await http.get(
-        Uri.parse("$base_url/profil"),
+        Uri.parse("$base_url/my-profil"),
         headers: headers,
       );
 
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        profileM = ProfileModel.fromJson(json);
+        profileData.value = json['data'];
       } else {
         debugPrint("Terjadi kesalahan get data User");
       }

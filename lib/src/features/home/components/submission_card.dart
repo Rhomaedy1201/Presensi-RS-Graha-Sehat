@@ -1,11 +1,24 @@
 import 'imported_package.dart';
 
 final dataMap = <String, double>{
-  "Flutter": 5,
+  "Perizinan": 6,
+  "Tukar Shift": 2,
+  "Lembur": 1,
+  "Sppd": 1,
 };
 
+final dataList = [
+  "Perizinan",
+  "Tukar Shift",
+  "Lembur",
+  "Sppd",
+];
+
 final colorList = <Color>[
-  Colors.greenAccent,
+  const Color(0xFF00AC06),
+  const Color(0xFF0217FF),
+  Colors.amber,
+  const Color(0xFFFF5E00),
 ];
 
 Padding submissionCard(BuildContext context) {
@@ -35,34 +48,68 @@ Padding submissionCard(BuildContext context) {
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
             spaceHeight(20),
-            PieChart(
-              dataMap: dataMap,
-              animationDuration: Duration(milliseconds: 800),
-              chartLegendSpacing: 32,
-              chartRadius: MediaQuery.of(context).size.width / 3.2,
-              colorList: colorList,
-              initialAngleInDegree: 0,
-              chartType: ChartType.ring,
-              ringStrokeWidth: 32,
-              centerText: "HYBRID",
-              legendOptions: LegendOptions(
-                showLegendsInRow: false,
-                legendPosition: LegendPosition.right,
-                showLegends: true,
-                // legendShape: _BoxShape.circle,
-                legendTextStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PieChart(
+                  dataMap: dataMap,
+                  animationDuration: const Duration(milliseconds: 800),
+                  chartLegendSpacing: 40,
+                  chartRadius: MediaQuery.of(context).size.width / 3,
+                  colorList: colorList,
+                  initialAngleInDegree: 0,
+                  chartType: ChartType.ring,
+                  ringStrokeWidth: 30,
+                  centerText: "HYBRID",
+                  legendOptions: const LegendOptions(
+                    showLegendsInRow: false,
+                    legendPosition: LegendPosition.right,
+                    showLegends: false,
+                    legendTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  chartValuesOptions: const ChartValuesOptions(
+                    showChartValueBackground: true,
+                    showChartValues: true,
+                    showChartValuesInPercentage: false,
+                    showChartValuesOutside: true,
+                    decimalPlaces: 1,
+                  ),
                 ),
-              ),
-              chartValuesOptions: ChartValuesOptions(
-                showChartValueBackground: true,
-                showChartValues: true,
-                showChartValuesInPercentage: false,
-                showChartValuesOutside: false,
-                decimalPlaces: 1,
-              ),
-              // gradientList: ---To add gradient colors---
-              // emptyColorGradient: ---Empty Color gradient---
+                SizedBox(
+                  width: 100,
+                  child: ListView.builder(
+                    itemCount: colorList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: colorList[index],
+                              ),
+                            ),
+                            spaceWidth(7),
+                            CustomText(
+                                text: dataList[index],
+                                color: cGrey_900,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600)
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
             )
           ],
         ),

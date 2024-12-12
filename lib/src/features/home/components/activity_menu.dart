@@ -2,7 +2,7 @@ import "imported_package.dart";
 
 Widget activityMenu(HomeController homeC) {
   return Container(
-    margin: EdgeInsets.only(top: Get.height * 0.495),
+    margin: EdgeInsets.only(top: Get.height * 0.499),
     // color: Colors.amber,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
