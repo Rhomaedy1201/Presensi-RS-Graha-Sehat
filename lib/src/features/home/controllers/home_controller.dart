@@ -1,12 +1,6 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:presensi_gs/http/models/dashboard_statistik_model.dart';
-import 'package:presensi_gs/http/models/profile_model.dart';
-import 'package:presensi_gs/utils/base_url.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:presensi_gs/http/models/profile_model.dart';
+import '../components/imported_package.dart';
 
 class HomeController extends GetxController {
   DashboardStatistikModel? statistikModel;
@@ -21,6 +15,11 @@ class HomeController extends GetxController {
   var isJadwal = false.obs;
   var isEmptyStr = true.obs;
   var tglStr = "".obs;
+
+  Rx<DateTime>? ntpTime;
+  Rx<DateTime>? initialFetchTime;
+  Rx<Timer>? timer;
+  RxBool isLoadingTime = true.obs;
   // user
 
   @override
@@ -30,6 +29,7 @@ class HomeController extends GetxController {
     getStatistik();
     getStr();
     getProfile();
+    fetchNtpTime();
   }
 
   // @override
@@ -175,6 +175,46 @@ class HomeController extends GetxController {
       print(e.toString()); // Mengembalikan error dalam Map
     } finally {
       isLoadingUser(false);
+    }
+  }
+
+  Future<void> fetchNtpTime() async {
+    try {
+      DateTime networkTime = await NTP.now();
+      ntpTime = networkTime.toLocal().obs;
+      initialFetchTime = DateTime.now().toUtc().obs;
+      isLoadingTime(false);
+      _startTimer();
+    } catch (e) {
+      isLoadingTime(false);
+      print('Error fetching NTP time: $e');
+    }
+  }
+
+  void _startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (ntpTime != null && initialFetchTime != null) {
+        ntpTime!.value = initialFetchTime!.value.add(
+          Duration(seconds: timer.tick),
+        );
+      }
+    }).obs;
+  }
+
+  String getGreeting() {
+    final now = DateTime.now();
+    final hour = now.hour;
+
+    if (hour >= 7 && hour < 10) {
+      return "Selamat Pagi";
+    } else if (hour >= 10 && hour < 14) {
+      return "Selamat Siang";
+    } else if (hour >= 14 && hour < 18) {
+      return "Selamat Sore";
+    } else if (hour >= 18 || hour < 7) {
+      return "Selamat Malam";
+    } else {
+      return "Halo";
     }
   }
 }

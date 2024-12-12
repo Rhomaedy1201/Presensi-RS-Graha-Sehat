@@ -46,7 +46,7 @@ class _ComponentHomeState extends State<ComponentHome> {
       duration: const Duration(milliseconds: 350),
       curve: Curves.linear,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 30),
         child: Container(
           width: Get.width,
           decoration: BoxDecoration(
