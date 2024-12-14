@@ -60,6 +60,7 @@ class SelesaiLemburController extends GetxController {
   Future<void> postAbsenFOTO(
     String id,
     String? file,
+    String jenisAbsen,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -79,6 +80,7 @@ class SelesaiLemburController extends GetxController {
       request.headers.addAll(headers);
 
       request.fields['id'] = id;
+      request.fields['jenis'] = jenisAbsen;
 
       if (file != null || file != "null") {
         request.files

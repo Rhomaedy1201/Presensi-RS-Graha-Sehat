@@ -113,7 +113,7 @@ class ConfirmLemburController extends GetxController {
         throw Exception("Token not found");
       }
 
-      Map body = {'tolak': ket};
+      Map body = {'ket': ket};
 
       http.Response response = await http.put(
         Uri.parse("$base_url/lembur/tolak/$id"),

@@ -317,7 +317,7 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                                     ['masuk'] ==
                                                                 null
                                                             ? "Masuk"
-                                                            : "Pulang"
+                                                            : "Pulang",
                                                       });
                                                 } else {
                                                   Get.toNamed(RouteNames

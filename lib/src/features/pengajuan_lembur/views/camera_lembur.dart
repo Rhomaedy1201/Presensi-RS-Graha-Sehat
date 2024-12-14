@@ -118,7 +118,10 @@ class _CameraLemburState extends State<CameraLembur> {
                                         onPressed: () {
                                           selesaiLemburC.postAbsenFOTO(
                                               Get.arguments['id'].toString(),
-                                              _imageFile!.path);
+                                              _imageFile!.path,
+                                              Get.arguments['absen'] == "Pulang"
+                                                  ? "KELUAR"
+                                                  : "MASUK");
                                         },
                                         child: Text(
                                           "Presensi ${Get.arguments['absen']}",
