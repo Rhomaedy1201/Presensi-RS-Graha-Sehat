@@ -47,7 +47,7 @@ class ConfirmLemburController extends GetxController {
         if (dataConfirm.value.length > 0) {
           isEmptyDataConfirm(false);
           isActiveList = List.generate(
-            dataConfirm.length ?? 0,
+            dataConfirm.length,
             (index) => false,
           );
         } else {
@@ -56,7 +56,8 @@ class ConfirmLemburController extends GetxController {
       } else {
         debugPrint("Terjadi kesalahan get data confirm lembur");
       }
-      nip.value = nipPref ?? "null";
+      print(dataConfirm);
+
       print(nip.value);
     } catch (e) {
       print(e.toString());

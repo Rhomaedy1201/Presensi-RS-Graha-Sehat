@@ -47,10 +47,7 @@ class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
                         padding: const EdgeInsets.only(top: 12),
                         itemBuilder: (context, index) {
                           var data = confirmLemburC.dataConfirm;
-                          if(data[index]['acc_status'] == 2){
-                            return Container();
-                          }
-                          else{
+                          
                           return AnimatedSize(
                             duration: const Duration(milliseconds: 350),
                             curve: Curves.linear,
@@ -526,10 +523,9 @@ class _ComponentConfirmLemburState extends State<ComponentConfirmLembur> {
                               ),
                             ),
                           );
-                          }
                         },
                       ),
-                    )),
+                    ),),
       ),
     );
   }
