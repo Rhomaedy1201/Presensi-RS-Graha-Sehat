@@ -14,6 +14,7 @@ class _ComponentHomeState extends State<ComponentHome> {
   bool kodeRed = false;
   bool kodeBlue = false;
   CodeBlueAndRedController codeBlueRed = Get.find<CodeBlueAndRedController>();
+  HomeController homeC = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +43,14 @@ class _ComponentHomeState extends State<ComponentHome> {
               !codeBlueRed.isEmptyDataBlue.value)
             spaceHeight(10),
           spaceHeight(5),
-          overTimeCard(),
-          spaceHeight(12),
+          homeC.dataPresensiHarian['lembur'] == null ? Container() : 
+          Column(
+            children: [
+              overTimeCard(homeC),
+              spaceHeight(12),
+            ],
+          ),
+          
           submissionCard(context)
         ],
       ),

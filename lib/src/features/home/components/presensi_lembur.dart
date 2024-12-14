@@ -1,6 +1,6 @@
 import 'imported_package.dart';
 
-Padding overTimeCard() {
+Padding overTimeCard(HomeController homeC) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 30),
     child: Container(
@@ -47,7 +47,7 @@ Padding overTimeCard() {
                         ),
                         spaceHeight(2),
                         CustomText(
-                            text: DateTime.now().fullDateTime(),
+                            text: "${DateTime.parse(homeC.dataPresensiHarian['lembur']['tanggal']).getSimpleDayAndDate()} ${homeC.dataPresensiHarian['lembur']['mulai']}",
                             color: cGrey_900,
                             fontSize: 11,
                             fontWeight: FontWeight.w600),
@@ -69,7 +69,7 @@ Padding overTimeCard() {
                         ),
                         spaceHeight(2),
                         CustomText(
-                            text: DateTime.now().fullDateTime(),
+                            text: "${DateTime.parse(homeC.dataPresensiHarian['lembur']['tanggal']).getSimpleDayAndDate()} ${homeC.dataPresensiHarian['lembur']['akhir']}",
                             color: cGrey_900,
                             fontSize: 11,
                             fontWeight: FontWeight.w600),

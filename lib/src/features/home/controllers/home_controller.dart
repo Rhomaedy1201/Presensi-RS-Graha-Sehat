@@ -1,15 +1,15 @@
 import 'package:http/http.dart' as http;
-import 'package:presensi_gs/http/models/profile_model.dart';
 import '../components/imported_package.dart';
 
 class HomeController extends GetxController {
   DashboardStatistikModel? statistikModel;
-  // ProfileModel? profileM;
   RxMap profileData = {}.obs;
+  RxMap dataPresensiHarian = {}.obs;
   var isLoadingCheckJadwal = false.obs;
   var isLoadingStatistik = false.obs;
   var isLoadingStr = false.obs;
   var isLoadingUser = false.obs;
+  var isLoadingLembur = false.obs;
   var shift = "".obs;
   var jamMasuk = "".obs;
   var jamPulang = "".obs;
@@ -31,6 +31,7 @@ class HomeController extends GetxController {
     getStr();
     getProfile();
     fetchNtpTime();
+    getJadwalHarian();
   }
 
   // @override
@@ -176,6 +177,38 @@ class HomeController extends GetxController {
       print(e.toString()); // Mengembalikan error dalam Map
     } finally {
       isLoadingUser(false);
+    }
+  }
+
+  Future<void> getJadwalHarian() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      isLoadingLembur(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/dashboard/jadwal/harian"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        dataPresensiHarian.value = json['data'];
+      } else {
+        debugPrint("Terjadi kesalahan get data presensi harian");
+      }
+    } catch (e) {
+      print(e.toString()); // Mengembalikan error dalam Map
+    } finally {
+      isLoadingLembur(false);
     }
   }
 

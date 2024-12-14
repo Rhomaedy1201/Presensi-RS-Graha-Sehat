@@ -1,3 +1,4 @@
+import 'package:presensi_gs/src/features/attendence/controllers/presensi_controller.dart';
 import 'package:presensi_gs/src/features/home/components/activity_menu.dart';
 import 'package:presensi_gs/src/features/home/components/user_heading.dart';
 import '../components/imported_package.dart';
@@ -12,6 +13,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   HomeController homeC = Get.find<HomeController>();
   PrefsController prefsC = Get.find<PrefsController>();
+  PresensiController presensiC = Get.find<PresensiController>();
 
   bool kodeRedShow = false;
   bool kodeBlueShow = false;
@@ -42,6 +44,7 @@ class _HomeViewState extends State<HomeView> {
               homeC.profileData['photo_url_cast'] ?? "null",
               heighStatusBar,
               homeC,
+              presensiC,
             ),
             activityMenu(homeC),
             Container()

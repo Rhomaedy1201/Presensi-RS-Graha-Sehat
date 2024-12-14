@@ -1,7 +1,9 @@
+import 'package:presensi_gs/src/features/attendence/controllers/presensi_controller.dart';
+
 import 'imported_package.dart';
 
 ClipPath componentUser(
-    name, jabatan, image, heighStatusBar, HomeController homeC) {
+    name, jabatan, image, heighStatusBar, HomeController homeC, PresensiController presensiC) {
   return ClipPath(
     child: Stack(
       children: [
@@ -94,9 +96,9 @@ ClipPath componentUser(
                     ),
                   ),
                   spaceHeight(15),
-                  workTimeCard(),
+                  workTimeCard(presensiC),
                   spaceHeight(12),
-                  presenceCard(homeC),
+                  presenceCard(homeC, presensiC),
                 ],
               ),
             ),
@@ -107,7 +109,7 @@ ClipPath componentUser(
   );
 }
 
-Container workTimeCard() {
+Container workTimeCard(PresensiController presensiC) {
   return Container(
     width: Get.width,
     decoration: BoxDecoration(
@@ -127,8 +129,8 @@ Container workTimeCard() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-              text: "Jam Kerja Hari ini",
-              color: cGrey_600,
+              text: presensiC.isJadwal.value? "Jam Kerja Hari ini" : "Hari ini Libur",
+              color: presensiC.isJadwal.value ? cGrey_600 : cRed,
               fontSize: 12,
               fontWeight: FontWeight.w500),
           spaceHeight(8),
@@ -160,7 +162,7 @@ Container workTimeCard() {
                               fontSize: 10,
                               fontWeight: FontWeight.w400),
                           CustomText(
-                              text: DateTime.now().getTime(),
+                              text: presensiC.isJadwal.value ?  presensiC.dataCheckJadwalNow['jam_masuk'] : "--:--",
                               color: cBlack,
                               fontSize: 15,
                               fontWeight: FontWeight.w600),
@@ -187,7 +189,7 @@ Container workTimeCard() {
                               fontSize: 10,
                               fontWeight: FontWeight.w400),
                           CustomText(
-                              text: DateTime.now().getTime(),
+                              text: presensiC.isJadwal.value ?  presensiC.dataCheckJadwalNow['jam_pulang'] : "--:--",
                               color: cBlack,
                               fontSize: 15,
                               fontWeight: FontWeight.w600),
@@ -206,7 +208,7 @@ Container workTimeCard() {
   );
 }
 
-Container presenceCard(HomeController homeC) {
+Container presenceCard(HomeController homeC, PresensiController presensiC) {
   return Container(
     width: Get.width,
     decoration: BoxDecoration(
@@ -256,15 +258,16 @@ Container presenceCard(HomeController homeC) {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0x4506AB95),
+                      // color: const Color(0x4506AB95),
+                      color: presensiC.isPresensiMasuk.value ? const Color(0x4506AB95) : cGrey_300,
                       borderRadius: BorderRadius.circular(7),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(10),
+                    child:  Padding(
+                      padding: const EdgeInsets.all(10),
                       child: Icon(
                         Icons.check_circle,
                         size: 28,
-                        color: cPrimary_dark,
+                        color: presensiC.isPresensiMasuk.value ? cPrimary_dark : cGrey_500,
                       ),
                     ),
                   ),
@@ -272,16 +275,40 @@ Container presenceCard(HomeController homeC) {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomText(
-                          text: "Masuk",
-                          color: cGrey_900,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500),
-                      CustomText(
-                          text: "08:57",
-                          color: cBlack,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700),
+                      Row(
+                        children: [
+                          CustomText(
+                              text: "Masuk",
+                              color: presensiC.isPresensiMasuk.value ? cGrey_900 : cGrey_500,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                              presensiC.isPresensiMasuk.value ? 
+                                Container(
+                                  margin: const EdgeInsets.only(left: 3),
+                                  decoration: BoxDecoration(
+                                    color: cRed_100,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 2),
+                                    child: CustomText(
+                                      text: presensiC.dataCheckAbsenMasukNow['presensi']['status'],
+                                      color: cRed,
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w500),
+                                  ),
+                                ) : Container(),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: presensiC.isPresensiMasuk.value ? 0 : 3),
+                        child: CustomText(
+                            text: presensiC.isPresensiMasuk.value ? presensiC.dataCheckAbsenMasukNow['presensi']['masuk'] :"--:--", 
+                            color: cBlack,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700),
+                            
+                      ),
                     ],
                   )
                 ],
@@ -334,7 +361,7 @@ Container presenceCard(HomeController homeC) {
             width: Get.width / 1.4,
             height: 35,
             child: ElevatedButton(
-              onPressed: () async {},
+              onPressed: () => Get.toNamed(RouteNames.presensi),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -344,7 +371,7 @@ Container presenceCard(HomeController homeC) {
                 elevation: 5,
               ),
               child: CustomText(
-                  text: "Presensi Masuk",
+                  text: "Presensi ${ presensiC.dataCheckAbsenMasukNow['presensi'] == null ? "Masuk" : "Pulang"}",
                   color: cWhite,
                   fontSize: 13,
                   fontWeight: FontWeight.w500),

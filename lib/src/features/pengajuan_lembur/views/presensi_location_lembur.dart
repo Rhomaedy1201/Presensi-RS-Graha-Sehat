@@ -702,18 +702,11 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                                                         .value) {
                                                                     } else {
                                                                       presensiC.presensiMasuk(
-                                                                          presensiC
-                                                                              .idLokasi
-                                                                              .value,
-                                                                          latLng
-                                                                              .latitude
-                                                                              .toString(),
-                                                                          latLng
-                                                                              .longitude
-                                                                              .toString(),
-                                                                          ipAddressC
-                                                                              .ipAdressv
-                                                                              .value);
+                                                                          presensiC.idLokasi.value,
+                                                                          latLng.latitude.toString(),
+                                                                          latLng.longitude.toString(),
+                                                                          ipAddressC.ipAdressv.value,
+                                                                          presensiC.dataCheckJadwalNow['id']);
                                                                     }
                                                                   } else {
                                                                     snackbarfailed(

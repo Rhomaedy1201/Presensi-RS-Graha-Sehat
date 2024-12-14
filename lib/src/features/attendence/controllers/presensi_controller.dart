@@ -25,6 +25,9 @@ class PresensiController extends GetxController {
   var isPresensiMasuk = false.obs;
   var isPresensiPulang = false.obs;
   var checkMockLocation = false.obs;
+  RxMap dataCheckJadwalNow = {}.obs;
+  RxMap dataCheckAbsenMasukNow = {}.obs;
+  RxMap dataCheckAbsenPulangNow = {}.obs;
 
   @override
   void onInit() {
@@ -96,8 +99,11 @@ class PresensiController extends GetxController {
         Uri.parse("$base_url/presensi/check-jadwal"),
         headers: headers,
       );
+
+      final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         isJadwal.value = true;
+        dataCheckJadwalNow.value = json['data'];
       } else {
         isJadwal.value = false;
       }
@@ -126,8 +132,14 @@ class PresensiController extends GetxController {
         headers: headers,
       );
 
+      final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        isPresensiMasuk.value = true;
+        dataCheckAbsenMasukNow.value = json['data'];
+        if (json['data']['presensi'] != null) {
+          isPresensiMasuk.value = true;
+        }else{
+          isPresensiMasuk.value = false;
+        }
       } else {
         isPresensiMasuk.value = false;
       }
@@ -157,6 +169,9 @@ class PresensiController extends GetxController {
       );
 
       final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        dataCheckAbsenPulangNow.value = json['data'];
+      }
       if (json['data'] != "null" || json['data'] != null) {
         isPresensiPulang.value = false;
       } else {
@@ -173,6 +188,7 @@ class PresensiController extends GetxController {
     String latitude,
     String longitude,
     lastIp,
+    String idJadwal,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -192,6 +208,7 @@ class PresensiController extends GetxController {
         "longitude": double.parse(longitude),
         "last_ip": lastIp.toString(),
         "device": GetPlatform.isIOS ? "IOS" : "Android",
+        "id_jadwal": idJadwal,
       };
 
       http.Response response = await http.post(
