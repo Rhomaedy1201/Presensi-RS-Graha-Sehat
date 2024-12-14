@@ -90,7 +90,18 @@ Padding overTimeCard(HomeController homeC) {
                 width: Get.width / 1.4,
                 height: 30,
                 child: ElevatedButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    if (homeC.dataPresensiHarian['lembur']['absen']  == "FOTO") {
+                      Get.toNamed(
+                          RouteNames.cameraLembur,
+                          arguments: {
+                            "id": homeC.dataPresensiHarian['lembur']['id'] ,
+                            "absen": homeC.dataPresensiHarian['lembur']['absen'] == null ? "Masuk" : "Pulang",
+                          });
+                    } else {
+                      Get.toNamed(RouteNames.presensiLocationLembur);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9),
@@ -99,11 +110,18 @@ Padding overTimeCard(HomeController homeC) {
                     shadowColor: cPrimary,
                     elevation: 5,
                   ),
-                  child: CustomText(
-                      text: "Presensi",
-                      color: cWhite,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomText(
+                          text: "Presensi ${homeC.dataPresensiHarian['lembur']['masuk'] == null ? "Masuk" : "Pulang"}",
+                          color: cWhite,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500),
+                      spaceWidth(4),
+                      Icon(homeC.dataPresensiHarian['lembur']['absen'] == "GPS" ?  Icons.location_on_outlined : Icons.camera_alt_outlined, size: 15, color: cWhite)
+                    ],
+                  ),
                 ),
               ),
             ),
