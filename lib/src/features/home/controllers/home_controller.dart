@@ -5,6 +5,7 @@ class HomeController extends GetxController {
   DashboardStatistikModel? statistikModel;
   RxMap profileData = {}.obs;
   RxMap dataPresensiHarian = {}.obs;
+  RxList dataJadwalHarian = [].obs;
   var isLoadingCheckJadwal = false.obs;
   var isLoadingStatistik = false.obs;
   var isLoadingStr = false.obs;
@@ -202,6 +203,7 @@ class HomeController extends GetxController {
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
         dataPresensiHarian.value = json['data'];
+        dataJadwalHarian.value = dataPresensiHarian['jadwal'];
       } else {
         debugPrint("Terjadi kesalahan get data presensi harian");
       }

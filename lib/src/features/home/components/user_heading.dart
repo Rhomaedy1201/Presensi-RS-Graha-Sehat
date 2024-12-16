@@ -96,7 +96,7 @@ ClipPath componentUser(
                     ),
                   ),
                   spaceHeight(15),
-                  workTimeCard(presensiC),
+                  workTimeCard(presensiC, homeC),
                   spaceHeight(12),
                   presenceCard(homeC, presensiC),
                 ],
@@ -109,7 +109,7 @@ ClipPath componentUser(
   );
 }
 
-Container workTimeCard(PresensiController presensiC) {
+Container workTimeCard(PresensiController presensiC, HomeController homeC) {
   return Container(
     width: Get.width,
     decoration: BoxDecoration(
@@ -129,8 +129,8 @@ Container workTimeCard(PresensiController presensiC) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-              text: presensiC.isJadwal.value? "Jam Kerja Hari ini" : "Hari ini Libur",
-              color: presensiC.isJadwal.value ? cGrey_600 : cRed,
+              text: homeC.dataJadwalHarian.length > 0 ? "Jam Kerja Hari ini" : "Hari ini Libur",
+              color: homeC.dataJadwalHarian.length > 0 ? cGrey_600 : cRed,
               fontSize: 12,
               fontWeight: FontWeight.w500),
           spaceHeight(8),
@@ -162,7 +162,7 @@ Container workTimeCard(PresensiController presensiC) {
                               fontSize: 10,
                               fontWeight: FontWeight.w400),
                           CustomText(
-                              text: presensiC.isJadwal.value ?  presensiC.dataCheckJadwalNow['jam_masuk'] : "--:--",
+                              text: homeC.dataJadwalHarian.length > 0 ?   homeC.dataJadwalHarian[0]['jam_masuk'] : "--:--",
                               color: cBlack,
                               fontSize: 15,
                               fontWeight: FontWeight.w600),
@@ -189,7 +189,7 @@ Container workTimeCard(PresensiController presensiC) {
                               fontSize: 10,
                               fontWeight: FontWeight.w400),
                           CustomText(
-                              text: presensiC.isJadwal.value ?  presensiC.dataCheckJadwalNow['jam_pulang'] : "--:--",
+                              text: homeC.dataJadwalHarian.length > 0 ?  homeC.dataJadwalHarian[0]['jam_pulang'] : "--:--",
                               color: cBlack,
                               fontSize: 15,
                               fontWeight: FontWeight.w600),
@@ -361,7 +361,7 @@ Container presenceCard(HomeController homeC, PresensiController presensiC) {
             width: Get.width / 1.4,
             height: 35,
             child: ElevatedButton(
-              onPressed: () => Get.toNamed(RouteNames.presensi),
+              onPressed: homeC.dataJadwalHarian.length > 0 ? () => Get.toNamed(RouteNames.presensi) : null,
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
