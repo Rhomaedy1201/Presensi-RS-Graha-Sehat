@@ -644,99 +644,95 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                             ),
                                             spaceHeight(15),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20),
-                                              child: presensiC
-                                                      .isLoadingCheckJadwalMasuk
-                                                      .value
-                                                  ? const CircularProgressIndicator()
-                                                  : SizedBox(
-                                                      width: Get.width,
-                                                      height: 40,
-                                                      child:
-                                                          ElevatedButton.icon(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              cPrimary,
-                                                          shadowColor:
-                                                              cGrey_400,
-                                                          elevation: 2,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                              5,
-                                                            ), // Mengatur border radius menjadi 0
-                                                          ),
-                                                        ),
-                                                        onPressed: (presensiC
-                                                                        .isJadwal
-                                                                        .value ==
-                                                                    true &&
-                                                                presensiC
-                                                                        .isPresensiMasuk
-                                                                        .value ==
-                                                                    false)
-                                                            ? () {
-                                                                if (presensiC
-                                                                    .checkMockLocation
-                                                                    .value) {
-                                                                  snackbarfailed(
-                                                                      "Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
-                                                                } else {
-                                                                  if (const Distance()
-                                                                          .distance(
-                                                                              latLng,
-                                                                              LatLng(
-                                                                                double.parse(presensiC.latitude.value),
-                                                                                double.parse(presensiC.longitude.value),
-                                                                              )) <=
-                                                                      int.parse(presensiC
-                                                                          .radius
-                                                                          .value)) {
-                                                                    if (presensiC
-                                                                        .isLoadingPresensiMasuk
-                                                                        .value) {
-                                                                    } else {
-                                                                      presensiC.presensiMasuk(
-                                                                          presensiC.idLokasi.value,
-                                                                          latLng.latitude.toString(),
-                                                                          latLng.longitude.toString(),
-                                                                          ipAddressC.ipAdressv.value,
-                                                                          presensiC.dataCheckJadwalNow['id']);
-                                                                    }
-                                                                  } else {
-                                                                    snackbarfailed(
-                                                                        "Anda Diluar area kantor");
-                                                                  }
-                                                                }
-                                                              }
-                                                            : null,
-                                                        label: Text(
-                                                          presensiC
-                                                                  .isLoadingPresensiMasuk
-                                                                  .value
-                                                              ? "Loading..."
-                                                              : "Presensi Masuk",
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: cWhite,
-                                                          ),
-                                                        ),
-                                                        icon: const Icon(
-                                                          CommunityMaterialIcons
-                                                              .location_enter,
-                                                          size: 25,
-                                                          color: cWhite,
+                                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                                              child: presensiC.isLoadingCheckJadwalMasuk.value
+                                                ? const CircularProgressIndicator()
+                                                : SizedBox(
+                                                    width: Get.width,
+                                                    height: 40,
+                                                    child: ElevatedButton.icon(
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor: cPrimary,
+                                                        shadowColor: cGrey_400,
+                                                        elevation: 2,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(5), // Mengatur border radius menjadi 0
                                                         ),
                                                       ),
+                                                      onPressed: (presensiC.isJadwal.value == true && presensiC.isPresensiMasuk.value == false) ? () {
+                                                              if (presensiC.checkMockLocation.value) {
+                                                                snackbarfailed("Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
+                                                              } else {
+                                                                if (const Distance().distance(latLng,LatLng(double.parse(presensiC.latitude.value), 
+                                                                  double.parse(presensiC.longitude.value))) <=int.parse(presensiC.radius.value)) {
+                                                                  if (presensiC.isLoadingPresensiMasuk.value) {
+                                                                  } else {
+                                                                    presensiC.presensiMasuk(
+                                                                      presensiC.idLokasi.value,
+                                                                      latLng.latitude.toString(),
+                                                                      latLng.longitude.toString(),
+                                                                      ipAddressC.ipAdressv.value,
+                                                                      presensiC.dataCheckJadwalNow['id']);
+                                                                  }
+                                                                } else {
+                                                                  snackbarfailed("Anda Diluar area kantor");
+                                                                }
+                                                              }
+                                                            }
+                                                          : null,
+                                                      label: Text(
+                                                        presensiC.isLoadingPresensiMasuk.value ? "Loading..." : "Presensi Masuk",
+                                                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: cWhite,),
+                                                      ),
+                                                      icon: const Icon(CommunityMaterialIcons.location_enter, size: 25, color: cWhite,),
                                                     ),
+                                                  ),
+                                            ),
+                                            spaceHeight(5),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                                              child: presensiC.isLoadingCheckJadwalMasuk.value
+                                                ? const CircularProgressIndicator()
+                                                : SizedBox(
+                                                    width: Get.width,
+                                                    height: 40,
+                                                    child: ElevatedButton.icon(
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor: cPrimary,
+                                                        shadowColor: cGrey_400,
+                                                        elevation: 2,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(5), // Mengatur border radius menjadi 0
+                                                        ),
+                                                      ),
+                                                      onPressed: (presensiC.isJadwal.value == true && presensiC.isPresensiMasuk.value == false) ? () {
+                                                              if (presensiC.checkMockLocation.value) {
+                                                                snackbarfailed("Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
+                                                              } else {
+                                                                if (const Distance().distance(latLng,LatLng(double.parse(presensiC.latitude.value), 
+                                                                  double.parse(presensiC.longitude.value))) <=int.parse(presensiC.radius.value)) {
+                                                                  if (presensiC.isLoadingPresensiMasuk.value) {
+                                                                  } else {
+                                                                    presensiC.presensiMasuk(
+                                                                      presensiC.idLokasi.value,
+                                                                      latLng.latitude.toString(),
+                                                                      latLng.longitude.toString(),
+                                                                      ipAddressC.ipAdressv.value,
+                                                                      presensiC.dataCheckJadwalNow['id']);
+                                                                  }
+                                                                } else {
+                                                                  snackbarfailed("Anda Diluar area kantor");
+                                                                }
+                                                              }
+                                                            }
+                                                          : null,
+                                                      label: Text(
+                                                        presensiC.isLoadingPresensiMasuk.value ? "Loading..." : "Presensi Masuk",
+                                                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: cWhite,),
+                                                      ),
+                                                      icon: const Icon(CommunityMaterialIcons.location_enter, size: 25, color: cWhite,),
+                                                    ),
+                                                  ),
                                             ),
                                             spaceHeight(10),
                                           ],
