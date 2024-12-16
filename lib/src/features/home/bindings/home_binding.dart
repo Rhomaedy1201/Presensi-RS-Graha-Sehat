@@ -3,6 +3,7 @@ import 'package:presensi_gs/src/features/attendence/controllers/presensi_control
 import 'package:presensi_gs/src/features/home/controllers/code_blue_and_red_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/home_controller.dart';
 import 'package:presensi_gs/src/features/home/controllers/prefs_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/presensi_lembur_controller.dart';
 
 class HomeBinding extends Bindings {
   @override
@@ -11,5 +12,6 @@ class HomeBinding extends Bindings {
     Get.lazyPut<PrefsController>(() => PrefsController());
     Get.lazyPut<CodeBlueAndRedController>(() => CodeBlueAndRedController());
     Get.lazyPut<PresensiController>(() => PresensiController());
+    Get.lazyPut<PresensiLemburController>(() => PresensiLemburController());
   }
 }

@@ -1,6 +1,7 @@
 import 'package:presensi_gs/src/features/home/components/presensi_lembur.dart';
 import 'package:presensi_gs/src/features/home/components/submission_card.dart';
 import 'package:presensi_gs/src/features/home/controllers/code_blue_and_red_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/presensi_lembur_controller.dart';
 import '../components/imported_package.dart';
 
 class ComponentHome extends StatefulWidget {
@@ -15,6 +16,7 @@ class _ComponentHomeState extends State<ComponentHome> {
   bool kodeBlue = false;
   CodeBlueAndRedController codeBlueRed = Get.find<CodeBlueAndRedController>();
   HomeController homeC = Get.find<HomeController>();
+  PresensiLemburController presensiLemburC = Get.find<PresensiLemburController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class _ComponentHomeState extends State<ComponentHome> {
           homeC.dataPresensiHarian['lembur'] == null ? Container() : 
           Column(
             children: [
-              overTimeCard(homeC),
+              overTimeCard(homeC, presensiLemburC),
               spaceHeight(12),
             ],
           ),

@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:ntp/ntp.dart';
 import 'package:presensi_gs/routes/route_name.dart';
 import 'package:presensi_gs/utils/base_url.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
@@ -9,13 +11,26 @@ import 'package:http/http.dart' as http;
 
 class PresensiLemburController extends GetxController {
   RxBool isLoadingPresensiMasuk = false.obs;
+  RxBool isLoadingPresensiKeluar = false.obs;
+
+  Rx<DateTime>? ntpTime;
+  Rx<DateTime>? initialFetchTime;
+  Rx<Timer>? timer;
+  RxBool isLoadingTime = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchNtpTime();
+  }
 
   Future<void> presensiLemburLokasi(
-    String id,
+    id,
     String jenis,
-    String latitude,
-    String longitude,
+    latitude,
+    longitude,
   ) async {
+    print(id);
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     var headers = {
@@ -23,7 +38,11 @@ class PresensiLemburController extends GetxController {
       'Authorization': 'Bearer $token',
     };
     try {
-      isLoadingPresensiMasuk(true);
+      if (jenis == "MASUK") {
+        isLoadingPresensiMasuk(true);
+      } else {
+        isLoadingPresensiKeluar(true);
+      }
       if (token == null) {
         throw Exception("Token not found");
       }
@@ -53,7 +72,34 @@ class PresensiLemburController extends GetxController {
     } catch (e) {
       print(e.toString());
     } finally {
-      isLoadingPresensiMasuk(false);
+      if (jenis == "MASUK") {
+        isLoadingPresensiMasuk(true);
+      } else {
+        isLoadingPresensiKeluar(true);
+      }
     }
+  }
+
+  Future<void> fetchNtpTime() async {
+    try {
+      DateTime networkTime = await NTP.now();
+      ntpTime = networkTime.toLocal().obs;
+      // initialFetchTime = DateTime.now().toUtc().obs;
+      isLoadingTime(false);
+      _startTimer();
+    } catch (e) {
+      isLoadingTime(false);
+      print('Error fetching NTP time: $e');
+    }
+  }
+
+  void _startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (ntpTime != null && initialFetchTime != null) {
+        ntpTime!.value = initialFetchTime!.value.add(
+          Duration(seconds: timer.tick),
+        );
+      }
+    }).obs;
   }
 }

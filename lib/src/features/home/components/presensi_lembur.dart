@@ -1,6 +1,8 @@
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/presensi_lembur_controller.dart';
+
 import 'imported_package.dart';
 
-Padding overTimeCard(HomeController homeC) {
+Padding overTimeCard(HomeController homeC, PresensiLemburController presensiLemburC) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 30),
     child: Container(
@@ -99,7 +101,10 @@ Padding overTimeCard(HomeController homeC) {
                             "absen": homeC.dataPresensiHarian['lembur']['absen'] == null ? "Masuk" : "Pulang",
                           });
                     } else {
-                      Get.toNamed(RouteNames.presensiLocationLembur);
+                      Get.toNamed(RouteNames.presensiLocationLembur, 
+                      arguments: {
+                        "lembur": homeC.dataPresensiHarian['lembur']  
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(

@@ -115,7 +115,7 @@ class RoutePages {
     GetPage(
       name: RouteNames.presensiLocationLembur,
       page: () => const PresensiLocationLember(),
-      // binding: SppdBinding(),
+      binding: LemburBinding(),
     ),
   ];
 }

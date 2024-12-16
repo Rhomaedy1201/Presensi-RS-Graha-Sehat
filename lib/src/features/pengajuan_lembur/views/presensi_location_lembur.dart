@@ -6,9 +6,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:ntp/ntp.dart';
 import 'package:presensi_gs/http/component_controller/ip_address_controller.dart';
 import 'package:presensi_gs/src/features/attendence/controllers/presensi_controller.dart';
+import 'package:presensi_gs/src/features/pengajuan_lembur/controllers/presensi_lembur_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
 import 'package:presensi_gs/utils/components/my_shimmer.dart';
 import 'package:presensi_gs/utils/components/my_snacbar.dart';
@@ -27,12 +27,8 @@ class PresensiLocationLember extends StatefulWidget {
 class _PresensiLocationLemberState extends State<PresensiLocationLember> {
   // Controller
   PresensiController presensiC = Get.put(PresensiController());
+  PresensiLemburController presensiLemburC = Get.put(PresensiLemburController());
   IpAddressController ipAddressC = Get.put(IpAddressController());
-
-  // NTP WAKTU
-  DateTime? _ntpTime;
-  DateTime? _initialFetchTime;
-  Timer? _timer;
 
   bool isLoadingMock = false;
 
@@ -63,8 +59,6 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
   void initState() {
     super.initState();
     fetchLocation();
-    _fetchNTPTime();
-    _startTimer();
     location.onLocationChanged.listen((LocationData currentLocation) {
       fetchChangedLocation();
       checkMockLocation();
@@ -74,30 +68,7 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
-  }
-
-  Future<void> _fetchNTPTime() async {
-    try {
-      DateTime ntpTime = await NTP.now();
-      if (mounted) {
-        setState(() {
-          _ntpTime = ntpTime.toLocal(); // Convert to UTC
-          _initialFetchTime = DateTime.now().toUtc();
-        });
-      }
-    } catch (e) {
-      print('Failed to get NTP time: $e');
-    }
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 0), (timer) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
   }
 
   fetchChangedLocation() {
@@ -239,11 +210,6 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
   @override
   Widget build(BuildContext context) {
     var heightStatusBar = MediaQuery.of(context).viewPadding.top;
-
-    Duration elapsedTime = Duration();
-    if (_initialFetchTime != null) {
-      elapsedTime = DateTime.now().toLocal().difference(_initialFetchTime!);
-    }
     return Scaffold(
       backgroundColor: cGrey_100,
       // appBar: appbar,
@@ -606,8 +572,7 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                             horizontal: 15, vertical: 20),
                                         child: Column(
                                           children: [
-                                            _ntpTime == null
-                                                ? Column(
+                                            presensiLemburC.isLoadingTime.value ? Column(
                                                     children: [
                                                       myShimmer(140, 40),
                                                       spaceHeight(3),
@@ -616,23 +581,17 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                                   )
                                                 : Column(
                                                     children: [
+                                                      presensiLemburC.ntpTime != null ?
                                                       Text(
-                                                        _ntpTime!
-                                                            .add(elapsedTime)
-                                                            .getTimeSecond(),
-                                                        style: customTextStyle(
-                                                            FontWeight.w900,
-                                                            21,
-                                                            cBlack),
-                                                      ),
+                                                        presensiLemburC.ntpTime!.value.getTimeSecond(),
+                                                        style: customTextStyle(FontWeight.w900,21,cBlack),
+                                                      ) : 
                                                       Text(
-                                                        _ntpTime!
-                                                            .add(elapsedTime)
-                                                            .getSimpleDayAndDate(),
-                                                        style: customTextStyle(
-                                                            FontWeight.w800,
-                                                            13,
-                                                            cBlack),
+                                                        presensiLemburC.ntpTime!.value.getTimeSecond(),
+                                                        style: customTextStyle(FontWeight.w900,21,cBlack)),
+                                                      Text(
+                                                        presensiLemburC.ntpTime!.value.getSimpleDayAndDate(),
+                                                        style: customTextStyle(FontWeight.w800,13,cBlack),
                                                       ),
                                                     ],
                                                   ),
@@ -659,29 +618,24 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                                           borderRadius: BorderRadius.circular(5), // Mengatur border radius menjadi 0
                                                         ),
                                                       ),
-                                                      onPressed: (presensiC.isJadwal.value == true && presensiC.isPresensiMasuk.value == false) ? () {
-                                                              if (presensiC.checkMockLocation.value) {
-                                                                snackbarfailed("Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
-                                                              } else {
-                                                                if (const Distance().distance(latLng,LatLng(double.parse(presensiC.latitude.value), 
-                                                                  double.parse(presensiC.longitude.value))) <=int.parse(presensiC.radius.value)) {
-                                                                  if (presensiC.isLoadingPresensiMasuk.value) {
-                                                                  } else {
-                                                                    presensiC.presensiMasuk(
-                                                                      presensiC.idLokasi.value,
-                                                                      latLng.latitude.toString(),
-                                                                      latLng.longitude.toString(),
-                                                                      ipAddressC.ipAdressv.value,
-                                                                      presensiC.dataCheckJadwalNow['id']);
-                                                                  }
-                                                                } else {
-                                                                  snackbarfailed("Anda Diluar area kantor");
-                                                                }
-                                                              }
+                                                      onPressed: (Get.arguments['lembur'] != null && Get.arguments['lembur']['masuk'] == null) ? () {
+                                                        if (presensiC.checkMockLocation.value) {
+                                                          snackbarfailed("Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
+                                                        } else {
+                                                          if (const Distance().distance(latLng,LatLng(double.parse(presensiC.latitude.value), 
+                                                            double.parse(presensiC.longitude.value))) <=int.parse(presensiC.radius.value)) {
+                                                            if (presensiLemburC.isLoadingPresensiMasuk.value) {
+                                                            } else {
+                                                              presensiLemburC.presensiLemburLokasi(Get.arguments['lembur']['id'], "MASUK", latLng.latitude, latLng.longitude);
                                                             }
-                                                          : null,
+                                                          } else {
+                                                            snackbarfailed("Anda Diluar area kantor");
+                                                          }
+                                                        }
+                                                      }
+                                                      : null,
                                                       label: Text(
-                                                        presensiC.isLoadingPresensiMasuk.value ? "Loading..." : "Presensi Masuk",
+                                                        presensiLemburC.isLoadingPresensiMasuk.value ? "Loading..." : "Presensi Masuk",
                                                         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: cWhite,),
                                                       ),
                                                       icon: const Icon(CommunityMaterialIcons.location_enter, size: 25, color: cWhite,),
@@ -705,29 +659,24 @@ class _PresensiLocationLemberState extends State<PresensiLocationLember> {
                                                           borderRadius: BorderRadius.circular(5), // Mengatur border radius menjadi 0
                                                         ),
                                                       ),
-                                                      onPressed: (presensiC.isJadwal.value == true && presensiC.isPresensiMasuk.value == false) ? () {
-                                                              if (presensiC.checkMockLocation.value) {
-                                                                snackbarfailed("Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
-                                                              } else {
-                                                                if (const Distance().distance(latLng,LatLng(double.parse(presensiC.latitude.value), 
-                                                                  double.parse(presensiC.longitude.value))) <=int.parse(presensiC.radius.value)) {
-                                                                  if (presensiC.isLoadingPresensiMasuk.value) {
-                                                                  } else {
-                                                                    presensiC.presensiMasuk(
-                                                                      presensiC.idLokasi.value,
-                                                                      latLng.latitude.toString(),
-                                                                      latLng.longitude.toString(),
-                                                                      ipAddressC.ipAdressv.value,
-                                                                      presensiC.dataCheckJadwalNow['id']);
-                                                                  }
-                                                                } else {
-                                                                  snackbarfailed("Anda Diluar area kantor");
-                                                                }
-                                                              }
+                                                      onPressed: (Get.arguments['lembur'] != null && Get.arguments['lembur']['masuk'] != null) ? () {
+                                                        if (presensiC.checkMockLocation.value) {
+                                                          snackbarfailed("Anda terdeteksi lokasi palsu, silahkan matikan lokasi palsu anda!.");
+                                                        } else {
+                                                          if (const Distance().distance(latLng,LatLng(double.parse(presensiC.latitude.value), 
+                                                            double.parse(presensiC.longitude.value))) <=int.parse(presensiC.radius.value)) {
+                                                            if (presensiLemburC.isLoadingPresensiMasuk.value) {
+                                                            } else {
+                                                              presensiLemburC.presensiLemburLokasi(Get.arguments['lembur']['id'], "KELUAR", latLng.latitude, latLng.longitude);
                                                             }
-                                                          : null,
+                                                          } else {
+                                                            snackbarfailed("Anda Diluar area kantor");
+                                                          }
+                                                        }
+                                                      }
+                                                      : null,
                                                       label: Text(
-                                                        presensiC.isLoadingPresensiMasuk.value ? "Loading..." : "Presensi Masuk",
+                                                        presensiLemburC.isLoadingPresensiKeluar.value ? "Loading..." : "Presensi Pulang",
                                                         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: cWhite,),
                                                       ),
                                                       icon: const Icon(CommunityMaterialIcons.location_enter, size: 25, color: cWhite,),
