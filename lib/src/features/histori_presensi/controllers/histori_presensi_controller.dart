@@ -9,7 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class HistoriPresensiController extends GetxController {
-  HistoriPresensiModel? historiPresensiM;
+  // HistoriPresensiModel? historiPresensiM;
+  RxList dataHistoryPresensi = [].obs;
   var isLoading = false.obs;
   var month = DateTime.now().getMonthNumber();
   var year = DateTime.now().getYear();
@@ -41,16 +42,15 @@ class HistoriPresensiController extends GetxController {
 
       final json = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        historiPresensiM = HistoriPresensiModel.fromJson(json);
-        for (var i = 0; i < historiPresensiM!.data.length; i++) {
-          if (historiPresensiM!.data[i].presensi != null) {
+        dataHistoryPresensi.value = json['data'];
+        for (var i = 0; i < dataHistoryPresensi.length; i++) {
+          if (dataHistoryPresensi[i]['presensi'] != null) {
             isEmptyData.value = false;
           }
         }
       } else {
         debugPrint("Terjadi kesalahan get data");
       }
-      print(json);
     } catch (e) {
       print(e.toString());
     } finally {

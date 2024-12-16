@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi_gs/src/features/histori_presensi/controllers/histori_presensi_controller.dart';
 import 'package:presensi_gs/utils/colors.dart';
-import 'package:presensi_gs/utils/components/my_datepicker.dart';
 import 'package:presensi_gs/utils/components/my_style_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:presensi_gs/utils/constant.dart';
@@ -68,22 +67,20 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                         )
                       : Expanded(
                           child: ListView.builder(
-                            itemCount:
-                                historiPresensiC.historiPresensiM!.data.length,
+                            itemCount: historiPresensiC.dataHistoryPresensi.length,
                             shrinkWrap: true,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              var data =
-                                  historiPresensiC.historiPresensiM!.data;
-                              if (data[index].presensi != null) {
+                              var data = historiPresensiC.dataHistoryPresensi;
+                              if (data[index]['presensi'] != null) {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: cardHistoris(
                                     index + 1,
-                                    data[index].tanggal.fullDateAll(),
-                                    data[index].presensi?.masuk,
-                                    data[index].presensi?.pulang,
-                                    data[index].presensi?.status,
+                                    DateTime.parse(data[index]['tanggal']).fullDateAll(),
+                                    data[index]['presensi']['masuk'],
+                                    data[index]['presensi']['pulang'],
+                                    data[index]['presensi']['status'],
                                   ),
                                 );
                               } else {
@@ -319,7 +316,7 @@ class _HistoriPresensiViewState extends State<HistoriPresensiView> {
                         onPressed: () {
                           Navigator.of(context).pop();
                           historiPresensiC.isEmptyData.value = true;
-                          historiPresensiC.historiPresensiM!.data.clear();
+                          historiPresensiC.dataHistoryPresensi.clear();
                           historiPresensiC.getHistoriPresensi(
                             valueDate.getMonthNumber(),
                             valueDate.getYear(),

@@ -165,6 +165,9 @@ Widget activityMenu(HomeController homeC) {
                 homeC.checkJadwal();
                 homeC.getStatistik();
                 homeC.getStr();
+                homeC.getProfile();
+                homeC.fetchNtpTime();
+                homeC.getJadwalHarian();
               },
               child: SingleChildScrollView(
                 child: Column(
