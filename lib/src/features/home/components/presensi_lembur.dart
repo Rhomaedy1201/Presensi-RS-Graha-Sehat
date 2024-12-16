@@ -42,9 +42,9 @@ Padding overTimeCard(HomeController homeC, PresensiLemburController presensiLemb
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.check_circle,
-                          color: cPrimary,
+                        Icon(
+                          homeC.dataPresensiHarian['lembur']['masuk'] == null ? Icons.timelapse : Icons.check_circle,
+                          color: homeC.dataPresensiHarian['lembur']['masuk'] == null ? cGrey_500 : cPrimary,
                           size: 18,
                         ),
                         spaceHeight(2),
@@ -64,9 +64,9 @@ Padding overTimeCard(HomeController homeC, PresensiLemburController presensiLemb
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.timelapse,
-                          color: cPrimary,
+                        Icon(
+                          homeC.dataPresensiHarian['lembur']['keluar'] == null ? Icons.timelapse : Icons.check_circle,
+                          color: homeC.dataPresensiHarian['lembur']['keluar'] == null ? cGrey_500 : cPrimary,
                           size: 18,
                         ),
                         spaceHeight(2),
@@ -92,7 +92,7 @@ Padding overTimeCard(HomeController homeC, PresensiLemburController presensiLemb
                 width: Get.width / 1.4,
                 height: 30,
                 child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: homeC.dataPresensiHarian['lembur']['masuk'] == null || homeC.dataPresensiHarian['lembur']['keluar'] == null ? () async {
                     if (homeC.dataPresensiHarian['lembur']['absen']  == "FOTO") {
                       Get.toNamed(
                           RouteNames.cameraLembur,
@@ -106,7 +106,7 @@ Padding overTimeCard(HomeController homeC, PresensiLemburController presensiLemb
                         "lembur": homeC.dataPresensiHarian['lembur']  
                       });
                     }
-                  },
+                  } : null,
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9),
