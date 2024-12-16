@@ -81,7 +81,7 @@ class _JadwalViewState extends State<JadwalView> {
                                   data[index]["tanggal"],
                                   data[index]["jam_masuk"] ?? 'null',
                                   data[index]["jam_pulang"] ?? 'null',
-                                  data[index]["kode_shift"] ?? 'null',
+                                  data[index]["shift"] ?? 'null',
                                 ),
                               );
                             },
