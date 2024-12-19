@@ -237,76 +237,8 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                 )
                                               ],
                                             ),
-                                            if (data[index]['masuk'] != null &&
-                                                data[index]['absen'] == "FOTO")
-                                              InkWell(
-                                                onTap: () {
-                                                  Get.dialog(Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 50,
-                                                        vertical: 200),
-                                                    child: Stack(
-                                                      clipBehavior: Clip.none,
-                                                      children: [
-                                                        SizedBox(
-                                                          child: Image.network(
-                                                              data[index][
-                                                                  'bukti_url_cast'],
-                                                              fit: BoxFit.cover),
-                                                        ),
-                                                        Positioned(
-                                                          right: 5,
-                                                          top: 5,
-                                                          child: GestureDetector(
-                                                            onTap: () {
-                                                              Get.back();
-                                                            },
-                                                            child: Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: cWhite,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  border: Border.all(
-                                                                      width: 1,
-                                                                      color:
-                                                                          cBlack),
-                                                                ),
-                                                                child: const Icon(
-                                                                    Icons.close)),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ));
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 1,
-                                                          color: cPrimary),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5)),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 7,
-                                                        vertical: 3),
-                                                    child: CustomText(
-                                                        text: "Lihat FOTO",
-                                                        color: cPrimary,
-                                                        fontSize: 11,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ),
-                                              ),
                                             if (data[index]['masuk'] == null ||
-                                                data[index]['pulang'] == null)
+                                                data[index]['keluar'] == null)
                                               InkWell(
                                                 onTap: () {
                                                   if (data[index]['absen'] ==
@@ -346,6 +278,21 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   ),
+                                                ),
+                                              ),
+                                              if(data[index]['masuk'] != null && data[index]['keluar'] != null)
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0x640ED654),
+                                                    // border: Border.all(width: 1.5, color: cPrimary),
+                                                    borderRadius: BorderRadius.circular(5)),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 7,vertical: 4),
+                                                  child: CustomText(
+                                                      text: "Selesai",
+                                                      color: cPrimary_dark,
+                                                      fontSize: 10,
+                                                      fontWeight: FontWeight.w700),
                                                 ),
                                               )
                                           ],
@@ -470,7 +417,7 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                 ),
                                               ),
                                               Expanded(
-                                                flex: 2,
+                                                flex: data[index]['absen'] == "FOTO" ? 1 : 2,
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
@@ -482,11 +429,88 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                         fontWeight:
                                                             FontWeight.w400),
                                                     CustomText(
-                                                        text: data[index]
-                                                                    ['masuk'] !=
-                                                                null
-                                                            ? "Selesai"
-                                                            : "-",
+                                                        text: data[index]['masuk'] != null ? data[index]['keluar'] != null ? "Pulang" : "Masuk" : "-",
+                                                        color: cBlack,
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ],
+                                                ),
+                                              ),
+                                              if(data[index]['absen'] == "FOTO")
+                                              Expanded(
+                                                flex: 1,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    CustomText(
+                                                        text: "Hasil Foto :",
+                                                        color: cBlack,
+                                                        fontSize: 9,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    (data[index]['masuk'] != null && data[index]['absen'] == "FOTO") ?
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Get.dialog(Padding(
+                                                          padding: const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal: 50,
+                                                              vertical: 200),
+                                                          child: Stack(
+                                                            clipBehavior: Clip.none,
+                                                            children: [
+                                                              SizedBox(
+                                                                child: Image.network(
+                                                                    data[index][
+                                                                        'bukti_url_cast'],
+                                                                    fit: BoxFit.cover),
+                                                              ),
+                                                              Positioned(
+                                                                right: 5,
+                                                                top: 5,
+                                                                child: GestureDetector(
+                                                                  onTap: () {
+                                                                    Get.back();
+                                                                  },
+                                                                  child: Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: cWhite,
+                                                                        borderRadius:
+                                                                            BorderRadius
+                                                                                .circular(
+                                                                                    5),
+                                                                        border: Border.all(
+                                                                            width: 1,
+                                                                            color:
+                                                                                cBlack),
+                                                                      ),
+                                                                      child: const Icon(
+                                                                          Icons.close)),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ));
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(width: 1, color: cPrimary),
+                                                            borderRadius: BorderRadius.circular(5)),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 1),
+                                                          child: CustomText(
+                                                              text: "Lihat Foto",
+                                                              color: cPrimary,
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight.w500),
+                                                        ),
+                                                      ),
+                                                    ) : CustomText(
+                                                        text: "-",
                                                         color: cBlack,
                                                         fontSize: 10,
                                                         fontWeight:
