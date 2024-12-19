@@ -84,7 +84,7 @@ class PresensiLemburController extends GetxController {
     try {
       DateTime networkTime = await NTP.now();
       ntpTime = networkTime.toLocal().obs;
-      // initialFetchTime = DateTime.now().toUtc().obs;
+      initialFetchTime = networkTime.obs;
       isLoadingTime(false);
       _startTimer();
     } catch (e) {
