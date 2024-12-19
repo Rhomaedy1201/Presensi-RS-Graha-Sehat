@@ -5,7 +5,7 @@ import 'package:presensi_gs/utils/components/my_text.dart';
 import 'package:presensi_gs/utils/components/space.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<void> updatedVersion() async {
+Future<void> updatedVersion(String version, String ket, String link) async {
   Get.dialog(
     barrierDismissible: false,
     Material(
@@ -55,7 +55,7 @@ Future<void> updatedVersion() async {
                         fontWeight: FontWeight.w500),
                     spaceWidth(5),
                     CustomText(
-                        text: "1.1.0",
+                        text: version,
                         color: cGrey_500,
                         fontSize: 12,
                         fontWeight: FontWeight.w500),
@@ -63,14 +63,14 @@ Future<void> updatedVersion() async {
                 ),
                 spaceHeight(5),
                 CustomText(
-                    text: "Pembaruan Versi 1.1.0",
+                    text: "Pembaruan Versi $version",
                     color: cBlack,
                     fontSize: 10,
                     fontWeight: FontWeight.w500),
                 spaceHeight(8),
                 CustomText(
                     text:
-                        "- Mengoptimalkan presensi dan tampilan yang menarik atau user frienly",
+                        "- $ket",
                     color: cBlack,
                     fontSize: 10,
                     fontWeight: FontWeight.w500),
@@ -79,7 +79,7 @@ Future<void> updatedVersion() async {
                   width: Get.width,
                   child: ElevatedButton(
                     onPressed: () async {
-                      var url = Uri.parse("https://www.instagram.com/rhm3d_/");
+                      var url = Uri.parse(link);
                       if (await canLaunchUrl(url)) {
                         await launchUrl(url,
                             mode: LaunchMode.externalApplication);

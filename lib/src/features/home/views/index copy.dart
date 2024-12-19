@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           InkWell(
             onTap: () {
-              updatedVersion();
+              // updatedVersion();
             },
             child: const Icon(
               Icons.notifications,

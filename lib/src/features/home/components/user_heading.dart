@@ -1,4 +1,5 @@
 import 'package:presensi_gs/src/features/attendence/controllers/presensi_controller.dart';
+import 'package:presensi_gs/src/features/home/views/upadate_version.dart';
 
 import 'imported_package.dart';
 
@@ -129,8 +130,8 @@ Container workTimeCard(PresensiController presensiC, HomeController homeC) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-              text: homeC.dataJadwalHarian.length > 0 ? "Jam Kerja Hari ini" : "Hari ini Libur",
-              color: homeC.dataJadwalHarian.length > 0 ? cGrey_600 : cRed,
+              text: homeC.dataJadwalHarian.isNotEmpty ? "Jam Kerja Hari ini" : "Tidak ada Jadwal Shift Hari ini",
+              color: homeC.dataJadwalHarian.isNotEmpty ? cGrey_600 : cRed,
               fontSize: 12,
               fontWeight: FontWeight.w500),
           spaceHeight(8),

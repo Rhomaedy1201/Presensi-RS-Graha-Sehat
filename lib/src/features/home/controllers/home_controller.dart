@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:presensi_gs/src/features/home/views/upadate_version.dart';
 import '../components/imported_package.dart';
 
 class HomeController extends GetxController {
@@ -6,6 +7,7 @@ class HomeController extends GetxController {
   RxMap profileData = {}.obs;
   RxMap dataPresensiHarian = {}.obs;
   RxList dataJadwalHarian = [].obs;
+  RxList dataVersionUpdated = [].obs;
   var isLoadingCheckJadwal = false.obs;
   var isLoadingStatistik = false.obs;
   var isLoadingStr = false.obs;
@@ -33,6 +35,7 @@ class HomeController extends GetxController {
     getProfile();
     fetchNtpTime();
     getJadwalHarian();
+    getUpdatedVersionMobile();
   }
 
   // @override
@@ -206,6 +209,41 @@ class HomeController extends GetxController {
         dataJadwalHarian.value = dataPresensiHarian['jadwal'];
       } else {
         debugPrint("Terjadi kesalahan get data presensi harian");
+      }
+    } catch (e) {
+      print(e.toString()); // Mengembalikan error dalam Map
+    } finally {
+      isLoadingLembur(false);
+    }
+  }
+
+  Future<void> getUpdatedVersionMobile() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      isLoadingLembur(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/updated_version_mobile"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        dataVersionUpdated.value = json['data'];
+        if (dataVersionUpdated.isNotEmpty) {
+          updatedVersion(dataVersionUpdated[0]['version'], dataVersionUpdated[0]['ket'],dataVersionUpdated[0]['source_link']);
+        }
+      } else {
+        debugPrint("Terjadi kesalahan get data updated version mobile");
       }
     } catch (e) {
       print(e.toString()); // Mengembalikan error dalam Map
