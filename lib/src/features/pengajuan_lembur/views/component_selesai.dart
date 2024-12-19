@@ -237,49 +237,54 @@ class _ComponentSelesaiLemburState extends State<ComponentSelesaiLembur> {
                                                 )
                                               ],
                                             ),
-                                            if (data[index]['masuk'] == null ||
-                                                data[index]['keluar'] == null)
-                                              InkWell(
-                                                onTap: () {
-                                                  if (data[index]['absen'] ==
-                                                      "FOTO") {
-                                                    Get.toNamed(
-                                                        RouteNames.cameraLembur,
-                                                        arguments: {
-                                                          "id": data[index]['id'],
-                                                          "absen": data[index]
-                                                                      ['masuk'] ==
-                                                                  null
-                                                              ? "Masuk"
-                                                              : "Pulang",
-                                                        });
-                                                  } else {
-                                                    Get.toNamed(RouteNames
-                                                        .presensiLocationLembur);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 1,
-                                                          color: cPrimary),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5)),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 7,
-                                                        vertical: 3),
-                                                    child: CustomText(
-                                                        text: "Presensi",
-                                                        color: cPrimary,
-                                                        fontSize: 11,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ),
-                                              ),
+                                            // if (data[index]['masuk'] == null ||
+                                            //     data[index]['keluar'] == null)
+                                            //   InkWell(
+                                            //     onTap: () {
+                                            //       if (data[index]['absen'] == "FOTO") {
+                                            //         Get.toNamed(RouteNames.cameraLembur,
+                                            //         arguments: {
+                                            //               "id": data[index]['id'],
+                                            //               "absen": data[index]['masuk'] == null ? "Masuk" : "Pulang",
+                                            //             });
+                                            //       } else {
+                                            //         Get.toNamed(RouteNames.presensiLocationLembur);
+                                            //       }
+                                            //       // if (data[index]['absen'] == "FOTO") {
+                                            //       //   Get.toNamed(RouteNames.cameraLembur,
+                                            //       //   arguments: {
+                                            //       //     "id": selesaiLemburC.dataPresensiHarian['lembur']['id'],
+                                            //       //     "absen": selesaiLemburC.dataPresensiHarian['lembur']['absen'] == null ? "Masuk" : "Pulang",
+                                            //       //   });
+                                            //       // } else {
+                                            //       //   Get.toNamed(RouteNames.presensiLocationLembur,
+                                            //       //   arguments: {
+                                            //       //     "lembur": selesaiLemburC.dataPresensiHarian['lembur']  
+                                            //       //   });
+                                            //       // }
+                                            //     },
+                                            //     child: Container(
+                                            //       decoration: BoxDecoration(
+                                            //           border: Border.all(
+                                            //               width: 1,
+                                            //               color: cPrimary),
+                                            //           borderRadius:
+                                            //               BorderRadius.circular(
+                                            //                   5)),
+                                            //       child: Padding(
+                                            //         padding: const EdgeInsets
+                                            //             .symmetric(
+                                            //             horizontal: 7,
+                                            //             vertical: 3),
+                                            //         child: CustomText(
+                                            //             text: "Presensi",
+                                            //             color: cPrimary,
+                                            //             fontSize: 11,
+                                            //             fontWeight:
+                                            //                 FontWeight.w500),
+                                            //       ),
+                                            //     ),
+                                            //   ),
                                               if(data[index]['masuk'] != null && data[index]['keluar'] != null)
                                               Container(
                                                 decoration: BoxDecoration(

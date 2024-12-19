@@ -13,11 +13,15 @@ class SelesaiLemburController extends GetxController {
   var isLoadingAbsen = false.obs;
   var isEmptyDataSelesai = true.obs;
   var dataSelesai = <dynamic>[].obs;
+  RxMap dataPresensiHarian = {}.obs;
+  RxList dataJadwalHarian = [].obs;
+  var isLoadingLembur = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     getDataSelesai(DateTime.now());
+    getJadwalHarian();
   }
 
   Future<void> getDataSelesai(DateTime tgl) async {
@@ -104,6 +108,40 @@ class SelesaiLemburController extends GetxController {
       print(e.toString());
     } finally {
       isLoadingAbsen(false);
+    }
+  }
+
+  Future<void> getJadwalHarian() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      isLoadingLembur(true);
+      if (token == null) {
+        throw Exception("Token not found");
+      }
+
+      http.Response response = await http.get(
+        Uri.parse("$base_url/dashboard/jadwal/harian"),
+        headers: headers,
+      );
+
+      final json = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        dataPresensiHarian.value = json['data'];
+        dataJadwalHarian.value = dataPresensiHarian['jadwal'];
+      } else {
+        debugPrint("Terjadi kesalahan get data presensi harian");
+      }
+      print(dataPresensiHarian);
+    } catch (e) {
+      print(e.toString()); // Mengembalikan error dalam Map
+    } finally {
+      isLoadingLembur(false);
     }
   }
 }
