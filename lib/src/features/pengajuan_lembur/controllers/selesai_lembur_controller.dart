@@ -137,7 +137,6 @@ class SelesaiLemburController extends GetxController {
       } else {
         debugPrint("Terjadi kesalahan get data presensi harian");
       }
-      print(dataPresensiHarian);
     } catch (e) {
       print(e.toString()); // Mengembalikan error dalam Map
     } finally {
