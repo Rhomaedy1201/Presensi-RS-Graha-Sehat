@@ -296,8 +296,7 @@ class _ProgressComponentsTukarShiftState
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     shadowColor:
-                                                        Colors.transparent,
-                                                    primary: cGrey_500,
+                                                        Colors.transparent, backgroundColor: cGrey_500,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                       borderRadius:
@@ -328,8 +327,7 @@ class _ProgressComponentsTukarShiftState
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     shadowColor:
-                                                        Colors.transparent,
-                                                    primary: cPrimary,
+                                                        Colors.transparent, backgroundColor: cPrimary,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                       borderRadius:

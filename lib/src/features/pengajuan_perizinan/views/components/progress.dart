@@ -256,9 +256,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                                                     .styleFrom(
                                                                   shadowColor:
                                                                       Colors
-                                                                          .transparent,
-                                                                  primary:
-                                                                      cGrey_500,
+                                                                          .transparent, backgroundColor: cGrey_500,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
@@ -293,9 +291,7 @@ class _ProgressIzinState extends State<ProgressIzin> {
                                                                     .styleFrom(
                                                                   shadowColor:
                                                                       Colors
-                                                                          .transparent,
-                                                                  primary:
-                                                                      cPrimary,
+                                                                          .transparent, backgroundColor: cPrimary,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:

@@ -37,8 +37,7 @@ class MyAlert {
                     child: ElevatedButton(
                       onPressed: onCancel,
                       style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.transparent,
-                        primary: cGrey_500,
+                        shadowColor: Colors.transparent, backgroundColor: cGrey_500,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
@@ -56,8 +55,7 @@ class MyAlert {
                     child: ElevatedButton(
                       onPressed: onOke,
                       style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.transparent,
-                        primary: cPrimary,
+                        shadowColor: Colors.transparent, backgroundColor: cPrimary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),

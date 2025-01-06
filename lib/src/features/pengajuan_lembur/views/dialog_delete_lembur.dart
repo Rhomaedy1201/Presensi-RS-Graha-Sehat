@@ -51,7 +51,7 @@ Future<void> dialogDeleteLembur(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
-                          contentPadding: EdgeInsets.all(12.0),
+                          contentPadding: const EdgeInsets.all(12.0),
                         ),
                       ),
                     ),
@@ -61,33 +61,26 @@ Future<void> dialogDeleteLembur(
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            child: const Text(
-                              'NO',
-                            ),
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(0, 45),
-                              primary: Colors.transparent,
-                              onPrimary: cPrimary,
+                              foregroundColor: cPrimary, minimumSize: const Size(0, 45), backgroundColor: Colors.transparent,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  side: BorderSide(width: 2, color: cPrimary)),
+                                  side: const BorderSide(width: 2, color: cPrimary)),
                             ),
                             onPressed: () {
                               Get.back();
                             },
+                            child: const Text(
+                              'NO',
+                            ),
                           ),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: ElevatedButton(
-                            child: const Text(
-                              'YES',
-                            ),
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(0, 45),
-                              primary: cPrimary,
-                              onPrimary: const Color(0xFFFFFFFF),
+                              foregroundColor: const Color(0xFFFFFFFF), minimumSize: const Size(0, 45), backgroundColor: cPrimary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -96,6 +89,9 @@ Future<void> dialogDeleteLembur(
                               await action(); // Panggil fungsi
                               Get.back();
                             },
+                            child: const Text(
+                              'YES',
+                            ),
                           ),
                         ),
                       ],
