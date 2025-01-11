@@ -8,35 +8,36 @@ environment:
   sdk: '>=3.2.6 <4.0.0'
 
 dependencies:
+  camera: ^0.11.0+2
+  community_material_icon: ^5.9.55
+  connectivity_plus: ^5.0.2
+  cupertino_icons: ^1.0.2
+  dart_ipify: ^1.1.1
+  device_info_plus: ^9.1.2
+  file_picker: ^8.0.0+1
+  fl_chart: ^0.70.1
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  http: ^1.1.0
-  get: ^4.6.6
-  community_material_icon: ^5.9.55
-  fluttertoast: ^8.2.5
-  intl: ^0.18.1
+  flutter_launcher_icons: ^0.13.1
   flutter_map: ^6.1.0
+  fluttertoast: ^8.2.5
+  get: ^4.6.6
+  http: ^1.1.0
+  intl: ^0.18.1
   latlong2: ^0.9.1
   location: ^6.0.2
-  shared_preferences: ^2.2.3
   ntp: ^2.0.0
-  connectivity_plus: ^5.0.2
-  dart_ipify: ^1.1.1
-  flutter_launcher_icons: ^0.13.1
-  file_picker: ^8.0.0+1
   percent_indicator: ^4.2.3
-  shimmer: ^3.0.0
-  safe_device: ^1.1.8
-  device_info_plus: ^9.1.2
-  url_launcher: ^6.3.0
   pie_chart: ^5.4.0
-  camera: ^0.11.0+2
+  safe_device: ^1.1.8
+  shared_preferences: ^2.2.3
+  shimmer: ^3.0.0
+  url_launcher: ^6.3.0
 
 dev_dependencies:
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter_icons:
   android: true
@@ -48,7 +49,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-
   # fonts:
   #   - family: Schyler
   #     fonts:
